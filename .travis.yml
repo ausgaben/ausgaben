@@ -9,10 +9,13 @@ node_js:
   - "stable"
   - "iojs"
 
+env:
+  - DSN=postgresql://postgres:@127.0.0.1:5432/travis_ci_test
+
 before_script:
   - npm install
   - psql -c 'create database travis_ci_test;' -U postgres
-  - DSN=postgresql://postgres:@127.0.0.1:5432/travis_ci_test node server/console.js sequelize:schema:sync
+  - node server/console.js sequelize:schema:sync
 
 script:
-  - DSN=postgresql://postgres:@127.0.0.1:5432/travis_ci_test ./node_modules/grunt-cli/bin/grunt test
+  - ./node_modules/grunt-cli/bin/grunt test
