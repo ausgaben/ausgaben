@@ -1,9 +1,9 @@
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
-var Sequelize = require('sequelize');
-var config = require('./config');
+var fs = require('fs'),
+    path = require('path'),
+    Sequelize = require('sequelize'),
+    config = require('./config');
 
 console.log('Initializing Sequelize');
 var sequelize = new Sequelize(config.postgresName, config.postgresUser, config.postgresPassword, {

@@ -19,17 +19,13 @@ function initServer(app, database) {
     app.set('showStackError', true);
     // use json formating
     app.use(bodyParser.json());
-    app.set('view engine', 'json');
 
     require('../api/route/status')(app);
+    require('../api/route/spending')(app, database);
 
     // Catch all route
     app.use(function (req, res) {
-        res.status(404).render('index', {
-            data: {
-                error: 404
-            }
-        });
+        res.status(404).send();
     });
 }
 /**

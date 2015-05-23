@@ -36,6 +36,7 @@
     "grunt-mocha-test": "^0.12.7",
     "mocha": "^2.2.5",
     "should": "^6.0.3",
-    "supertest": "^1.0.1"
+    "supertest": "^1.0.1",
+    "yargs": "^3.9.1"
   }
 }
