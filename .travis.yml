@@ -1,0 +1,11 @@
+language: node_js
+
+node_js:
+  - "stable"
+  - "iojs"
+
+before_script:
+  - npm install
+
+script:
+  - ./node_modules/grunt-cli/bin/grunt test
