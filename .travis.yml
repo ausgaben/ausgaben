@@ -18,4 +18,4 @@ before_script:
   - node server/console.js sequelize:schema:sync
 
 script:
-  - ./node_modules/grunt-cli/bin/grunt test
+  - npm test

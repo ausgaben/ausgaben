@@ -16,3 +16,10 @@
     # Init database
     node server/console.js sequelize:schema:sync
 
+## Run tests
+
+    npm test
+    
+## Run the app
+
+    npm start
