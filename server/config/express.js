@@ -21,7 +21,8 @@ function initServer(app, database) {
     app.use(bodyParser.json());
 
     require('../api/route/status')(app);
-    require('../api/route/spending')(app, database);
+    require('../api/route/crud')(app, database, 'Periodical');
+    require('../api/route/crud')(app, database, 'Spending');
 
     // Catch all route
     app.use(function (req, res) {
