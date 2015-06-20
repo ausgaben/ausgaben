@@ -1,8 +1,6 @@
 # Ausgaben
 
-[![Travis CI](https://travis-ci.org/ausgaben/ausgaben.svg?branch=master)](https://travis-ci.org/ausgaben/ausgaben)
-
-[![Code Climate](https://codeclimate.com/github/ausgaben/ausgaben/badges/gpa.svg)](https://codeclimate.com/github/ausgaben/ausgaben)
+[![Travis CI](https://travis-ci.org/ausgaben/ausgaben.svg?branch=master)](https://travis-ci.org/ausgaben/ausgaben) [![Code Climate](https://codeclimate.com/github/ausgaben/ausgaben/badges/gpa.svg)](https://codeclimate.com/github/ausgaben/ausgaben) [![Dependency Status](https://www.versioneye.com/user/projects/5585b93d3638610015000443/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5585b93d3638610015000443)
 
 ## Set up
 
