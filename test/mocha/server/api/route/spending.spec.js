@@ -3,16 +3,66 @@
 require('should');
 
 var request = require('supertest'),
-    server = request.agent('http://localhost:3000');
+    server = request.agent('http://localhost:3000'),
+    bluebird = require('bluebird');
 
 describe('POST /spending', function () {
-    it('should create a spending', function (done) {
+    it('should create some spendings', function (done) {
+
+        var createSpending = function (spending) {
+            return new bluebird.Promise(function (resolve, reject) {
+                server
+                    .post('/spending')
+                    .send(spending)
+                    .set('Accept', 'application/json')
+                    .set('Content-Type', 'application/json')
+                    .expect(201)
+                    .expect('Location', /spending/)
+                    .end(function (err, res) {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(res);
+                        }
+                    })
+                ;
+            });
+        };
+
+        bluebird.join(
+            createSpending({'amount': 1234, 'description': 'Catfood'}),
+            createSpending({'amount': 5678, 'description': 'Dogfood'})
+        ).then(function () {
+            done();
+        }).catch(function (err) {
+            done(err);
+        });
+    });
+
+    it('should list the created spending', function (done) {
         server
-            .post('/spending')
-            .send({'amount': 1234, 'description': 'Catfood'})
+            .get('/spending')
             .set('Accept', 'application/json')
-            .set('Content-Type', 'application/json')
-            .expect('Location', /spending/)
-            .expect(201, done);
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .expect({
+                '@context': 'https://ausgaben.io/jsonld/List',
+                total: 2,
+                items: [
+                    {
+                        '@context': 'https://ausgaben.io/jsonld/Spending',
+                        '@link': 'http://localhost:3000/spending/1',
+                        'amount': 1234,
+                        'description': 'Catfood'
+                    },
+                    {
+                        '@context': 'https://ausgaben.io/jsonld/Spending',
+                        '@link': 'http://localhost:3000/spending/2',
+                        'amount': 5678,
+                        'description': 'Dogfood'
+                    }
+                ]
+            }, done)
+        ;
     });
 });

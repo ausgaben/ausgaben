@@ -1,8 +1,15 @@
 'use strict';
 
-var bluebird = require('bluebird');
+var bluebird = require('bluebird'),
+    _ = require('lodash');
+
+var entityUrl = function (entity, req) {
+    return req.protocol + '://' + req.get('host') + req.url + '/' + entity.id;
+};
 
 module.exports = function (app, db, modelName) {
+    var transformer = require('../../transformer/' + modelName.toLowerCase());
+    var limit = 10;
     app.post('/' + modelName.toLowerCase(), function (req, res) {
 
         var entity;
@@ -16,7 +23,46 @@ module.exports = function (app, db, modelName) {
                 });
             });
         }).then(function () {
-            res.status(201).header('Location', req.protocol + '://' + req.hostname + req.url + '/' + entity.id).send();
+            res.status(201).header('Location', entityUrl(entity, req)).send();
+        }).catch(function (err) {
+            res.status(500).send(err);
+        });
+    });
+
+    app.get('/' + modelName.toLowerCase(), function (req, res) {
+
+        var model = db.models[modelName];
+
+        bluebird.try(function () {
+            bluebird.join(
+                model.count(),
+                model.findAll({limit: limit, offset: 0})
+            ).spread(function (count, entities) {
+                    var list = {
+                        '@context': 'https://ausgaben.io/jsonld/List',
+                        total: count,
+                        items: _.map(entities, function (entity) {
+                            var model = transformer(entity);
+                            model['@link'] = entityUrl(entity, req);
+                            return model;
+                        })
+                    };
+                    res.send(list);
+                });
+        }).catch(function (err) {
+            res.status(500).send(err);
+        });
+    });
+
+    app.get('/' + modelName.toLowerCase() + '/:id', function (req, res) {
+
+        bluebird.try(function () {
+            db.models[modelName].find({where: {id: req.params.id}}).then(function (entity) {
+                if (entity === null) {
+                    throw new Error('Unkown entity: ' + req.url);
+                }
+                res.send(transformer(entity));
+            });
         }).catch(function (err) {
             res.status(500).send(err);
         });
