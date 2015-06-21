@@ -4,9 +4,13 @@ require('should');
 
 var request = require('supertest'),
     server = request.agent('http://localhost:3000'),
-    bluebird = require('bluebird');
+    bluebird = require('bluebird'),
+    db = require('../../../../../server/config/sequelize'),
+    helper = require('../../helper');
 
 describe('POST /spending', function () {
+    before(helper.clearDb);
+
     it('should create some spendings', function (done) {
 
         /**
@@ -34,13 +38,23 @@ describe('POST /spending', function () {
         };
 
         bluebird.join(
-            createSpending({'amount': -1234, 'title': 'Cat food'}),
-            createSpending({'amount': -5678, 'title': 'Dog food'})
+            createSpending({
+                type: db.models.Spending.type.SPENDING,
+                category: 'Pets',
+                'amount': -1234,
+                'title': 'Cat food'
+            }),
+            createSpending({
+                type: db.models.Spending.type.SPENDING,
+                category: 'Pets',
+                'amount': -5678,
+                'title': 'Dog food'
+            })
         ).then(function () {
-            done();
-        }).catch(function (err) {
-            done(err);
-        });
+                done();
+            }).catch(function (err) {
+                done(err);
+            });
     });
 
     it('should list the created spendings', function (done) {
@@ -56,12 +70,16 @@ describe('POST /spending', function () {
                     {
                         '@context': 'https://ausgaben.io/jsonld/Spending',
                         '@link': 'http://localhost:3000/spending/1',
+                        type: db.models.Spending.type.SPENDING,
+                        category: 'Pets',
                         'amount': -1234,
                         'title': 'Cat food'
                     },
                     {
                         '@context': 'https://ausgaben.io/jsonld/Spending',
                         '@link': 'http://localhost:3000/spending/2',
+                        type: db.models.Spending.type.SPENDING,
+                        category: 'Pets',
                         'amount': -5678,
                         'title': 'Dog food'
                     }

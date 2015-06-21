@@ -5,10 +5,9 @@ var request = require('supertest');
 var bluebird = require('bluebird');
 bluebird.promisifyAll(request);
 
-before(function () {
+exports.clearDb = function () {
     // recreating the sequelize takes a bit => disable timeout
     this.timeout(0);
-    console.log('Recreate all tables');
     // Synchronizing any model changes with database.
     return sequelize.sync({
         force: true
@@ -16,4 +15,4 @@ before(function () {
         console.error(err);
         process.exit(1);
     });
-});
+};

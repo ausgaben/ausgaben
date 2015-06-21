@@ -1,7 +1,20 @@
 'use strict';
 
+var TYPE_INCOME = 'income',
+    TYPE_SPENDING = 'spending',
+    TYPE_SAVING = 'saving';
+
 module.exports = function (sequelize, DataTypes) {
     return sequelize.define('Spending', {
+        type: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+            isIn: [[TYPE_INCOME, TYPE_SPENDING, TYPE_SAVING]]
+        },
+        category: {
+            type: DataTypes.STRING(255),
+            allowNull: false
+        },
         title: {
             type: DataTypes.STRING(255),
             allowNull: false
@@ -11,6 +24,22 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: false
         }
     }, {
-        tableName: 'Spending'
+        tableName: 'Spending',
+        associate: function (models) {
+            var thisModel = models[this.name.singular];
+            thisModel.belongsTo(models.Periodical, {
+                foreignKey: {
+                    allowNull: true
+                }
+            });
+        },
+        classMethods: {
+            type: {
+                INCOME: TYPE_INCOME,
+                SPENDING: TYPE_SPENDING,
+                SAVING: TYPE_SAVING
+            }
+        },
+        repository: 'SpendingsRepository'
     });
 };

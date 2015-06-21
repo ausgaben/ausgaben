@@ -5,9 +5,12 @@ require('should');
 var request = require('supertest'),
     server = request.agent('http://localhost:3000'),
     bluebird = require('bluebird'),
-    db = require('../../../../../server/config/sequelize');
+    db = require('../../../../../server/config/sequelize'),
+    helper = require('../../helper');
 
 describe('POST /periodical', function () {
+    before(helper.clearDb);
+
     it('should create a periodical', function (done) {
 
         var createPeriodical = function (periodical) {
@@ -32,28 +35,28 @@ describe('POST /periodical', function () {
 
         bluebird.join(
             createPeriodical({
-                type: db.models.Periodical.type.INCOME,
+                type: db.models.Spending.type.INCOME,
                 category: 'Salary',
                 title: 'Tanja\'s Salary',
                 amount: 165432,
                 starts: '2015-01-01'
             }),
             createPeriodical({
-                type: db.models.Periodical.type.INCOME,
+                type: db.models.Spending.type.INCOME,
                 category: 'Salary',
                 title: 'Markus\' Salary',
                 amount: 123456,
                 starts: '2015-01-02'
             }),
             createPeriodical({
-                type: db.models.Periodical.type.SPENDING,
+                type: db.models.Spending.type.SPENDING,
                 category: 'Pets',
                 title: 'Cat food',
                 amount: -12345,
                 starts: '2015-01-03'
             }),
             createPeriodical({
-                type: db.models.Periodical.type.SPENDING,
+                type: db.models.Spending.type.SPENDING,
                 category: 'Pets',
                 title: 'Dog food',
                 amount: -23456,
@@ -79,7 +82,7 @@ describe('POST /periodical', function () {
                     {
                         '@context': 'https://ausgaben.io/jsonld/Periodical',
                         '@link': 'http://localhost:3000/periodical/1',
-                        type: db.models.Periodical.type.INCOME,
+                        type: db.models.Spending.type.INCOME,
                         category: 'Salary',
                         amount: 165432,
                         title: 'Tanja\'s Salary',
@@ -101,7 +104,7 @@ describe('POST /periodical', function () {
                     {
                         '@context': 'https://ausgaben.io/jsonld/Periodical',
                         '@link': 'http://localhost:3000/periodical/2',
-                        type: db.models.Periodical.type.INCOME,
+                        type: db.models.Spending.type.INCOME,
                         category: 'Salary',
                         amount: 123456,
                         title: 'Markus\' Salary',
@@ -123,7 +126,7 @@ describe('POST /periodical', function () {
                     {
                         '@context': 'https://ausgaben.io/jsonld/Periodical',
                         '@link': 'http://localhost:3000/periodical/3',
-                        type: db.models.Periodical.type.SPENDING,
+                        type: db.models.Spending.type.SPENDING,
                         category: 'Pets',
                         amount: -12345,
                         title: 'Cat food',
@@ -145,7 +148,7 @@ describe('POST /periodical', function () {
                     {
                         '@context': 'https://ausgaben.io/jsonld/Periodical',
                         '@link': 'http://localhost:3000/periodical/4',
-                        type: db.models.Periodical.type.SPENDING,
+                        type: db.models.Spending.type.SPENDING,
                         category: 'Pets',
                         amount: -23456,
                         title: 'Dog food',

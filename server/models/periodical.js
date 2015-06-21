@@ -6,7 +6,7 @@ var _ = require('lodash'),
     TYPE_SAVING = 'saving';
 
 module.exports = function (sequelize, DataTypes) {
-
+    
     var fields = {
         type: {
             type: DataTypes.STRING(255),
@@ -48,12 +48,6 @@ module.exports = function (sequelize, DataTypes) {
         fields,
         {
             tableName: 'Periodical',
-            classMethods: {
-                type: {
-                    INCOME: TYPE_INCOME,
-                    SPENDING: TYPE_SPENDING,
-                    SAVING: TYPE_SAVING
-                }
-            }
+            repository: 'PeriodicalsRepository'
         });
 };
