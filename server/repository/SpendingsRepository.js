@@ -31,7 +31,7 @@ SpendingsRepository.prototype.spendingFromPeriodical = function (periodical) {
         title: periodical.title,
         amount: periodical.amount
     });
-    spending.setPeriodical(periodical);
+    spending.setPeriodical(periodical, {save: false});
     return spending;
 };
 
