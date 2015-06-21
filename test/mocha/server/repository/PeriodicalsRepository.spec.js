@@ -9,11 +9,10 @@ var db = require('../../../../server/config/sequelize'),
 describe('PeriodicalsRepository', function () {
     before(helper.clearDb);
 
-    var repository, month;
+    var repository;
 
     before(function () {
         repository = new Repository(db);
-        month = new Date('2015-01-01');
     });
 
     it('should persist', function (done) {
@@ -39,7 +38,7 @@ describe('PeriodicalsRepository', function () {
     });
 
     it('should find periodicals by month', function (done) {
-        repository.findByMonth(month).then(function(periodicals) {
+        repository.findByMonth(new Date('2015-01-02')).then(function(periodicals) {
             periodicals.length.should.be.equal(2);
             done();
         })

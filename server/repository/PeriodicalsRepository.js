@@ -32,7 +32,11 @@ PeriodicalsRepository.prototype.findByMonth = function (month) {
     var db = this.db;
     return new bluebird.Promise(function (resolve, reject) {
         bluebird.try(function() {
-            db.models['Periodical'].findAll({where: {starts: {gte: month}}}).then(resolve);
+            var monthKey = 'enabledIn' + _.padLeft(month.getMonth() + 1, 2, 0);
+            var where = {starts: {lte: month}};
+            where[monthKey] = true;
+            db.models['Periodical']
+                .findAll({where: where}).then(resolve);
         })
         .catch(function (err) {
             reject(err);

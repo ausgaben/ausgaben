@@ -13,6 +13,7 @@ var sequelize = new Sequelize(config.postgresName, config.postgresUser, config.p
     host: config.postgresHost,
     native: true,
     logging: false
+    // logging: console.log
 });
 
 // use long stacktraces for debugging

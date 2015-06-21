@@ -15,7 +15,6 @@ CreateMonthlySpendingsTask.prototype.execute = function (month) {
     var periodicalsRepository = this.periodicalsRepository;
     var spendingsRepository = this.spendingsRepository;
     return new bluebird.Promise(function (resolve, reject) {
-        // console.log('Creating spendings for month: ' + month.getFullYear() + '-' + _.padLeft((month.getMonth() + 1), 2, 0));
         // Find the periodicals for the given month
         periodicalsRepository
         .findByMonth(month)

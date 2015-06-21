@@ -7,7 +7,8 @@ var repositories = [];
 Object.keys(db.models).forEach(function (modelName) {
     // Load repository
     if (db.models[modelName].options.hasOwnProperty('repository')) {
-        repositories[modelName] = require('../repository/' + db.models[modelName].options.repository).Repository(db);
+        var repo = require('../repository/' + db.models[modelName].options.repository);
+        repositories[modelName] = new repo(db);
     }
 });
 
