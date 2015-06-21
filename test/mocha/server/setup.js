@@ -1,6 +1,6 @@
 'use strict';
 
-var sequelize = require('../../server/config/sequelize');
+var sequelize = require('../../../server/config/sequelize');
 var request = require('supertest');
 var bluebird = require('bluebird');
 bluebird.promisifyAll(request);

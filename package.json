@@ -27,7 +27,9 @@
   },
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js -i '[\"*.html\",\"public/system/**\",\"public/auth/**\",\"test/coverage/**\",\"node_modules/**\"]' -e 'js,html,cs' -d 1 -w ./ server/server.js",
-    "test": "./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/mocha/**/*.js"
+    "test": "npm run test:server && npm run test:util",
+    "test:server": "./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/mocha/server/**/*.js",
+    "test:util": "./node_modules/mocha/bin/mocha --reporter=spec --timeout=1350 test/mocha/util/**/*.js"
   },
   "devDependencies": {
     "mocha": "^2.2.5",
