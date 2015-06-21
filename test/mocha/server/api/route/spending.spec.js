@@ -9,6 +9,10 @@ var request = require('supertest'),
 describe('POST /spending', function () {
     it('should create some spendings', function (done) {
 
+        /**
+         * @param spending
+         * @returns {bluebird.Promise}
+         */
         var createSpending = function (spending) {
             return new bluebird.Promise(function (resolve, reject) {
                 server
@@ -30,8 +34,8 @@ describe('POST /spending', function () {
         };
 
         bluebird.join(
-            createSpending({'amount': 1234, 'description': 'Catfood'}),
-            createSpending({'amount': 5678, 'description': 'Dogfood'})
+            createSpending({'amount': -1234, 'title': 'Cat food'}),
+            createSpending({'amount': -5678, 'title': 'Dog food'})
         ).then(function () {
             done();
         }).catch(function (err) {
@@ -39,7 +43,7 @@ describe('POST /spending', function () {
         });
     });
 
-    it('should list the created spending', function (done) {
+    it('should list the created spendings', function (done) {
         server
             .get('/spending')
             .set('Accept', 'application/json')
@@ -52,14 +56,14 @@ describe('POST /spending', function () {
                     {
                         '@context': 'https://ausgaben.io/jsonld/Spending',
                         '@link': 'http://localhost:3000/spending/1',
-                        'amount': 1234,
-                        'description': 'Catfood'
+                        'amount': -1234,
+                        'title': 'Cat food'
                     },
                     {
                         '@context': 'https://ausgaben.io/jsonld/Spending',
                         '@link': 'http://localhost:3000/spending/2',
-                        'amount': 5678,
-                        'description': 'Dogfood'
+                        'amount': -5678,
+                        'title': 'Dog food'
                     }
                 ]
             }, done)

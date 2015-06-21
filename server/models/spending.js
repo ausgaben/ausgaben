@@ -2,7 +2,7 @@
 
 module.exports = function (sequelize, DataTypes) {
     return sequelize.define('Spending', {
-        description: {
+        title: {
             type: DataTypes.STRING(255),
             allowNull: false
         },
