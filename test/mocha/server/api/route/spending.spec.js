@@ -6,7 +6,9 @@ var request = require('supertest'),
     server = request.agent('http://localhost:3000'),
     bluebird = require('bluebird'),
     db = require('../../../../../server/config/sequelize'),
-    helper = require('../../helper');
+    helper = require('../../helper'),
+    _ = require('lodash'),
+    jsonld = require('../jsonld');
 
 describe('POST /spending', function () {
     before(helper.clearDb);
@@ -63,28 +65,23 @@ describe('POST /spending', function () {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({
-                '@context': 'https://ausgaben.io/jsonld/List',
-                total: 2,
-                items: [
-                    {
-                        '@context': 'https://ausgaben.io/jsonld/Spending',
-                        '@link': 'http://localhost:3000/spending/1',
-                        type: db.models.Spending.type.SPENDING,
-                        category: 'Pets',
-                        'amount': -1234,
-                        'title': 'Cat food'
-                    },
-                    {
-                        '@context': 'https://ausgaben.io/jsonld/Spending',
-                        '@link': 'http://localhost:3000/spending/2',
-                        type: db.models.Spending.type.SPENDING,
-                        category: 'Pets',
-                        'amount': -5678,
-                        'title': 'Dog food'
-                    }
-                ]
-            }, done)
+            .end(function (err, res) {
+                if (err) {
+                    throw err;
+                }
+                jsonld.list(res.body, 'https://ausgaben.io/jsonld/Spending', 2);
+                var items = _.sortBy(res.body['items'], 'title');
+                for(var i = 0; i < 2; i++) {
+                    items[i].type.should.be.equal(db.models.Spending.type.SPENDING);
+                    items[i].category.should.be.equal('Pets');
+                    items[i]['@link'].should.match(/http:\/\/localhost:3000\/spending\/[0-9]+/);
+                }
+                items[0].amount.should.be.equal(-1234);
+                items[0].title.should.be.equal('Cat food');
+                items[1].amount.should.be.equal(-5678);
+                items[1].title.should.be.equal('Dog food');
+                done();
+            })
         ;
     });
 });

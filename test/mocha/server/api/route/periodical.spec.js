@@ -6,7 +6,9 @@ var request = require('supertest'),
     server = request.agent('http://localhost:3000'),
     bluebird = require('bluebird'),
     db = require('../../../../../server/config/sequelize'),
-    helper = require('../../helper');
+    helper = require('../../helper'),
+    _ = require('lodash'),
+    jsonld = require('../jsonld');
 
 describe('POST /periodical', function () {
     before(helper.clearDb);
@@ -63,10 +65,10 @@ describe('POST /periodical', function () {
                 starts: '2015-01-04'
             })
         ).then(function () {
-            done();
-        }).catch(function (err) {
-            done(err);
-        });
+                done();
+            }).catch(function (err) {
+                done(err);
+            });
     });
 
     it('should list the created periodicals', function (done) {
@@ -75,100 +77,50 @@ describe('POST /periodical', function () {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
-            .expect({
-                '@context': 'https://ausgaben.io/jsonld/List',
-                total: 4,
-                items: [
-                    {
-                        '@context': 'https://ausgaben.io/jsonld/Periodical',
-                        '@link': 'http://localhost:3000/periodical/1',
-                        type: db.models.Spending.type.INCOME,
-                        category: 'Salary',
-                        amount: 165432,
-                        title: 'Tanja\'s Salary',
-                        starts: '2015-01-01T00:00:00+00:00',
-                        estimate: false,
-                        enabledIn01: true,
-                        enabledIn02: true,
-                        enabledIn03: true,
-                        enabledIn04: true,
-                        enabledIn05: true,
-                        enabledIn06: true,
-                        enabledIn07: true,
-                        enabledIn08: true,
-                        enabledIn09: true,
-                        enabledIn10: true,
-                        enabledIn11: true,
-                        enabledIn12: true
-                    },
-                    {
-                        '@context': 'https://ausgaben.io/jsonld/Periodical',
-                        '@link': 'http://localhost:3000/periodical/2',
-                        type: db.models.Spending.type.INCOME,
-                        category: 'Salary',
-                        amount: 123456,
-                        title: 'Markus\' Salary',
-                        starts: '2015-01-02T00:00:00+00:00',
-                        estimate: false,
-                        enabledIn01: true,
-                        enabledIn02: true,
-                        enabledIn03: true,
-                        enabledIn04: true,
-                        enabledIn05: true,
-                        enabledIn06: true,
-                        enabledIn07: true,
-                        enabledIn08: true,
-                        enabledIn09: true,
-                        enabledIn10: true,
-                        enabledIn11: true,
-                        enabledIn12: true
-                    },
-                    {
-                        '@context': 'https://ausgaben.io/jsonld/Periodical',
-                        '@link': 'http://localhost:3000/periodical/3',
-                        type: db.models.Spending.type.SPENDING,
-                        category: 'Pets',
-                        amount: -12345,
-                        title: 'Cat food',
-                        starts: '2015-01-03T00:00:00+00:00',
-                        estimate: false,
-                        enabledIn01: true,
-                        enabledIn02: true,
-                        enabledIn03: true,
-                        enabledIn04: true,
-                        enabledIn05: true,
-                        enabledIn06: true,
-                        enabledIn07: true,
-                        enabledIn08: true,
-                        enabledIn09: true,
-                        enabledIn10: true,
-                        enabledIn11: true,
-                        enabledIn12: true
-                    },
-                    {
-                        '@context': 'https://ausgaben.io/jsonld/Periodical',
-                        '@link': 'http://localhost:3000/periodical/4',
-                        type: db.models.Spending.type.SPENDING,
-                        category: 'Pets',
-                        amount: -23456,
-                        title: 'Dog food',
-                        starts: '2015-01-04T00:00:00+00:00',
-                        estimate: false,
-                        enabledIn01: true,
-                        enabledIn02: true,
-                        enabledIn03: true,
-                        enabledIn04: true,
-                        enabledIn05: true,
-                        enabledIn06: true,
-                        enabledIn07: true,
-                        enabledIn08: true,
-                        enabledIn09: true,
-                        enabledIn10: true,
-                        enabledIn11: true,
-                        enabledIn12: true
-                    }
-                ]
-            }, done)
+            .end(function (err, res) {
+                if (err) {
+                    throw err;
+                }
+                jsonld.list(res.body, 'https://ausgaben.io/jsonld/Periodical', 4);
+                var items = _.sortBy(res.body['items'], 'title');
+                for (var n = 0; n < 4; n++) {
+                    items[n]['@link'].should.match(/http:\/\/localhost:3000\/periodical\/[0-9]+/);
+                    items[n].estimate.should.be.equal(false);
+                    items[n].enabledIn01.should.be.equal(true);
+                    items[n].enabledIn02.should.be.equal(true);
+                    items[n].enabledIn03.should.be.equal(true);
+                    items[n].enabledIn04.should.be.equal(true);
+                    items[n].enabledIn05.should.be.equal(true);
+                    items[n].enabledIn06.should.be.equal(true);
+                    items[n].enabledIn07.should.be.equal(true);
+                    items[n].enabledIn08.should.be.equal(true);
+                    items[n].enabledIn09.should.be.equal(true);
+                    items[n].enabledIn10.should.be.equal(true);
+                    items[n].enabledIn11.should.be.equal(true);
+                    items[n].enabledIn12.should.be.equal(true);
+                }
+                for (var i = 0; i < 2; i++) {
+                    items[i].type.should.be.equal(db.models.Spending.type.SPENDING);
+                    items[i].category.should.be.equal('Pets');
+                }
+                for (var j = 2; j < 4; j++) {
+                    items[j].type.should.be.equal(db.models.Spending.type.INCOME);
+                    items[j].category.should.be.equal('Salary');
+                }
+                items[0].amount.should.be.equal(-12345);
+                items[0].title.should.be.equal('Cat food');
+                items[0].starts.should.be.equal('2015-01-03T00:00:00+00:00');
+                items[1].amount.should.be.equal(-23456);
+                items[1].title.should.be.equal('Dog food');
+                items[1].starts.should.be.equal('2015-01-04T00:00:00+00:00');
+                items[2].amount.should.be.equal(123456);
+                items[2].title.should.be.equal('Markus\' Salary');
+                items[2].starts.should.be.equal('2015-01-02T00:00:00+00:00');
+                items[3].amount.should.be.equal(165432);
+                items[3].title.should.be.equal('Tanja\'s Salary');
+                items[3].starts.should.be.equal('2015-01-01T00:00:00+00:00');
+                done();
+            })
         ;
     });
 });
