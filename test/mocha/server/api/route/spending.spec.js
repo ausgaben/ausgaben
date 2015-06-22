@@ -43,14 +43,18 @@ describe('POST /spending', function () {
             createSpending({
                 type: db.models.Spending.type.SPENDING,
                 category: 'Pets',
-                'amount': -1234,
-                'title': 'Cat food'
+                amount: -1234,
+                title: 'Cat food',
+                booked: true,
+                bookedAt: '2015-01-02T12:34:56+02:00'
             }),
             createSpending({
                 type: db.models.Spending.type.SPENDING,
                 category: 'Pets',
-                'amount': -5678,
-                'title': 'Dog food'
+                amount: -5678,
+                title: 'Dog food',
+                booked: true,
+                bookedAt: '2015-01-03T12:34:56+02:00'
             })
         ).then(function () {
                 done();
@@ -78,8 +82,12 @@ describe('POST /spending', function () {
                 }
                 items[0].amount.should.be.equal(-1234);
                 items[0].title.should.be.equal('Cat food');
+                items[0].booked.should.be.equal(true);
+                items[0].bookedAt.should.be.equal('2015-01-02T10:34:56+00:00');
                 items[1].amount.should.be.equal(-5678);
                 items[1].title.should.be.equal('Dog food');
+                items[1].booked.should.be.equal(true);
+                items[1].bookedAt.should.be.equal('2015-01-03T10:34:56+00:00');
                 done();
             })
         ;

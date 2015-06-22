@@ -22,6 +22,16 @@ module.exports = function (sequelize, DataTypes) {
         amount: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        booked: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: true
+        },
+        bookedAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: new Date()
         }
     }, {
         tableName: 'Spending',
