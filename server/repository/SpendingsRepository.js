@@ -9,17 +9,9 @@ var SpendingsRepository = function (db) {
 
 SpendingsRepository.prototype.persist = function (entity) {
     var db = this.db;
-    return new bluebird.Promise(function (resolve, reject) {
-        bluebird.try(function () {
-            return db.transaction(function (t) {
-                return entity.save({
-                    transaction: t
-                });
-            });
-        }).then(function () {
-            resolve(entity);
-        }).catch(function (err) {
-            reject(err);
+    return db.transaction(function (t) {
+        return entity.save({
+            transaction: t
         });
     });
 };
