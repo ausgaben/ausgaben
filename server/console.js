@@ -38,6 +38,7 @@ switch (argv._[0]) {
         var task = new CreateMonthlySpendingsTask(repos['Periodical'], repos['Spending']);
         task.execute(month).then(function () {
             console.log('Spendings created');
+            process.exit(0);
         });
         break;
     default:
