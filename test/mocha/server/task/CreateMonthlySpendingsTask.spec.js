@@ -38,7 +38,7 @@ describe('CreateMonthlySpendingsTask', function () {
         simple.mock(mockPeriodicalsRepository, 'findByMonth').resolveWith(periodicals);
         mockSpendingsRepository = new SpendingsRepository();
         simple.mock(mockSpendingsRepository, 'persist').resolveWith(null);
-        simple.mock(mockSpendingsRepository, 'spendingFromPeriodical').returnWith(null);
+        simple.mock(mockSpendingsRepository, 'spendingFromPeriodical').returnWith({});
         var month = new Date();
         task = new Task(mockPeriodicalsRepository, mockSpendingsRepository);
         task.execute(month).then(function () {

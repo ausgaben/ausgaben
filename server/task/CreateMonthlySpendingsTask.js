@@ -19,15 +19,10 @@ CreateMonthlySpendingsTask.prototype.execute = function (month) {
         .findByMonth(month)
         .then(function (periodicals) {
             return bluebird.map(periodicals, function (periodical) {
-                var p = {
-                    type: periodical.type,
-                    category: periodical.category,
-                    title: periodical.title,
-                    amount: periodical.amount,
-                    bookedAt: month,
-                    booked: false
-                };
-                return spendingsRepository.persist(spendingsRepository.spendingFromPeriodical(p));
+                var spending = spendingsRepository.spendingFromPeriodical(periodical);
+                spending.bookedAt = month;
+                spending.booked = false;
+                return spendingsRepository.persist(spending);
             });
         });
 };
