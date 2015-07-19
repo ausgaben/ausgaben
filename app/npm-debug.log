@@ -1,0 +1,300 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/bin/npm', 'install' ]
+2 info using npm@2.13.1
+3 info using node@v0.12.7
+4 verbose readDependencies loading dependencies from /home/m/www/ausgaben/package.json
+5 verbose install where, deps [ '/home/m/www/ausgaben',
+5 verbose install   [ 'bluebird',
+5 verbose install     'body-parser',
+5 verbose install     'bootstrap',
+5 verbose install     'express',
+5 verbose install     'fast-url-parser',
+5 verbose install     'lodash',
+5 verbose install     'material-design-lite',
+5 verbose install     'nodemon',
+5 verbose install     'pg',
+5 verbose install     'pg-hstore',
+5 verbose install     'pg-native',
+5 verbose install     'sequelize',
+5 verbose install     'mocha',
+5 verbose install     'should',
+5 verbose install     'simple-mock',
+5 verbose install     'supertest',
+5 verbose install     'yargs' ] ]
+6 verbose install where, peers [ '/home/m/www/ausgaben', [] ]
+7 verbose installManyTop reading for lifecycle /home/m/www/ausgaben/package.json
+8 info preinstall ausgaben@0.0.1
+9 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/bluebird/package.json
+10 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/body-parser/package.json
+11 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/bootstrap/package.json
+12 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/express/package.json
+13 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/fast-url-parser/package.json
+14 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/lodash/package.json
+15 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/material-design-lite/package.json
+16 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/mocha/package.json
+17 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/nodemon/package.json
+18 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/pg/package.json
+19 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/pg-hstore/package.json
+20 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/pg-native/package.json
+21 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/sequelize/package.json
+22 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/should/package.json
+23 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/simple-mock/package.json
+24 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/sinon/package.json
+25 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/supertest/package.json
+26 verbose installManyTop reading scoped package data from /home/m/www/ausgaben/node_modules/yargs/package.json
+27 info package.json nodemon@1.3.7 No license field.
+28 info package.json pg-hstore@2.3.2 No license field.
+29 info package.json material-design-lite@1.0.0-3 No repository field.
+30 info package.json material-design-lite@1.0.0-3 license should be a valid SPDX license expression
+31 verbose readDependencies loading dependencies from /home/m/www/ausgaben/package.json
+32 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/bluebird/package.json
+33 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/body-parser/package.json
+34 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/bootstrap/package.json
+35 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/express/package.json
+36 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/fast-url-parser/package.json
+37 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/lodash/package.json
+38 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/material-design-lite/package.json
+39 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/mocha/package.json
+40 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/nodemon/package.json
+41 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/pg/package.json
+42 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/pg-hstore/package.json
+43 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/pg-native/package.json
+44 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/sequelize/package.json
+45 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/should/package.json
+46 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/simple-mock/package.json
+47 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/sinon/package.json
+48 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/supertest/package.json
+49 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/yargs/package.json
+50 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/.bin/mocha/package.json
+51 verbose targetResolver reading package data from /home/m/www/ausgaben/node_modules/.bin/nodemon/package.json
+52 verbose already installed skipping pg@^4.4.0 /home/m/www/ausgaben
+53 verbose already installed skipping pg-hstore@^2.3.2 /home/m/www/ausgaben
+54 verbose already installed skipping pg-native@^1.8.1 /home/m/www/ausgaben
+55 verbose already installed skipping sequelize@^3.4.1 /home/m/www/ausgaben
+56 verbose already installed skipping mocha@^2.2.5 /home/m/www/ausgaben
+57 verbose already installed skipping should@^7.0.2 /home/m/www/ausgaben
+58 verbose already installed skipping simple-mock@^0.3.1 /home/m/www/ausgaben
+59 verbose already installed skipping supertest@^1.0.1 /home/m/www/ausgaben
+60 verbose already installed skipping yargs@^3.15.0 /home/m/www/ausgaben
+61 verbose already installed skipping bluebird@^2.9.34 /home/m/www/ausgaben
+62 verbose already installed skipping body-parser@^1.13.2 /home/m/www/ausgaben
+63 verbose already installed skipping bootstrap@^3.3.5 /home/m/www/ausgaben
+64 verbose already installed skipping express@^4.13.1 /home/m/www/ausgaben
+65 verbose already installed skipping fast-url-parser@^1.1.3 /home/m/www/ausgaben
+66 verbose already installed skipping lodash@^3.10.0 /home/m/www/ausgaben
+67 silly cache add args [ 'material-design-lite@git+https://github.com/google/material-design-lite.git#v1.0.0',
+67 silly cache add   null ]
+68 verbose cache add spec material-design-lite@git+https://github.com/google/material-design-lite.git#v1.0.0
+69 verbose already installed skipping nodemon@^1.3.7 /home/m/www/ausgaben
+70 silly cache add parsed spec { raw: 'material-design-lite@git+https://github.com/google/material-design-lite.git#v1.0.0',
+70 silly cache add   scope: null,
+70 silly cache add   name: 'material-design-lite',
+70 silly cache add   rawSpec: 'git+https://github.com/google/material-design-lite.git#v1.0.0',
+70 silly cache add   spec: 'git+https://github.com/google/material-design-lite.git#v1.0.0',
+70 silly cache add   type: 'hosted',
+70 silly cache add   hosted:
+70 silly cache add    { type: 'github',
+70 silly cache add      ssh: 'git@github.com:google/material-design-lite.git#v1.0.0',
+70 silly cache add      sshUrl: 'git+ssh://git@github.com/google/material-design-lite.git#v1.0.0',
+70 silly cache add      httpsUrl: 'git+https://github.com/google/material-design-lite.git#v1.0.0',
+70 silly cache add      gitUrl: 'git://github.com/google/material-design-lite.git#v1.0.0',
+70 silly cache add      shortcut: 'github:google/material-design-lite#v1.0.0',
+70 silly cache add      directUrl: 'https://raw.githubusercontent.com/google/material-design-lite/v1.0.0/package.json' } }
+71 verbose addRemoteGit caching git+https://github.com/google/material-design-lite.git#v1.0.0
+72 verbose addRemoteGit git+https://github.com/google/material-design-lite.git#v1.0.0 is a repository hosted by github
+73 silly tryClone cloning git+https://github.com/google/material-design-lite.git#v1.0.0 via git+https://github.com/google/material-design-lite.git#v1.0.0
+74 verbose tryClone https-github-com-google-material-design-lite-git-bc87c457 not in flight; caching
+75 info git [ 'clone',
+75 info git   '--template=/home/m/.npm/_git-remotes/_templates',
+75 info git   '--mirror',
+75 info git   'https://github.com/google/material-design-lite.git',
+75 info git   '/home/m/.npm/_git-remotes/https-github-com-google-material-design-lite-git-bc87c457' ]
+76 verbose mirrorRemote git+https://github.com/google/material-design-lite.git#v1.0.0 git clone https://github.com/google/material-design-lite.git
+77 verbose setPermissions git+https://github.com/google/material-design-lite.git#v1.0.0 set permissions on /home/m/.npm/_git-remotes/https-github-com-google-material-design-lite-git-bc87c457
+78 verbose resolveHead git+https://github.com/google/material-design-lite.git#v1.0.0 original treeish: v1.0.0
+79 info git [ 'rev-list', '-n1', 'v1.0.0' ]
+80 silly resolveHead git+https://github.com/google/material-design-lite.git#v1.0.0 resolved treeish: ea8f4d9c9a04aa539b76613817dce7534767dadf
+81 verbose resolveHead git+https://github.com/google/material-design-lite.git#v1.0.0 resolved Git URL: git+https://github.com/google/material-design-lite.git#ea8f4d9c9a04aa539b76613817dce7534767dadf
+82 silly resolveHead Git working directory: /tmp/npm-6079-742c9f8f/git-cache-c5ea4b75d505/ea8f4d9c9a04aa539b76613817dce7534767dadf
+83 info git [ 'clone',
+83 info git   '/home/m/.npm/_git-remotes/https-github-com-google-material-design-lite-git-bc87c457',
+83 info git   '/tmp/npm-6079-742c9f8f/git-cache-c5ea4b75d505/ea8f4d9c9a04aa539b76613817dce7534767dadf' ]
+84 verbose cloneResolved git+https://github.com/google/material-design-lite.git#v1.0.0 clone Klone nach '/tmp/npm-6079-742c9f8f/git-cache-c5ea4b75d505/ea8f4d9c9a04aa539b76613817dce7534767dadf' ...
+84 verbose cloneResolved Fertig.
+85 info git [ 'checkout', 'ea8f4d9c9a04aa539b76613817dce7534767dadf' ]
+86 verbose checkoutTreeish git+https://github.com/google/material-design-lite.git#v1.0.0 checkout Note: checking out 'ea8f4d9c9a04aa539b76613817dce7534767dadf'.
+86 verbose checkoutTreeish
+86 verbose checkoutTreeish You are in 'detached HEAD' state. You can look around, make experimental
+86 verbose checkoutTreeish changes and commit them, and you can discard any commits you make in this
+86 verbose checkoutTreeish state without impacting any branches by performing another checkout.
+86 verbose checkoutTreeish
+86 verbose checkoutTreeish If you want to create a new branch to retain commits you create, you may
+86 verbose checkoutTreeish do so (now or later) by using -b with the checkout command again. Example:
+86 verbose checkoutTreeish
+86 verbose checkoutTreeish   git checkout -b <new-branch-name>
+86 verbose checkoutTreeish
+86 verbose checkoutTreeish HEAD ist jetzt bei ea8f4d9... Updating to latest stable release
+87 verbose addLocalDirectory /home/m/.npm/material-design-lite/1.0.0/package.tgz not in flight; packing
+88 verbose tar pack [ '/home/m/.npm/material-design-lite/1.0.0/package.tgz',
+88 verbose tar pack   '/tmp/npm-6079-742c9f8f/git-cache-c5ea4b75d505/ea8f4d9c9a04aa539b76613817dce7534767dadf' ]
+89 verbose tarball /home/m/.npm/material-design-lite/1.0.0/package.tgz
+90 verbose folder /tmp/npm-6079-742c9f8f/git-cache-c5ea4b75d505/ea8f4d9c9a04aa539b76613817dce7534767dadf
+91 verbose addLocalTarball adding from inside cache /home/m/.npm/material-design-lite/1.0.0/package.tgz
+92 verbose addRemoteGit data._from: git+https://github.com/google/material-design-lite.git#v1.0.0
+93 verbose addRemoteGit data._resolved: git+https://github.com/google/material-design-lite.git#ea8f4d9c9a04aa539b76613817dce7534767dadf
+94 silly cache afterAdd material-design-lite@1.0.0
+95 verbose afterAdd /home/m/.npm/material-design-lite/1.0.0/package/package.json not in flight; writing
+96 verbose afterAdd /home/m/.npm/material-design-lite/1.0.0/package/package.json written
+97 silly install resolved [ { name: 'material-design-lite',
+97 silly install resolved     version: '1.0.0',
+97 silly install resolved     description: 'Material Design Components in CSS, JS and HTML',
+97 silly install resolved     private: true,
+97 silly install resolved     license:
+97 silly install resolved      { type: 'Apache-2',
+97 silly install resolved        url: 'https://github.com/google/material-design-lite/blob/master/LICENSE' },
+97 silly install resolved     author: { name: 'Google' },
+97 silly install resolved     homepage: 'https://github.com/google/material-design-lite',
+97 silly install resolved     bugs: { url: 'https://github.com/google/material-design-lite/issues' },
+97 silly install resolved     devDependencies:
+97 silly install resolved      { 'apache-server-configs': '^2.7.1',
+97 silly install resolved        'browser-sync': '^2.2.3',
+97 silly install resolved        chai: '^2.0.0',
+97 silly install resolved        'chai-jquery': '^2.0.0',
+97 silly install resolved        del: '^1.1.1',
+97 silly install resolved        gulp: '^3.8.11',
+97 silly install resolved        'gulp-autoprefixer': '^2.0.0',
+97 silly install resolved        'gulp-cache': '^0.2.6',
+97 silly install resolved        'gulp-changed': '^1.0.0',
+97 silly install resolved        'gulp-concat': '^2.4.1',
+97 silly install resolved        'gulp-connect': '^2.2.0',
+97 silly install resolved        'gulp-css-inline-images': '^0.1.1',
+97 silly install resolved        'gulp-csso': '^1.0.0',
+97 silly install resolved        'gulp-file': '^0.2.0',
+97 silly install resolved        'gulp-filter': '^2.0.2',
+97 silly install resolved        'gulp-flatten': '0.0.4',
+97 silly install resolved        'gulp-front-matter': '^1.2.2',
+97 silly install resolved        'gulp-gh-pages': '^0.5.0',
+97 silly install resolved        'gulp-header': '^1.2.2',
+97 silly install resolved        'gulp-if': '^1.2.1',
+97 silly install resolved        'gulp-imagemin': '^2.2.1',
+97 silly install resolved        'gulp-jscs': '^1.6.0',
+97 silly install resolved        'gulp-jshint': '^1.6.3',
+97 silly install resolved        'gulp-load-plugins': '^0.10.0',
+97 silly install resolved        'gulp-markdown': '^1.0.0',
+97 silly install resolved        'gulp-marked': '^1.0.0',
+97 silly install resolved        'gulp-minify-html': '^1.0.0',
+97 silly install resolved        'gulp-mocha-phantomjs': '^0.6.1',
+97 silly install resolved        'gulp-open': '^0.3.2',
+97 silly install resolved        'gulp-rename': '^1.2.0',
+97 silly install resolved        'gulp-replace': '^0.5.3',
+97 silly install resolved        'gulp-sass': '^1.3.3',
+97 silly install resolved        'gulp-shell': '^0.4.2',
+97 silly install resolved        'gulp-size': '^1.0.0',
+97 silly install resolved        'gulp-sourcemaps': '^1.3.0',
+97 silly install resolved        'gulp-tap': '^0.1.3',
+97 silly install resolved        'gulp-uglify': '^1.0.1',
+97 silly install resolved        'gulp-useref': '^1.0.1',
+97 silly install resolved        'gulp-util': '^3.0.4',
+97 silly install resolved        'gulp-zip': '^3.0.2',
+97 silly install resolved        jquery: '^2.1.3',
+97 silly install resolved        'jshint-stylish': '^1.0.0',
+97 silly install resolved        'merge-stream': '^0.1.7',
+97 silly install resolved        mocha: '^2.1.0',
+97 silly install resolved        napa: '^1.2.0',
+97 silly install resolved        opn: '^1.0.0',
+97 silly install resolved        'require-dir': '^0.3.0',
+97 silly install resolved        'run-sequence': '^1.0.2',
+97 silly install resolved        swig: '^1.4.2',
+97 silly install resolved        through2: '^0.6.3',
+97 silly install resolved        prismjs: '0.0.1',
+97 silly install resolved        'swfobject-npm': '^2.3.0-1' },
+97 silly install resolved     engines: { node: '>=0.10.0' },
+97 silly install resolved     scripts:
+97 silly install resolved      { install: 'napa mojombo/clippy',
+97 silly install resolved        test: 'gulp && git status | grep \'working directory clean\' >/dev/null || (echo \'Please commit all changes generated by building\'; exit 1)' },
+97 silly install resolved     gitHead: 'ea8f4d9c9a04aa539b76613817dce7534767dadf',
+97 silly install resolved     readme: 'ERROR: No README data found!',
+97 silly install resolved     _id: 'material-design-lite@1.0.0',
+97 silly install resolved     _shasum: 'be72b1a28e11c9e44f1764ca9cdb1c5c08534d40',
+97 silly install resolved     _from: 'git+https://github.com/google/material-design-lite.git#v1.0.0',
+97 silly install resolved     _resolved: 'git+https://github.com/google/material-design-lite.git#ea8f4d9c9a04aa539b76613817dce7534767dadf' } ]
+98 info install material-design-lite@1.0.0 into /home/m/www/ausgaben
+99 info installOne material-design-lite@1.0.0
+100 verbose installOne of material-design-lite to /home/m/www/ausgaben not in flight; installing
+101 verbose lock using /home/m/.npm/_locks/material-design-lite-c0b5edc8adc61774.lock for /home/m/www/ausgaben/node_modules/material-design-lite
+102 silly install write writing material-design-lite 1.0.0 to /home/m/www/ausgaben/node_modules/material-design-lite
+103 verbose unbuild node_modules/material-design-lite
+104 info preuninstall material-design-lite@1.0.0-3
+105 info uninstall material-design-lite@1.0.0-3
+106 verbose unbuild rmStuff material-design-lite@1.0.0-3 from /home/m/www/ausgaben/node_modules
+107 info postuninstall material-design-lite@1.0.0-3
+108 silly gentlyRm /home/m/www/ausgaben/node_modules/material-design-lite is being purged from base /home/m/www/ausgaben
+109 verbose gentlyRm don't care about contents; nuking /home/m/www/ausgaben/node_modules/material-design-lite
+110 silly vacuum-fs purging /home/m/www/ausgaben/node_modules/material-design-lite
+111 silly vacuum-fs quitting because other entries in /home/m/www/ausgaben/node_modules
+112 verbose tar unpack /home/m/.npm/material-design-lite/1.0.0/package.tgz
+113 verbose tar unpacking to /home/m/www/ausgaben/node_modules/material-design-lite
+114 silly gentlyRm /home/m/www/ausgaben/node_modules/material-design-lite is being purged
+115 verbose gentlyRm don't care about contents; nuking /home/m/www/ausgaben/node_modules/material-design-lite
+116 silly gunzTarPerm modes [ '755', '644' ]
+117 silly gunzTarPerm extractEntry package.json
+118 silly gunzTarPerm extractEntry LICENSE
+119 silly gunzTarPerm extractEntry material.js
+120 silly gunzTarPerm extractEntry material.min.js
+121 silly gunzTarPerm extractEntry bower.json
+122 silly gunzTarPerm extractEntry material.css
+123 silly gunzTarPerm extractEntry material.min.css
+124 silly gunzTarPerm extractEntry material.min.css.map
+125 silly gunzTarPerm extractEntry material.min.js.map
+126 verbose write writing to /home/m/www/ausgaben/node_modules/material-design-lite/package.json
+127 info preinstall material-design-lite@1.0.0
+128 verbose readDependencies loading dependencies from /home/m/www/ausgaben/node_modules/material-design-lite/package.json
+129 verbose readDependencies loading dependencies from /home/m/www/ausgaben/node_modules/material-design-lite/package.json
+130 silly install resolved []
+131 verbose about to build /home/m/www/ausgaben/node_modules/material-design-lite
+132 info build /home/m/www/ausgaben/node_modules/material-design-lite
+133 info linkStuff material-design-lite@1.0.0
+134 silly linkStuff material-design-lite@1.0.0 has /home/m/www/ausgaben/node_modules as its parent node_modules
+135 verbose linkBins material-design-lite@1.0.0
+136 verbose linkMans material-design-lite@1.0.0
+137 verbose rebuildBundles material-design-lite@1.0.0
+138 info install material-design-lite@1.0.0
+139 verbose unsafe-perm in lifecycle true
+140 info material-design-lite@1.0.0 Failed to exec install script
+141 verbose unlock done using /home/m/.npm/_locks/material-design-lite-c0b5edc8adc61774.lock for /home/m/www/ausgaben/node_modules/material-design-lite
+142 verbose stack Error: material-design-lite@1.0.0 install: `napa mojombo/clippy`
+142 verbose stack spawn ENOENT
+142 verbose stack     at ChildProcess.<anonymous> (/usr/lib/node_modules/npm/lib/utils/spawn.js:17:16)
+142 verbose stack     at ChildProcess.emit (events.js:110:17)
+142 verbose stack     at maybeClose (child_process.js:1015:16)
+142 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1087:5)
+143 verbose pkgid material-design-lite@1.0.0
+144 verbose cwd /home/m/www/ausgaben/app
+145 error Linux 4.0.8-1-ck
+146 error argv "node" "/usr/bin/npm" "install"
+147 error node v0.12.7
+148 error npm  v2.13.1
+149 error file sh
+150 error code ELIFECYCLE
+151 error errno ENOENT
+152 error syscall spawn
+153 error material-design-lite@1.0.0 install: `napa mojombo/clippy`
+153 error spawn ENOENT
+154 error Failed at the material-design-lite@1.0.0 install script 'napa mojombo/clippy'.
+154 error This is most likely a problem with the material-design-lite package,
+154 error not with npm itself.
+154 error Tell the author that this fails on your system:
+154 error     napa mojombo/clippy
+154 error You can get their info via:
+154 error     npm owner ls material-design-lite
+154 error There is likely additional logging output above.
+155 verbose exit [ 1, true ]
+156 verbose unbuild node_modules/material-design-lite
+157 info preuninstall material-design-lite@1.0.0
+158 info uninstall material-design-lite@1.0.0
+159 verbose unbuild rmStuff material-design-lite@1.0.0 from /home/m/www/ausgaben/node_modules
+160 info postuninstall material-design-lite@1.0.0
+161 silly gentlyRm /home/m/www/ausgaben/node_modules/material-design-lite is being purged from base /home/m/www/ausgaben
+162 verbose gentlyRm don't care about contents; nuking /home/m/www/ausgaben/node_modules/material-design-lite
+163 silly vacuum-fs purging /home/m/www/ausgaben/node_modules/material-design-lite
+164 silly vacuum-fs quitting because other entries in /home/m/www/ausgaben/node_modules
