@@ -19,11 +19,11 @@ node_js:
 env:
   global:
     - CXX=g++-4.8
-    - DSN=postgresql://postgres:@127.0.0.1:5432/travis_ci_test
 
 before_script:
   - npm install
   - psql -c 'create database travis_ci_test;' -U postgres
+  - cp config.travis.json config.local.json
   - node server/console.js sequelize:schema:sync
 
 script:
