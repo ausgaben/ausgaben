@@ -38,17 +38,17 @@ module.exports = function (app, db, modelName) {
                 model.count(),
                 model.findAll({limit: limit, offset: 0})
             ).spread(function (count, entities) {
-                    var list = {
-                        '@context': 'https://ausgaben.io/jsonld/List',
-                        total: count,
-                        items: _.map(entities, function (entity) {
-                            var model = transformer(entity);
-                            model['@link'] = entityUrl(entity, req);
-                            return model;
-                        })
-                    };
-                    res.send(list);
-                });
+                var list = {
+                    '@context': 'https://ausgaben.io/jsonld/List',
+                    total: count,
+                    items: _.map(entities, function (entity) {
+                        var model = transformer(entity);
+                        model['@link'] = entityUrl(entity, req);
+                        return model;
+                    })
+                };
+                res.send(list);
+            });
         }).catch(function (err) {
             res.status(500).send(err);
         });

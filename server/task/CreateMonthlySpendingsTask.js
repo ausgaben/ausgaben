@@ -1,7 +1,6 @@
 'use strict';
 
-var _ = require('lodash'),
-    bluebird = require('bluebird');
+var bluebird = require('bluebird');
 
 var CreateMonthlySpendingsTask = function (periodicalsRepository, spendingsRepository) {
     this.periodicalsRepository = periodicalsRepository;

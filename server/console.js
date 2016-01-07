@@ -11,38 +11,38 @@ var db = require('./config/sequelize'),
 bluebird.promisifyAll(fs);
 
 var argv = yargs
-        .usage('Usage: $0 <command> [options]')
-        .command('sequelize:schema:sync', 'Sync the db schema')
-        .command('spendings:monthly', 'Creating spendings for the current month')
-        .demand(1)
-        .help('h')
-        .alias('h', 'help')
+    .usage('Usage: $0 <command> [options]')
+    .command('sequelize:schema:sync', 'Sync the db schema')
+    .command('spendings:monthly', 'Creating spendings for the current month')
+    .demand(1)
+    .help('h')
+    .alias('h', 'help')
         .argv
     ;
 
 switch (argv._[0]) {
-    case 'sequelize:schema:sync':
-    case 's:s:s':
-        return db.sync({
-            force: false
-        }).then(function () {
-            console.log('Schema synched');
-        }).catch(function (err) {
-            console.log('Error synching schema: %j', err);
-            process.exit(1);
-        });
-    case 'spendings:monthly':
-    case 's:m':
-        var month = new Date();
-        console.log('Creating spendings for month: ' + month.getFullYear() + '-' + _.padLeft((month.getMonth() + 1), 2, 0));
-        var task = new CreateMonthlySpendingsTask(repos['Periodical'], repos['Spending']);
-        task.execute(month).then(function () {
-            console.log('Spendings created');
-            process.exit(0);
-        });
-        break;
-    default:
-        console.error('Unknown command: %j', argv._[0]);
-        console.log(yargs.help());
+case 'sequelize:schema:sync':
+case 's:s:s':
+    return db.sync({
+        force: false
+    }).then(function () {
+        console.log('Schema synched');
+    }).catch(function (err) {
+        console.log('Error synching schema: %j', err);
         process.exit(1);
+    });
+case 'spendings:monthly':
+case 's:m':
+    var month = new Date();
+    console.log('Creating spendings for month: ' + month.getFullYear() + '-' + _.padLeft((month.getMonth() + 1), 2, 0));
+    var task = new CreateMonthlySpendingsTask(repos['Periodical'], repos['Spending']);
+    task.execute(month).then(function () {
+        console.log('Spendings created');
+        process.exit(0);
+    });
+    break;
+default:
+    console.error('Unknown command: %j', argv._[0]);
+    console.log(yargs.help());
+    process.exit(1);
 }

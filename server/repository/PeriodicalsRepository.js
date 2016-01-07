@@ -1,7 +1,6 @@
 'use strict';
 
-var _ = require('lodash'),
-    bluebird = require('bluebird');
+var _ = require('lodash');
 
 var PeriodicalsRepository = function (db) {
     this.db = db;

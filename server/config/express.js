@@ -3,9 +3,7 @@
 /**
  * Module dependencies.
  */
-var express = require('express'),
-    bodyParser = require('body-parser'),
-    config = require('./config');
+var bodyParser = require('body-parser');
 
 /**
  * Handle all the express-stuff for the server

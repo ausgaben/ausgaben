@@ -19,7 +19,7 @@ var w3cformat = function (date) {
     var seconds = d.getSeconds();
     return year + '-' + pad(month) + '-' + pad(day) +
         'T' + pad(hours) + ':' + pad(minutes) + ':' + pad(seconds) +
-        "+00:00";
+        '+00:00';
 };
 
 module.exports = {

@@ -1,8 +1,5 @@
 'use strict';
 
-var _ = require('lodash'),
-    bluebird = require('bluebird');
-
 var SpendingsRepository = function (db) {
     this.db = db;
 };
