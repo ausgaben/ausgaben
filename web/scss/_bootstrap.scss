@@ -1,0 +1,48 @@
+button.none {
+  border: 0;
+  background-color: transparent;
+  outline: none;
+  &.danger {
+    color: $brand-danger;
+  }
+  &.success {
+    color: $brand-success;
+  }
+}
+
+button + button, button + .dropdown {
+  margin-right: $spacer-x / 2;
+}
+
+.dropdown {
+  button + button {
+    margin-right: 0;
+  }
+}
+
+a.danger {
+  color: $brand-danger;
+}
+
+.card-footer, form {
+  @include clearfix();
+  button {
+    @include pull-right();
+  }
+}
+
+// Navbar styling
+
+.navbar-fixed-top {
+  background-color: $body-bg;
+}
+
+body.scrolling {
+  .navbar-fixed-top {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+}
+
+body.with-navbar-fixed-top {
+  padding-top: 38px;
+}

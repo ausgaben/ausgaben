@@ -1,7 +1,8 @@
 {
   "name": "ausgaben",
   "version": "0.0.1",
-  "description": "ausgaben is a personal finance tracker",
+  "API_VERSION": 1,
+  "description": "Ausgaben – Your personal spendings tracker",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ausgaben/ausgaben-node.git"
@@ -13,22 +14,35 @@
   },
   "homepage": "https://github.com/ausgaben/ausgaben-node#readme",
   "dependencies": {
+    "angular": "^1.4.8",
+    "angular-bluebird-promises": "^1.0.1",
+    "angular-ui-router": "^1.0.0-alpha0",
     "bluebird": "^3.1.1",
     "body-parser": "^1.13.2",
-    "bootstrap": "^3.3.5",
+    "bootstrap": "git://github.com/twbs/bootstrap.git#v4-dev",
+    "browserify": "^12.0.1",
+    "browserify-shim": "^3.8.11",
     "express": "^4.13.1",
     "fast-url-parser": "^1.1.3",
+    "jquery": "^2.1.4",
     "lodash": "^3.10.0",
+    "material-design-icons": "^2.1.3",
+    "nconf": "^0.8.2",
+    "node-sass": "^3.4.2",
     "pg": "^4.4.0",
     "pg-hstore": "^2.3.2",
     "pg-native": "^1.8.1",
     "sequelize": "^3.4.1",
-    "yargs": "^3.15.0"
+    "tether": "^1.1.1",
+    "uglifycss": "0.0.20",
+    "uglifyjs": "^2.4.10"
   },
   "scripts": {
-    "start": "./node_modules/nodemon/bin/nodemon.js -i '[\"*.html\",\"public/system/**\",\"public/auth/**\",\"test/coverage/**\",\"node_modules/**\"]' -e 'js,html,cs' -d 1 -w ./ server/server.js",
+    "dev-server": "./node_modules/nodemon/bin/nodemon.js -e 'js,html,css' -w ./build -w ./server -w ./util -w ./config.json -w ./config.local.json -d 1 ./server/server.js --environment=development",
     "test": "./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/mocha/\\*\\*/\\*.js",
-    "lint": "./node_modules/eslint/bin/eslint.js -c .eslintrc server util"
+    "lint": "npm run lint:server && npm run lint:web",
+    "lint:server": "./node_modules/eslint/bin/eslint.js -c .eslintrc server util",
+    "lint:web": "./node_modules/eslint/bin/eslint.js -c web/js/.eslintrc web/js"
   },
   "devDependencies": {
     "eslint": "^1.10.3",
@@ -37,5 +51,37 @@
     "should": "^8.0.2",
     "simple-mock": "^0.5.0",
     "supertest": "^1.0.1"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "jquery": "./node_modules/jquery/dist/jquery.js",
+    "angular": "./node_modules/angular/angular.js",
+    "angular-ui-router": "./node_modules/angular-ui-router/release/angular-ui-router.js",
+    "tether": "./node_modules/tether/dist/js/tether.js",
+    "bootstrap": "./node_modules/bootstrap/dist/js/bootstrap.js",
+    "bluebird": "./node_modules/bluebird/js/browser/bluebird.js"
+  },
+  "browserify-shim": {
+    "jquery": {
+      "exports": "$"
+    },
+    "angular": {
+      "exports": "angular",
+      "depends": "jquery"
+    },
+    "angular-ui-router": {
+      "depends": "angular"
+    },
+    "bootstrap": {
+      "exports": "bootstrap",
+      "depends": [
+        "tether",
+        "jquery"
+      ]
+    }
   }
 }

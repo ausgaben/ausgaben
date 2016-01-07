@@ -27,4 +27,5 @@ before_script:
   - node server/console.js sequelize:schema:sync
 
 script:
+  - npm run lint
   - npm test

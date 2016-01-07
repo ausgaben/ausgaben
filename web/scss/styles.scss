@@ -1,0 +1,75 @@
+@import "variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "bootstrap";
+@import "angular";
+@import "helper";
+@import "material-design-icons";
+
+.card-footer {
+    &.error {
+        background-color: mix($brand-danger, $card-cap-bg, 25);
+        .error-info {
+            @include pull-left();
+            line-height: 1em;
+        }
+    }
+}
+
+.card-title {
+    .material-icons {
+        zoom: 200%;
+        @include pull-right();
+        color: rgba($brand-secondary, 0.5);
+    }
+}
+
+.card-header {
+    &.with-logo {
+        text-align: center;
+        .logo {
+            width: 200px;
+        }
+    }
+}
+
+.navbar-brand img {
+    @include pull-left();
+    width: $material-icon-size;
+    margin-right: $icon-spacer;
+}
+
+.nav-link {
+    cursor: pointer;
+    i.material-icons {
+        @include pull-left();
+        margin-right: 5px;
+    }
+}
+
+#metanav {
+    @include pull-right();
+}
+
+.preloader-with-text {
+    &:before {
+        content: ' ';
+        position: relative;
+        animation: spin 1s infinite linear;
+        border: 4px solid #002f56;
+        border-top: 4px solid #FDB813;
+        width: $material-icon-size;
+        height: $material-icon-size;
+        border-radius: 999px;
+        display: inline-block;
+        margin-right: $icon-spacer;
+        float: left;
+    }
+}
+
+.nav-link.preloader-with-text {
+    cursor: default;
+}
+
+form.card {
+    margin-top: 40px;
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="<%= data.description %>">
+    <meta name="version" content="<%= data.tag %>-<%= data.version %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ausgaben – Your personal spendings tracker</title>
+    <link rel="stylesheet" href="/css/styles.min.css?v=<%= data.tag %>-<%= data.version %>">
+    <base href="/">
+    <%= includes.favicon %>
+</head>
+<body data-ng-app="ausgabenApp" class="ng-cloak with-navbar-fixed-top">
+<nav class="navbar navbar-fixed-top" data-ng-controller="NavigationController as vm">
+    <a class="navbar-brand" href="/" target="_self">
+        <img src="img/logo.svg" alt="<%= data.description %>">
+        <%= data.description %>
+    </a>
+    <ul class="nav navbar-nav">
+        <li class="nav-item" data-ng-show="vm.hasPricingPermission()"
+            data-ng-class="{active: vm.state.current.name === 'market'}">
+            <a class="nav-link" data-ui-sref="pricing.settings">
+                <i class="material-icons">perm_data_settings</i>
+                Konditionen
+            </a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav" id="metanav">
+        <li class="nav-item fade" data-ng-class="{in: vm.loading}">
+			<span class="nav-link preloader-with-text">
+				Loading …
+			</span>
+        </li>
+        <li class="nav-item" data-ng-show="vm.token">
+            <a class="nav-link" data-ng-click="vm.refreshToken()"
+               title="Verbleibende Zeit bis zur automatischen Abmeldung. Klicken um zu verlängern.">
+                <i class="material-icons" data-ng-show="vm.tokenLifetime>0">schedule</i>
+                <i class="material-icons" data-ng-show="vm.tokenLifetime<=0">warning</i>
+                %%vm.tokenLifetimeMin%%:%%vm.tokenLifetimeSec%%
+            </a>
+        </li>
+        <li class="nav-item" data-ng-show="vm.me" data-ng-class="{active: vm.state.current.name === 'me'}">
+            <a class="nav-link" data-ui-sref="me">
+                <i class="material-icons">account_circle</i>
+                %%vm.me.firstname%%
+            </a>
+        </li>
+        <li class="nav-item" data-ng-show="vm.me">
+            <a class="nav-link" data-ui-sref="logout">
+                <i class="material-icons">power_settings_new</i>
+                Abmelden
+            </a>
+        </li>
+    </ul>
+</nav>
+<main data-ui-view></main>
+<script type="text/ng-template" id="/view/login.html"><%= includes.login %></script>
+<script type="text/ng-template" id="/view/registration.html"><%= includes.registration %></script>
+<script type="text/javascript" src="/js/app.min.js?v=<%= data.tag %>-<%= data.version %>"></script>
+<script type="text/javascript">
+    (function () {
+        'use strict';
+
+        var config = {
+            version: '<%= data.version %>',
+            tag: '<%= data.tag %>'
+        };
+
+        angular
+            .module('ausgabenConfigModule', [])
+            .factory('Config', function () {
+                // Make system config available as service
+                return config;
+            })
+            .run(['$rootScope', function ($rootScope) {
+                // Make system config available on rootscope for use in templates
+                $rootScope.config = config;
+            }])
+        ;
+    }());
+</script>
+</body>
+</html>

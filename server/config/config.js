@@ -1,18 +1,17 @@
 'use strict';
 
-var path = require('path');
-var rootPath = path.normalize(__dirname + '/..');
+var nconf = require('nconf'),
+    path = require('path');
 
-process.env.NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV : 'development';
+nconf
+    .file('local', {file: 'config.local.json'})   // read local overwrite
+    .argv()                                       // Allow overwrites from command-line
+    .env()                                        // Allow overwrites from env
+    .file('default', {file: 'config.json'});      // read defaults
 
-var dsn = process.env.DSN ? process.env.DSN.match(/postgresql:\/\/([^:]+):([^@]*)@([^:]+):(\d+)\/(.+)/) : [];
+nconf.set('deployVersion', +new Date());
+nconf.set('version', require('../../package.json').version);
+nconf.set('app', require('../../package.json').name);
+nconf.set('root', path.normalize(__dirname + '/../..'));
 
-module.exports = {
-    port: process.env.PORT || 3000,
-    modelsDir: rootPath + '/models',
-    postgresName: dsn[5] || 'ausgaben',
-    postgresUser: dsn[1] || 'ausgaben',
-    postgresPassword: dsn[2] || 'password',
-    postgresPort: dsn[4] || '5432',
-    postgresHost: dsn[3] || '127.0.0.1'
-};
+module.exports = nconf;

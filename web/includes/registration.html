@@ -1,0 +1,53 @@
+<div class="container">
+    <article class="row">
+        <section class="col-md-offset-3 col-md-6">
+            <form name="form" class="card">
+                <div class="card-header with-logo">
+                    <img src="/img/logo.svg" alt="<%= data.description %>" class="logo">
+                </div>
+                <div class="card-block">
+                    <h1 class="card-title">
+                        Register
+                        <i class="material-icons">person_add</i>
+                    </h1>
+
+                    <p class="card-text">
+                        Please enter your email address in order to create an account.<br>
+                        <small>If you already have an account you can <a data-ui-sref="login">log-in here</a>.</small>
+                    </p>
+                    <fieldset class="form-group">
+                        <label for="email">email address</label>
+                        <input tabindex="1"
+                               class="form-control"
+                               type="email"
+                               id="email"
+                               required
+                               bootstrap-error-states
+                               data-ng-model="data.email"
+                               data-ng-disabled="vm.p.$active || vm.initializing"
+                               name="email"
+                               auto-focus
+                        />
+                    </fieldset>
+                </div>
+                <div class="card-footer clearfix" data-ng-class="{error: vm.p.$error}">
+                    <div data-ng-show="vm.p.$error" class="error-info">
+                        %%vm.p.$problem.detail%%<br>
+                        <small>(%%vm.p.$problem.title%%) <a data-ng-href="%%vm.p.$problem.type%%"
+                                                            target="_blank">Help</a></small>
+                    </div>
+                    <button type="submit"
+                            class="btn btn-primary"
+                            data-ng-disabled="form.$invalid || vm.p.$active || vm.initializing"
+                            data-ng-click="vm.submit(data)">
+                        <i class="material-icons" data-ng-show="vm.p.$pristine">send</i>
+                        <i class="material-icons spin" data-ng-show="vm.p.$active">hourglass_empty</i>
+                        <i class="material-icons" data-ng-show="vm.p.$success">check_ok</i>
+                        <i class="material-icons" data-ng-show="vm.p.$error">error</i>
+                        <span>Login</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+    </article>
+</div>

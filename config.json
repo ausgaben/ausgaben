@@ -1,0 +1,12 @@
+{
+    "environment": "production",
+    "host": "localhost",
+    "port": 3000,
+    "postgres": {
+        "name": "ausgaben",
+        "user": "ausgaben",
+        "password": "password",
+        "port": "5432",
+        "host": "localhost"
+    }
+}

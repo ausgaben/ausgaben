@@ -6,11 +6,11 @@ var fs = require('fs'),
     config = require('./config');
 
 console.log('Initializing Sequelize');
-var sequelize = new Sequelize(config.postgresName, config.postgresUser, config.postgresPassword, {
+var sequelize = new Sequelize(config.get('postgres').name, config.get('postgres').user, config.get('postgres').password, {
     dialect: 'postgres',
     protocol: 'postgres',
-    port: config.postgresPort,
-    host: config.postgresHost,
+    port: config.get('postgres').port,
+    host: config.get('postgres').host,
     native: true,
     logging: false
     // logging: console.log
@@ -20,9 +20,10 @@ var sequelize = new Sequelize(config.postgresName, config.postgresUser, config.p
 sequelize.Promise.longStackTraces();
 
 // loop through all files in models directory and import the models
-fs.readdirSync(config.modelsDir).forEach(function (file) {
+var modelsDir = path.normalize(__dirname + '/../models');
+fs.readdirSync(modelsDir).forEach(function (file) {
     console.log('Import model ' + file);
-    sequelize.import(path.join(config.modelsDir, file));
+    sequelize.import(path.join(modelsDir, file));
 });
 
 // invoke associations on each of the models

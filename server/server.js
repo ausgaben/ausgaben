@@ -15,6 +15,17 @@ var config = require('./config/config');
 console.error('Node', process.version);
 var app = express();
 require('./config/express')(app, db);
-app.listen(config.port, config.hostname);
-exports = module.exports = app;
-console.log('App started on port ' + config.port + ' (' + process.env.NODE_ENV + ')');
+
+if (config.get('environment') === 'development') {
+    app.set('showStackError', true);
+    app.use(express.static(config.get('root') + '/build'));
+    console.log('Serving static files for ' + config.get('root') + '/build');
+}
+
+app.listen(config.get('port'), config.get('host'));
+console.log(config.get('app') + ' v' + config.get('version') + ' (Node ' + process.version + ') started');
+console.log('--port ' + config.get('port'));
+console.log('--host ' + config.get('host'));
+console.log('--environment ' + config.get('environment'));
+
+module.exports = app;
