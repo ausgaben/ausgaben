@@ -1,16 +1,17 @@
 <div class="container">
     <article class="row">
         <section class="col-md-offset-3 col-md-6">
+            <div class="card-decoration with-logo">
+                <img src="/img/logo.svg" alt="<%= data.description %>" class="logo">
+            </div>
             <form name="form" class="card">
-                <div class="card-header with-logo">
-                    <img src="/img/logo.svg" alt="<%= data.description %>" class="logo">
-                </div>
-                <div class="card-block">
+                <div class="card-header">
                     <h1 class="card-title">
                         Login
                         <i class="material-icons">person</i>
                     </h1>
-
+                </div>
+                <div class="card-block">
                     <p class="card-text">
                         Please enter your email address and we will send you a login link.<br>
                         <small>You don't have an account you can <a data-ui-sref="register">create one here</a>.</small>
@@ -33,7 +34,8 @@
                 <div class="card-footer clearfix" data-ng-class="{error: vm.p.$error}">
                     <div data-ng-show="vm.p.$error" class="error-info">
                         %%vm.p.$problem.detail%%<br>
-                        <small>(%%vm.p.$problem.title%%) <a data-ng-href="%%vm.p.$problem.type%%" target="_blank">Help</a></small>
+                        <small>(%%vm.p.$problem.title%%) <a data-ng-href="%%vm.p.$problem.type%%"
+                                                            target="_blank">Help</a></small>
                     </div>
                     <button type="submit"
                             class="btn btn-primary"
