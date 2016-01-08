@@ -1,4 +1,4 @@
-/data
+data/id_rsa*
 /build
 /node_modules
 npm-debug.log

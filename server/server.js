@@ -32,7 +32,7 @@ module.exports = app;
 
 // Generate RSA keys for JWT
 var fs = require('fs');
-var keyFile = config.get('root') + '/data/ida_rsa';
+var keyFile = config.get('root') + '/data/id_rsa';
 var pubKeyFile = keyFile + '.pub';
 fs.lstatAsync(keyFile)
     .then(function () {
