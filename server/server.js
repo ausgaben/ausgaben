@@ -29,3 +29,31 @@ console.log('--host ' + config.get('host'));
 console.log('--environment ' + config.get('environment'));
 
 module.exports = app;
+
+// Generate RSA keys for JWT
+var fs = require('fs');
+var keyFile = config.get('root') + '/data/ida_rsa';
+var pubKeyFile = keyFile + '.pub';
+fs.lstatAsync(keyFile)
+    .then(function () {
+        return bluebird.join(
+            fs.readFileAsync(keyFile, 'utf8'),
+            fs.readFileAsync(pubKeyFile, 'utf8')
+        ).spread(function (privateKey, publicKey) {
+            config.set('private_key', privateKey);
+            config.set('public_key', publicKey);
+        });
+    })
+    .catch(function () {
+        console.log('Generating RSA key pair …');
+        var keypair = require('keypair');
+        var pair = keypair({bits: 1024});
+        return bluebird.join(
+            fs.writeFileAsync(pubKeyFile, pair.public),
+            fs.writeFileAsync(keyFile, pair.private)
+        ).then(function () {
+            console.log('RSA key pair generated');
+            config.set('private_key', pair.private);
+            config.set('public_key', pair.public);
+        });
+    });

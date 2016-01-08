@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var bodyParser = require('body-parser');
+var MIME_TYPE = require('../../web/js/util/http').MIME_TYPE;
 
 /**
  * Handle all the express-stuff for the server
@@ -14,12 +15,12 @@ var bodyParser = require('body-parser');
  */
 function initServer(app, database) {
     app.enable('trust proxy');
-    // use json formating
-    app.use(bodyParser.json());
+    app.use(bodyParser.json({type: MIME_TYPE}));
 
     require('../api/route/status')(app);
     require('../api/route/crud')(app, database, 'Periodical');
     require('../api/route/crud')(app, database, 'Spending');
+    require('../api/route/registration')(app, database);
 }
 /**
  * Export the whole initialization-process to the world as module 'express'

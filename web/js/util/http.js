@@ -13,11 +13,14 @@ function auth(token) {
 }
 
 var API_VERSION = require('../../../package.json').API_VERSION;
+var MIME_TYPE = 'application/vnd.ausgaben.v' + API_VERSION + '+json';
+var CONTENT_TYPE = MIME_TYPE + '; charset=utf-8';
 
 function accept() {
     return {
         headers: {
-            Accept: 'application/vnd.ausgaben.v' + API_VERSION + '+json'
+            Accept: MIME_TYPE,
+            'Content-Type': CONTENT_TYPE
         }
     };
 }
@@ -74,5 +77,7 @@ module.exports = {
     auth: auth,
     accept: accept,
     HttpProgress: HttpProgress,
-    API_VERSION: API_VERSION
+    API_VERSION: API_VERSION,
+    MIME_TYPE: MIME_TYPE,
+    CONTENT_TYPE: CONTENT_TYPE
 };

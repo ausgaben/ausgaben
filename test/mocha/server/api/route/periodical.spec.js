@@ -8,7 +8,9 @@ var request = require('supertest'),
     db = require('../../../../../server/config/sequelize'),
     helper = require('../../helper'),
     _ = require('lodash'),
-    jsonld = require('../jsonld');
+    jsonld = require('../jsonld'),
+    accept = require('../../../../../web/js/util/http').MIME_TYPE,
+    contentType = require('../../../../../web/js/util/http').CONTENT_TYPE;
 
 describe('POST /periodical', function () {
     before(helper.clearDb);
@@ -20,8 +22,7 @@ describe('POST /periodical', function () {
                 server
                     .post('/periodical')
                     .send(periodical)
-                    .set('Accept', 'application/json')
-                    .set('Content-Type', 'application/json')
+                    .set('Content-Type', contentType)
                     .expect(201)
                     .expect('Location', /periodical/)
                     .end(function (err, res) {
@@ -65,23 +66,23 @@ describe('POST /periodical', function () {
                 starts: '2015-01-04'
             })
         ).then(function () {
-                done();
-            }).catch(function (err) {
-                done(err);
-            });
+            done();
+        }).catch(function (err) {
+            done(err);
+        });
     });
 
     it('should list the created periodicals', function (done) {
         server
             .get('/periodical')
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
+            .set('Accept', accept)
+            .expect('Content-Type', contentType)
             .expect(200)
             .end(function (err, res) {
                 if (err) {
                     throw err;
                 }
-                jsonld.list(res.body, 'https://ausgaben.io/jsonld/Periodical', 4);
+                jsonld.list(res.body, 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Periodical', 4);
                 var items = _.sortBy(res.body['items'], 'title');
                 for (var n = 0; n < 4; n++) {
                     items[n]['@link'].should.match(/http:\/\/localhost:3000\/periodical\/[0-9]+/);

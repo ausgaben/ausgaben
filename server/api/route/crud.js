@@ -1,7 +1,8 @@
 'use strict';
 
 var bluebird = require('bluebird'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    contentType = require('../../../web/js/util/http').CONTENT_TYPE;
 
 var entityUrl = function (entity, req) {
     return req.protocol + '://' + req.get('host') + req.url + '/' + entity.id;
@@ -23,7 +24,10 @@ module.exports = function (app, db, modelName) {
                 });
             });
         }).then(function () {
-            res.status(201).header('Location', entityUrl(entity, req)).send();
+            res
+                .status(201)
+                .header('Location', entityUrl(entity, req))
+                .send();
         }).catch(function (err) {
             res.status(500).send(err);
         });
@@ -39,7 +43,7 @@ module.exports = function (app, db, modelName) {
                 model.findAll({limit: limit, offset: 0})
             ).spread(function (count, entities) {
                 var list = {
-                    '@context': 'https://ausgaben.io/jsonld/List',
+                    '@context': 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List',
                     total: count,
                     items: _.map(entities, function (entity) {
                         var model = transformer(entity);
@@ -47,7 +51,9 @@ module.exports = function (app, db, modelName) {
                         return model;
                     })
                 };
-                res.send(list);
+                res
+                    .header('Content-Type', contentType)
+                    .send(list);
             });
         }).catch(function (err) {
             res.status(500).send(err);
@@ -61,7 +67,9 @@ module.exports = function (app, db, modelName) {
                 if (entity === null) {
                     throw new Error('Unkown entity: ' + req.url);
                 }
-                res.send(transformer(entity));
+                res
+                    .header('Content-Type', contentType)
+                    .send(transformer(entity));
             });
         }).catch(function (err) {
             res.status(500).send(err);

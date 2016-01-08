@@ -16,3 +16,7 @@ exports.clearDb = function () {
         process.exit(1);
     });
 };
+
+// Configure parsing for superagent
+var mime = require('../../../web/js/util/http').MIME_TYPE;
+require('superagent').serialize[mime] = JSON.stringify;

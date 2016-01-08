@@ -6,7 +6,8 @@ var db = require('./config/sequelize'),
     fs = require('fs'),
     yargs = require('yargs'),
     bluebird = require('bluebird'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    config = require('./config/config');
 
 bluebird.promisifyAll(fs);
 
@@ -14,6 +15,7 @@ var argv = yargs
     .usage('Usage: $0 <command> [options]')
     .command('sequelize:schema:sync', 'Sync the db schema')
     .command('spendings:monthly', 'Creating spendings for the current month')
+    .command('token:verify', 'Verify a JWT')
     .demand(1)
     .help('h')
     .alias('h', 'help')
@@ -38,6 +40,14 @@ case 's:m':
     var task = new CreateMonthlySpendingsTask(repos['Periodical'], repos['Spending']);
     task.execute(month).then(function () {
         console.log('Spendings created');
+        process.exit(0);
+    });
+    break;
+case 'token:verify':
+    var jwt = require('jsonwebtoken');
+    var pubKey = fs.readFileSync(config.get('root') + '/data/ida_rsa.pub', 'utf8');
+    jwt.verify(argv._[1], pubKey, {algorithms: ['RS256']}, function (err, decoded) {
+        console.log(decoded);
         process.exit(0);
     });
     break;

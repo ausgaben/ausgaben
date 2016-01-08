@@ -45,7 +45,6 @@ function run() {
                         var trg = file.replace('./web/js/directives/', '');
                         trg = trg.replace(/\.html$/, '');
                         trg = trg.replace(/\//, '.');
-                        console.log(trg);
                         directives[trg] = data;
                     });
                 })

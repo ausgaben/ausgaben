@@ -4,7 +4,7 @@ var dateUtil = require('../../util/date');
 
 module.exports = function (model) {
     return {
-        '@context': 'https://ausgaben.io/jsonld/Periodical',
+        '@context': 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Periodical',
         type: model.type,
         category: model.category,
         amount: model.amount,

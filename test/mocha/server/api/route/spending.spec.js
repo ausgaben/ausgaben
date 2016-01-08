@@ -8,7 +8,9 @@ var request = require('supertest'),
     db = require('../../../../../server/config/sequelize'),
     helper = require('../../helper'),
     _ = require('lodash'),
-    jsonld = require('../jsonld');
+    jsonld = require('../jsonld'),
+    accept = require('../../../../../web/js/util/http').MIME_TYPE,
+    contentType = require('../../../../../web/js/util/http').CONTENT_TYPE;
 
 describe('POST /spending', function () {
     before(helper.clearDb);
@@ -24,8 +26,7 @@ describe('POST /spending', function () {
                 server
                     .post('/spending')
                     .send(spending)
-                    .set('Accept', 'application/json')
-                    .set('Content-Type', 'application/json')
+                    .set('Content-Type', contentType)
                     .expect(201)
                     .expect('Location', /spending/)
                     .end(function (err, res) {
@@ -57,25 +58,25 @@ describe('POST /spending', function () {
                 bookedAt: '2015-01-03T12:34:56+02:00'
             })
         ).then(function () {
-                done();
-            }).catch(function (err) {
-                done(err);
-            });
+            done();
+        }).catch(function (err) {
+            done(err);
+        });
     });
 
     it('should list the created spendings', function (done) {
         server
             .get('/spending')
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
+            .set('Accept', accept)
+            .expect('Content-Type', contentType)
             .expect(200)
             .end(function (err, res) {
                 if (err) {
                     throw err;
                 }
-                jsonld.list(res.body, 'https://ausgaben.io/jsonld/Spending', 2);
+                jsonld.list(res.body, 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Spending', 2);
                 var items = _.sortBy(res.body['items'], 'title');
-                for(var i = 0; i < 2; i++) {
+                for (var i = 0; i < 2; i++) {
                     items[i].type.should.be.equal(db.models.Spending.type.SPENDING);
                     items[i].category.should.be.equal('Pets');
                     items[i]['@link'].should.match(/http:\/\/localhost:3000\/spending\/[0-9]+/);
