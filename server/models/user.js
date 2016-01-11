@@ -5,13 +5,16 @@ module.exports = function (sequelize, DataTypes) {
         email: {
             type: DataTypes.STRING(255),
             allowNull: false,
-            primaryKey: true,
             validate: {
                 isEmail: true
             }
         }
     }, {
         tableName: 'User',
+        associate: function (models) {
+            var thisModel = models[this.name.singular];
+            thisModel.belongsToMany(models.Account, {through: 'UserAccounts'});
+        },
         repository: 'UsersRepository'
     });
 };

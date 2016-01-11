@@ -5,8 +5,7 @@ require('should');
 var db = require('../../../../server/config/sequelize'),
     Task = require('../../../../server/task/CreateMonthlySpendingsTask'),
     PeriodicalsRepository = require('../../../../server/repository/PeriodicalsRepository'),
-    SpendingsRepository = require('../../../../server/repository/SpendingsRepository'),
-    bluebird = require('bluebird');
+    SpendingsRepository = require('../../../../server/repository/SpendingsRepository');
 
 describe('CreateMonthlySpendingsTask', function () {
     var task;
@@ -29,7 +28,7 @@ describe('CreateMonthlySpendingsTask', function () {
     });
 
     after(function () {
-        simple.restore()
+        simple.restore();
     });
 
     it('should create spendings for the given month', function (done) {

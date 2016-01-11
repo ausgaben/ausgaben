@@ -1,6 +1,6 @@
 {
   "name": "ausgaben",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "dependencies": {
     "abbrev": {
       "version": "1.0.7",
@@ -185,6 +185,11 @@
       "version": "0.1.5",
       "from": "assert-plus@>=0.1.5 <0.2.0",
       "resolved": "https://registry.npmjs.org/assert-plus/-/assert-plus-0.1.5.tgz"
+    },
+    "assertion-error": {
+      "version": "1.0.1",
+      "from": "assertion-error@>=1.0.1 <2.0.0",
+      "resolved": "https://registry.npmjs.org/assertion-error/-/assertion-error-1.0.1.tgz"
     },
     "astw": {
       "version": "2.0.0",
@@ -471,6 +476,11 @@
       "from": "center-align@>=0.1.1 <0.2.0",
       "resolved": "https://registry.npmjs.org/center-align/-/center-align-0.1.2.tgz"
     },
+    "chai": {
+      "version": "3.4.1",
+      "from": "chai@latest",
+      "resolved": "https://registry.npmjs.org/chai/-/chai-3.4.1.tgz"
+    },
     "chalk": {
       "version": "1.1.1",
       "from": "chalk@>=1.0.0 <2.0.0",
@@ -686,6 +696,18 @@
       "from": "decamelize@>=1.1.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/decamelize/-/decamelize-1.1.2.tgz"
     },
+    "deep-eql": {
+      "version": "0.1.3",
+      "from": "deep-eql@>=0.1.3 <0.2.0",
+      "resolved": "https://registry.npmjs.org/deep-eql/-/deep-eql-0.1.3.tgz",
+      "dependencies": {
+        "type-detect": {
+          "version": "0.1.1",
+          "from": "type-detect@0.1.1",
+          "resolved": "https://registry.npmjs.org/type-detect/-/type-detect-0.1.1.tgz"
+        }
+      }
+    },
     "deep-extend": {
       "version": "0.4.0",
       "from": "deep-extend@>=0.4.0 <0.5.0",
@@ -708,8 +730,7 @@
       "dependencies": {
         "pinkie": {
           "version": "2.0.1",
-          "from": "pinkie@2.0.1",
-          "resolved": "https://registry.npmjs.org/pinkie/-/pinkie-2.0.1.tgz"
+          "from": "pinkie@>=2.0.0 <3.0.0"
         },
         "pinkie-promise": {
           "version": "2.0.0",
@@ -802,8 +823,7 @@
       "dependencies": {
         "readable-stream": {
           "version": "2.0.5",
-          "from": "readable-stream@2.0.5",
-          "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.0.5.tgz"
+          "from": "readable-stream@>=2.0.2 <3.0.0"
         }
       }
     },
@@ -1126,8 +1146,7 @@
       "dependencies": {
         "pinkie": {
           "version": "2.0.1",
-          "from": "pinkie@2.0.1",
-          "resolved": "https://registry.npmjs.org/pinkie/-/pinkie-2.0.1.tgz"
+          "from": "pinkie@>=2.0.0 <3.0.0"
         },
         "pinkie-promise": {
           "version": "2.0.0",
@@ -1279,8 +1298,7 @@
         },
         "minimatch": {
           "version": "3.0.0",
-          "from": "minimatch@3.0.0",
-          "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-3.0.0.tgz"
+          "from": "minimatch@>=2.0.0 <3.0.0||>=3.0.0 <4.0.0"
         },
         "pinkie": {
           "version": "2.0.1",
@@ -1289,8 +1307,7 @@
         },
         "pinkie-promise": {
           "version": "2.0.0",
-          "from": "pinkie-promise@2.0.0",
-          "resolved": "https://registry.npmjs.org/pinkie-promise/-/pinkie-promise-2.0.0.tgz"
+          "from": "pinkie-promise@>=2.0.0 <3.0.0"
         }
       }
     },
@@ -1842,13 +1859,11 @@
         },
         "pinkie": {
           "version": "2.0.1",
-          "from": "pinkie@2.0.1",
-          "resolved": "https://registry.npmjs.org/pinkie/-/pinkie-2.0.1.tgz"
+          "from": "pinkie@>=2.0.0 <3.0.0"
         },
         "pinkie-promise": {
           "version": "2.0.0",
-          "from": "pinkie-promise@2.0.0",
-          "resolved": "https://registry.npmjs.org/pinkie-promise/-/pinkie-promise-2.0.0.tgz"
+          "from": "pinkie-promise@>=2.0.0 <3.0.0"
         }
       }
     },
@@ -2293,8 +2308,7 @@
       "dependencies": {
         "nopt": {
           "version": "3.0.6",
-          "from": "nopt@3.0.6",
-          "resolved": "https://registry.npmjs.org/nopt/-/nopt-3.0.6.tgz"
+          "from": "nopt@>=3.0.1 <3.1.0"
         }
       }
     },
@@ -2452,8 +2466,7 @@
         },
         "pinkie-promise": {
           "version": "2.0.0",
-          "from": "pinkie-promise@2.0.0",
-          "resolved": "https://registry.npmjs.org/pinkie-promise/-/pinkie-promise-2.0.0.tgz"
+          "from": "pinkie-promise@>=2.0.0 <3.0.0"
         }
       }
     },
@@ -2489,13 +2502,11 @@
         },
         "pinkie": {
           "version": "2.0.1",
-          "from": "pinkie@2.0.1",
-          "resolved": "https://registry.npmjs.org/pinkie/-/pinkie-2.0.1.tgz"
+          "from": "pinkie@>=2.0.0 <3.0.0"
         },
         "pinkie-promise": {
           "version": "2.0.0",
-          "from": "pinkie-promise@2.0.0",
-          "resolved": "https://registry.npmjs.org/pinkie-promise/-/pinkie-promise-2.0.0.tgz"
+          "from": "pinkie-promise@>=2.0.0 <3.0.0"
         }
       }
     },
@@ -2702,8 +2713,7 @@
       "dependencies": {
         "graceful-fs": {
           "version": "4.1.2",
-          "from": "graceful-fs@4.1.2",
-          "resolved": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.2.tgz"
+          "from": "graceful-fs@>=4.1.2 <5.0.0"
         }
       }
     },
@@ -2915,8 +2925,7 @@
         },
         "minimatch": {
           "version": "3.0.0",
-          "from": "minimatch@3.0.0",
-          "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-3.0.0.tgz"
+          "from": "minimatch@>=2.0.0 <3.0.0||>=3.0.0 <4.0.0"
         }
       }
     },
@@ -2942,8 +2951,7 @@
       "dependencies": {
         "glob": {
           "version": "5.0.15",
-          "from": "glob@5.0.15",
-          "resolved": "https://registry.npmjs.org/glob/-/glob-5.0.15.tgz"
+          "from": "glob@>=5.0.5 <6.0.0"
         },
         "minimatch": {
           "version": "3.0.0",
@@ -3133,8 +3141,7 @@
       "dependencies": {
         "readable-stream": {
           "version": "2.0.5",
-          "from": "readable-stream@2.0.5",
-          "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.0.5.tgz"
+          "from": "readable-stream@>=2.0.2 <3.0.0"
         }
       }
     },
@@ -3150,8 +3157,7 @@
       "dependencies": {
         "readable-stream": {
           "version": "2.0.5",
-          "from": "readable-stream@2.0.5",
-          "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.0.5.tgz"
+          "from": "readable-stream@>=2.0.2 <3.0.0"
         }
       }
     },
@@ -3242,6 +3248,11 @@
           "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.0.27-1.tgz"
         }
       }
+    },
+    "supertest": {
+      "version": "1.1.0",
+      "from": "supertest@>=1.0.1 <2.0.0",
+      "resolved": "https://registry.npmjs.org/supertest/-/supertest-1.1.0.tgz"
     },
     "supports-color": {
       "version": "1.2.0",
@@ -3355,6 +3366,11 @@
       "version": "0.3.2",
       "from": "type-check@>=0.3.1 <0.4.0",
       "resolved": "https://registry.npmjs.org/type-check/-/type-check-0.3.2.tgz"
+    },
+    "type-detect": {
+      "version": "1.0.0",
+      "from": "type-detect@>=1.0.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/type-detect/-/type-detect-1.0.0.tgz"
     },
     "type-is": {
       "version": "1.6.10",

@@ -1,0 +1,7 @@
+{
+    "globals": {
+        "scenarios": true,
+        "steps": true,
+        "featureFile": true
+    }
+}

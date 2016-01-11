@@ -42,6 +42,11 @@ module.exports = function (sequelize, DataTypes) {
                     allowNull: true
                 }
             });
+            thisModel.belongsTo(models.Account, {
+                foreignKey: {
+                    allowNull: false
+                }
+            });
         },
         classMethods: {
             type: {
