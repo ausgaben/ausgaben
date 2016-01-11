@@ -6,7 +6,7 @@ var _ = require('lodash'),
     TYPE_SAVING = 'saving';
 
 module.exports = function (sequelize, DataTypes) {
-    
+
     var fields = {
         type: {
             type: DataTypes.STRING(255),
@@ -48,6 +48,14 @@ module.exports = function (sequelize, DataTypes) {
         fields,
         {
             tableName: 'Periodical',
+            associate: function (models) {
+                var thisModel = models[this.name.singular];
+                thisModel.belongsTo(models.Account, {
+                    foreignKey: {
+                        allowNull: false
+                    }
+                });
+            },
             repository: 'PeriodicalsRepository'
         });
 };
