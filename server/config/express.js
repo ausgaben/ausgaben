@@ -21,6 +21,13 @@ function initServer(app, database) {
     require('../api/route/crud')(app, database, 'Periodical');
     require('../api/route/crud')(app, database, 'Spending');
     require('../api/route/registration')(app, database);
+
+    app.use(function(err, req, res, next) {
+        console.error(req.method + ' ' + req.url);
+        console.error(err.message);
+        console.error(err.stack);
+        res.status(500).send(err);
+    });
 }
 /**
  * Export the whole initialization-process to the world as module 'express'

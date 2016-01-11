@@ -11,7 +11,7 @@ var entityUrl = function (entity, req) {
 module.exports = function (app, db, modelName) {
     var transformer = require('../../transformer/' + modelName.toLowerCase());
     var limit = 10;
-    app.post('/' + modelName.toLowerCase(), function (req, res) {
+    app.post('/' + modelName.toLowerCase(), function (req, res, next) {
 
         var entity;
 
@@ -29,11 +29,11 @@ module.exports = function (app, db, modelName) {
                 .header('Location', entityUrl(entity, req))
                 .send();
         }).catch(function (err) {
-            res.status(500).send(err);
+            return next(err);
         });
     });
 
-    app.get('/' + modelName.toLowerCase(), function (req, res) {
+    app.get('/' + modelName.toLowerCase(), function (req, res, next) {
 
         var model = db.models[modelName];
 
@@ -56,11 +56,11 @@ module.exports = function (app, db, modelName) {
                     .send(list);
             });
         }).catch(function (err) {
-            res.status(500).send(err);
+            return next(err);
         });
     });
 
-    app.get('/' + modelName.toLowerCase() + '/:id', function (req, res) {
+    app.get('/' + modelName.toLowerCase() + '/:id', function (req, res, next) {
 
         bluebird.try(function () {
             db.models[modelName].find({where: {id: req.params.id}}).then(function (entity) {
@@ -72,7 +72,7 @@ module.exports = function (app, db, modelName) {
                     .send(transformer(entity));
             });
         }).catch(function (err) {
-            res.status(500).send(err);
+            return next(err);
         });
     });
 };

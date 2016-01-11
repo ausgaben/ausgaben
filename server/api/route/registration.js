@@ -6,7 +6,7 @@ var bluebird = require('bluebird'),
     contentType = require('../../../web/js/util/http').CONTENT_TYPE;
 
 module.exports = function (app, db) {
-    app.post('/api/registration', function (req, res) {
+    app.post('/api/registration', function (req, res, next) {
 
         var entity;
 
@@ -36,7 +36,7 @@ module.exports = function (app, db) {
                     token: token
                 });
         }).catch(function (err) {
-            res.status(500).send(err);
+            return next(err);
         });
     });
 };
