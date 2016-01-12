@@ -12,7 +12,7 @@ var request = require('supertest'),
     accept = require('../../../../../web/js/util/http').MIME_TYPE,
     contentType = require('../../../../../web/js/util/http').CONTENT_TYPE;
 
-describe('POST /periodical', function () {
+describe('POST /api/periodical', function () {
     before(helper.clearDb);
 
     it('should create a periodical', function (done) {
@@ -20,7 +20,7 @@ describe('POST /periodical', function () {
         var createPeriodical = function (periodical) {
             return new bluebird.Promise(function (resolve, reject) {
                 server
-                    .post('/periodical')
+                    .post('/api/periodical')
                     .send(periodical)
                     .set('Content-Type', contentType)
                     .expect(201)
@@ -74,7 +74,7 @@ describe('POST /periodical', function () {
 
     it('should list the created periodicals', function (done) {
         server
-            .get('/periodical')
+            .get('/api/periodical')
             .set('Accept', accept)
             .expect('Content-Type', contentType)
             .expect(200)
@@ -85,7 +85,7 @@ describe('POST /periodical', function () {
                 jsonld.list(res.body, 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Periodical', 4);
                 var items = _.sortBy(res.body['items'], 'title');
                 for (var n = 0; n < 4; n++) {
-                    items[n]['@link'].should.match(/http:\/\/localhost:3000\/periodical\/[0-9]+/);
+                    items[n]['$link'].should.match(/http:\/\/localhost:3000\/api\/periodical\/[0-9]+/);
                     items[n].estimate.should.be.equal(false);
                     items[n].enabledIn01.should.be.equal(true);
                     items[n].enabledIn02.should.be.equal(true);

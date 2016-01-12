@@ -7,7 +7,6 @@ var _ = require('lodash');
  * @constructor
  */
 function Token(data) {
-    this.$context = Token.$context;
     this.$id = null;
     this.lifetime = null;
     this.token = null;
@@ -19,9 +18,10 @@ function Token(data) {
         });
         this.createdAt = new Date(this.createdAt);
     }
+    this.$context = Token.$context;
 }
 
-Token.$context = 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#token';
+Token.$context = 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Token';
 
 /**
  * Returns the remaining lifetime of this token in seconds

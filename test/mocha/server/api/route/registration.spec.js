@@ -31,7 +31,7 @@ describe('POST /api/registration', function () {
                         if (err) {
                             reject(err);
                         }
-                        res.body['@context'].should.be.equal('https://tools.ietf.org/html/rfc7519');
+                        res.body['$context'].should.be.equal('https://tools.ietf.org/html/rfc7519');
                         jwt.verify(res.body.token, config.get('public_key'), function (err, decoded) {
                             decoded.sub.should.be.equal(registration.email);
                             decoded.iss.should.be.equal('registration');

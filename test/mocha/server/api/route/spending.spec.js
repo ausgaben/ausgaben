@@ -12,7 +12,7 @@ var request = require('supertest'),
     accept = require('../../../../../web/js/util/http').MIME_TYPE,
     contentType = require('../../../../../web/js/util/http').CONTENT_TYPE;
 
-describe('POST /spending', function () {
+describe('POST /api/spending', function () {
     before(helper.clearDb);
 
     it('should create some spendings', function (done) {
@@ -66,7 +66,7 @@ describe('POST /spending', function () {
 
     it('should list the created spendings', function (done) {
         server
-            .get('/spending')
+            .get('/api/spending')
             .set('Accept', accept)
             .expect('Content-Type', contentType)
             .expect(200)
@@ -79,7 +79,7 @@ describe('POST /spending', function () {
                 for (var i = 0; i < 2; i++) {
                     items[i].type.should.be.equal(db.models.Spending.type.SPENDING);
                     items[i].category.should.be.equal('Pets');
-                    items[i]['@link'].should.match(/http:\/\/localhost:3000\/spending\/[0-9]+/);
+                    items[i]['$link'].should.match(/http:\/\/localhost:3000\/api\/spending\/[0-9]+/);
                 }
                 items[0].amount.should.be.equal(-1234);
                 items[0].title.should.be.equal('Cat food');

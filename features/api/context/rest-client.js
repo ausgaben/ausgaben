@@ -15,28 +15,33 @@ dictionary
     .define('httpStatus', /(\d+)/, Yadda.converters.integer)
 ;
 
+var testHost = 'http://localhost:3000';
+
 function client(context) {
     if (!context.client) {
-        context.client = request.agent('http://localhost:3000');
+        context.client = request.agent(testHost);
     }
     return context.client;
 }
 
-function header(context, name, value) {
-    if (!context.headers) {
-        context.headers = {};
+function storage(store, context, name, value) {
+    if (!context[store]) {
+        context[store] = {};
     }
     if (value === undefined) {
-        return context[name];
+        return context[store][name];
     }
-    context[name] = value;
+    context[store][name] = value;
 }
+
+var header = storage.bind(null, 'headers');
+var data = storage.bind(null, 'data');
 
 module.exports = English.library(dictionary)
 
-    .given('"$value" is the $header', function (value, name, next) {
+    .given('"$value" is the $header header', function (value, name, next) {
         var context = this.ctx;
-        header(context, name, value)
+        header(context, name, value);
         next();
     })
 
@@ -60,9 +65,50 @@ module.exports = English.library(dictionary)
         });
     })
 
+    .when('I store "$node" as "$storage"', function (node, storage, next) {
+        var context = this.ctx;
+        data(context, storage, context.response.body[node]);
+        next();
+    })
+
+    .when('I follow the redirect', function (next) {
+        var context = this.ctx;
+        var agent = client(context);
+        var request = agent.get(context.response.headers['location'].replace(testHost, ''));
+        request.send();
+        request.end(function (error, response) {
+            context.response = response;
+            next();
+        });
+    })
+
     .then('the status code should be $httpStatus', function (status, next) {
         var context = this.ctx;
         expect(context.response.statusCode).to.equal(status);
+        next();
+    })
+
+    .then('the $header header should equal "$value"', function (name, value, next) {
+        var context = this.ctx;
+        expect(context.response.headers[name.toLowerCase()]).to.equal(value);
+        next();
+    })
+
+    .then('the $header header should exist', function (name, next) {
+        var context = this.ctx;
+        expect(context.response.headers[name.toLowerCase()]).to.not.equal(undefined);
+        next();
+    })
+
+    .then('"$node" should equal "$value"', function (node, value, next) {
+        var context = this.ctx;
+        expect(context.response.body[node]).to.equal(value);
+        next();
+    })
+
+    .then('"$node" should exist', function (node, next) {
+        var context = this.ctx;
+        expect(context.response.body[node]).to.not.equal(undefined);
         next();
     })
 

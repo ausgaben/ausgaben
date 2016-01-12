@@ -20,6 +20,7 @@ function initServer(app, database) {
     require('../api/route/status')(app);
     require('../api/route/crud')(app, database, 'Periodical');
     require('../api/route/crud')(app, database, 'Spending');
+    require('../api/route/crud')(app, database, 'Account');
     require('../api/route/registration')(app, database);
 
     app.use(function(err, req, res, next) {

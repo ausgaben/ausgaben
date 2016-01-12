@@ -11,7 +11,7 @@ var entityUrl = function (entity, req) {
 module.exports = function (app, db, modelName) {
     var transformer = require('../../transformer/' + modelName.toLowerCase());
     var limit = 10;
-    app.post('/' + modelName.toLowerCase(), function (req, res, next) {
+    app.post('/api/' + modelName.toLowerCase(), function (req, res, next) {
 
         var entity;
 
@@ -33,7 +33,7 @@ module.exports = function (app, db, modelName) {
         });
     });
 
-    app.get('/' + modelName.toLowerCase(), function (req, res, next) {
+    app.get('/api/' + modelName.toLowerCase(), function (req, res, next) {
 
         var model = db.models[modelName];
 
@@ -43,11 +43,11 @@ module.exports = function (app, db, modelName) {
                 model.findAll({limit: limit, offset: 0})
             ).spread(function (count, entities) {
                 var list = {
-                    '@context': 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List',
+                    '$context': 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List',
                     total: count,
                     items: _.map(entities, function (entity) {
                         var model = transformer(entity);
-                        model['@link'] = entityUrl(entity, req);
+                        model['$id'] = entityUrl(entity, req);
                         return model;
                     })
                 };
@@ -60,16 +60,18 @@ module.exports = function (app, db, modelName) {
         });
     });
 
-    app.get('/' + modelName.toLowerCase() + '/:id', function (req, res, next) {
+    app.get('/api/' + modelName.toLowerCase() + '/:id', function (req, res, next) {
 
         bluebird.try(function () {
             db.models[modelName].find({where: {id: req.params.id}}).then(function (entity) {
                 if (entity === null) {
                     throw new Error('Unkown entity: ' + req.url);
                 }
+                var item = transformer(entity);
+                item['$id'] = entityUrl(entity, req);
                 res
                     .header('Content-Type', contentType)
-                    .send(transformer(entity));
+                    .send(item);
             });
         }).catch(function (err) {
             return next(err);
