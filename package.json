@@ -21,7 +21,7 @@
     "body-parser": "^1.13.2",
     "bootstrap": "git://github.com/twbs/bootstrap.git#v4-dev",
     "browserify": "^12.0.1",
-    "browserify-shim": "^3.8.11",
+    "browserify-shim": "^3.8.12",
     "chai": "^3.4.1",
     "express": "^4.13.1",
     "fast-url-parser": "^1.1.3",
