@@ -1,5 +1,5 @@
 @After=Registration
-Feature: Account
+Feature: /api/account
 
     Background: Client defaults
 
@@ -7,7 +7,7 @@ Feature: Account
         Given "application/vnd.ausgaben.v1+json; charset=utf-8" is the Content-Type header
         Given "Bearer: {token}" is the Authentication header
 
-    Scenario: create
+    Scenario: POST (create)
 
         Given this is the request body
         --------------
@@ -24,3 +24,4 @@ Feature: Account
         And "$context" should equal "https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Account"
         And "$id" should exist
         And "name" should equal "Account"
+        And I store "$id" as "account"

@@ -5,7 +5,9 @@ var _ = require('lodash'),
     Yadda = require('yadda'),
     English = Yadda.localisation.English,
     dictionary = new Yadda.Dictionary(),
-    request = require('supertest');
+    request = require('supertest'),
+    jwt = require('jsonwebtoken'),
+    config = require('../../../server/config/config');
 
 
 dictionary
@@ -37,6 +39,31 @@ function storage(store, context, name, value) {
 var header = storage.bind(null, 'headers');
 var data = storage.bind(null, 'data');
 
+function doRequest(context, method, endpoint, next) {
+    var agent = client(context);
+    var request = context.request = agent[method.toLowerCase()](template(endpoint, context.data).replace(testHost, ''));
+    _.forIn(context.headers, function (value, name) {
+        request.set(name, value);
+    });
+    request.send(JSON.stringify(context.body));
+    request.end(function (error, response) {
+        context.response = response;
+        next();
+    });
+}
+
+function template(str, data) {
+    return _.template(str, {interpolate: /{([\s\S]+?)}/g})(data);
+}
+
+function checkJwtProperty(context, type, value, next) {
+    expect(context.response.body['$context']).to.equal('https://tools.ietf.org/html/rfc7519');
+    jwt.verify(context.response.body.token, config.get('public_key'), function (err, decoded) {
+        expect(decoded[type]).to.equal(value);
+    });
+    next();
+}
+
 module.exports = English.library(dictionary)
 
     .given('"$value" is the $header header', function (value, name, next) {
@@ -53,16 +80,12 @@ module.exports = English.library(dictionary)
 
     .when('I $method to $endpoint', function (method, endpoint, next) {
         var context = this.ctx;
-        var agent = client(context);
-        var request = agent[method.toLowerCase()](endpoint);
-        _.forIn(context.headers, function (value, name) {
-            request.set(name, value);
-        });
-        request.send(JSON.stringify(context.body));
-        request.end(function (error, response) {
-            context.response = response;
-            next();
-        });
+        doRequest(context, method, endpoint, next);
+    })
+
+    .when('I GET $endpoint', function (endpoint, next) {
+        var context = this.ctx;
+        doRequest(context, 'GET', endpoint, next);
     })
 
     .when('I store "$node" as "$storage"', function (node, storage, next) {
@@ -74,7 +97,7 @@ module.exports = English.library(dictionary)
     .when('I follow the redirect', function (next) {
         var context = this.ctx;
         var agent = client(context);
-        var request = agent.get(context.response.headers['location'].replace(testHost, ''));
+        var request = context.request = agent.get(context.response.headers['location'].replace(testHost, ''));
         request.send();
         request.end(function (error, response) {
             context.response = response;
@@ -84,8 +107,12 @@ module.exports = English.library(dictionary)
 
     .then('the status code should be $httpStatus', function (status, next) {
         var context = this.ctx;
-        expect(context.response.statusCode).to.equal(status);
-        next();
+        try {
+            expect(context.response.statusCode).to.equal(status);
+            next();
+        } catch(err) {
+            next(new Error('Unexpected HTTP response status\nExpected: ' + status + '\nGot:      ' + context.response.statusCode + '\nRequest:  ' + context.request.method + ' ' + context.request.url));
+        }
     })
 
     .then('the $header header should equal "$value"', function (name, value, next) {
@@ -110,6 +137,16 @@ module.exports = English.library(dictionary)
         var context = this.ctx;
         expect(context.response.body[node]).to.not.equal(undefined);
         next();
+    })
+
+    .then('JWT $property should equal "$value"', function (property, value, next) {
+        var context = this.ctx;
+        checkJwtProperty(context, property, value, next);
+    })
+
+    .then(/JWT ([^ ]+) should equal (true|false)/, function (property, bool, next) {
+        var context = this.ctx;
+        checkJwtProperty(context, property, bool, next);
     })
 
 ;

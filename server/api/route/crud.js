@@ -68,7 +68,7 @@ module.exports = function (app, db, modelName) {
                     throw new Error('Unkown entity: ' + req.url);
                 }
                 var item = transformer(entity);
-                item['$id'] = entityUrl(entity, req);
+                item['$id'] = req.url;
                 res
                     .header('Content-Type', contentType)
                     .send(item);
