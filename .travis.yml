@@ -16,9 +16,6 @@ sudo: false
 
 node_js:
   - "stable"
-  - "iojs"
-  - "4.1"
-  - "4.0"
 
 env:
   global:
