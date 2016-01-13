@@ -4,32 +4,32 @@ var TYPE_INCOME = 'income',
     TYPE_SPENDING = 'spending',
     TYPE_SAVING = 'saving';
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function (sequelize, dataTypes) {
     return sequelize.define('Spending', {
         type: {
-            type: DataTypes.STRING(255),
+            type: dataTypes.STRING(255),
             allowNull: false,
             isIn: [[TYPE_INCOME, TYPE_SPENDING, TYPE_SAVING]]
         },
         category: {
-            type: DataTypes.STRING(255),
+            type: dataTypes.STRING(255),
             allowNull: false
         },
         title: {
-            type: DataTypes.STRING(255),
+            type: dataTypes.STRING(255),
             allowNull: false
         },
         amount: {
-            type: DataTypes.INTEGER,
+            type: dataTypes.INTEGER,
             allowNull: false
         },
         booked: {
-            type: DataTypes.BOOLEAN,
+            type: dataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
         },
         bookedAt: {
-            type: DataTypes.DATE,
+            type: dataTypes.DATE,
             allowNull: false,
             defaultValue: new Date()
         }
