@@ -12,8 +12,7 @@ function Registration(data) {
     if (data) {
         var self = this;
         _.forEach(this, function (value, key) {
-            if (/^\$/.test(key)) return;
-            self[key] = data[key] || undefined;
+            self[key] = data[key] === undefined ? null : data[key];
         });
     }
     this.$context = Registration.$context;

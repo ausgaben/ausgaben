@@ -34,6 +34,10 @@ function run(featureFiles, featureLibraries) {
             return new RegExp('\/' + featureName + '.feature$').test(file);
         })[0];
         featureFile(file, function (feature) {
+            if (feature.annotations.pending) {
+                console.log('Skipped pending feature: ' + feature.title);
+                return;
+            }
             scenarios(feature.scenarios, function (scenario) {
                 steps(scenario.steps, function (step, done) {
                     y.run(step, done);
