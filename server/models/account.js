@@ -1,9 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
-
 module.exports = function (sequelize, DataTypes) {
-
     var fields = {
         name: {
             type: DataTypes.STRING(255),

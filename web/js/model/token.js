@@ -14,7 +14,7 @@ function Token(data) {
     if (data) {
         var self = this;
         _.forEach(this, function (value, key) {
-            self[key] = data[key] || null;
+            self[key] = data[key] === undefined ? null : data[key];
         });
         this.createdAt = new Date(this.createdAt);
     }

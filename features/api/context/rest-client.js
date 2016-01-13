@@ -14,7 +14,7 @@ dictionary
     .define('json', /([^\u0000]*)/, function (data, done) {
         done(null, JSON.parse(data));
     })
-    .define('httpStatus', /(\d+)/, Yadda.converters.integer)
+    .define('num', /(\d+)/, Yadda.converters.integer)
 ;
 
 var testHost = 'http://localhost:3000';
@@ -41,7 +41,9 @@ var data = storage.bind(null, 'data');
 
 function doRequest(context, method, endpoint, next) {
     var agent = client(context);
-    var request = context.request = agent[method.toLowerCase()](template(endpoint, context.data).replace(testHost, ''));
+    var url = template(endpoint, context.data);
+    console.log('(REST client)', method, url);
+    var request = context.request = agent[method.toLowerCase()](url.replace(testHost, ''));
     _.forIn(context.headers, function (value, name) {
         request.set(name, value);
     });
@@ -97,6 +99,7 @@ module.exports = English.library(dictionary)
     .when('I follow the redirect', function (next) {
         var context = this.ctx;
         var agent = client(context);
+        console.log('(REST client)', 'GET', context.response.headers['location']);
         var request = context.request = agent.get(context.response.headers['location'].replace(testHost, ''));
         request.send();
         request.end(function (error, response) {
@@ -105,12 +108,12 @@ module.exports = English.library(dictionary)
         });
     })
 
-    .then('the status code should be $httpStatus', function (status, next) {
+    .then('the status code should be $num', function (status, next) {
         var context = this.ctx;
         try {
             expect(context.response.statusCode).to.equal(status);
             next();
-        } catch(err) {
+        } catch (err) {
             next(new Error('Unexpected HTTP response status\nExpected: ' + status + '\nGot:      ' + context.response.statusCode + '\nRequest:  ' + context.request.method + ' ' + context.request.url));
         }
     })
@@ -133,9 +136,33 @@ module.exports = English.library(dictionary)
         next();
     })
 
+    .then(/"([^"]+)" should equal ([+0-9,\.-]+)/, function (node, number, next) {
+        var context = this.ctx;
+        expect(context.response.body[node]).to.equal(+number);
+        next();
+    })
+
+    .then(/"([^"]+)" should equal (true|false)/, function (node, bool, next) {
+        var context = this.ctx;
+        expect(context.response.body[node]).to.equal(bool === 'true');
+        next();
+    })
+
     .then('"$node" should exist', function (node, next) {
         var context = this.ctx;
         expect(context.response.body[node]).to.not.equal(undefined);
+        next();
+    })
+
+    .then(/a list of "([^"]+)" with ([0-9]+) of ([0-9]+) items should be returned/, function (itemContext, num, total, next) {
+        var context = this.ctx;
+        var list = context.response.body;
+        expect(list['$context']).to.equal('https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List');
+        expect(list['total']).to.equal(+total);
+        expect(list['items'].length).to.equal(+num);
+        _.map(list['items'], function (item) {
+            expect(item['$context']).to.equal(itemContext);
+        });
         next();
     })
 
