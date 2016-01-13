@@ -6,10 +6,16 @@ var _ = require('lodash');
  * @param {object} data
  * @constructor
  */
-function Account(data) {
+function Spending(data) {
     this.$id = null;
-    this.name = null;
     this.createdAt = null;
+    this.booked = null;
+    this.bookedAt = null;
+    this.type = null;
+    this.category = null;
+    this.amount = null;
+    this.title = null;
+
     if (data) {
         var self = this;
         _.forEach(this, function (value, key) {
@@ -17,9 +23,9 @@ function Account(data) {
         });
         this.createdAt = new Date(this.createdAt);
     }
-    this.$context = Account.$context;
+    this.$context = Spending.$context;
 }
 
-Account.$context = 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Account';
+Spending.$context = 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Spending';
 
-module.exports = Account;
+module.exports = Spending;
