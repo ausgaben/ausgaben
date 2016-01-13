@@ -39,6 +39,10 @@ function storage(store, context, name, value) {
 var header = storage.bind(null, 'headers');
 var data = storage.bind(null, 'data');
 
+function template(str, data) {
+    return _.template(str, {interpolate: /{([\s\S]+?)}/g})(data);
+}
+
 function doRequest(context, method, endpoint, next) {
     var agent = client(context);
     var url = template(endpoint, context.data);
@@ -52,10 +56,6 @@ function doRequest(context, method, endpoint, next) {
         context.response = response;
         next();
     });
-}
-
-function template(str, data) {
-    return _.template(str, {interpolate: /{([\s\S]+?)}/g})(data);
 }
 
 function checkJwtProperty(context, type, value, next) {
