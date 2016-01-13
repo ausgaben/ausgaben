@@ -8,15 +8,41 @@ var entityUrl = function (entity, req) {
     return req.protocol + '://' + req.get('host') + req.url + '/' + entity.id;
 };
 
-module.exports = function (app, db, modelName) {
+module.exports = function (app, db, modelName, prefix) {
     var transformer = require('../../transformer/' + modelName.toLowerCase());
     var limit = 10;
-    app.post('/' + modelName.toLowerCase(), function (req, res, next) {
+    prefix = '/' + _.trim(prefix, '/') + '/';
+
+    function fetchParents(req) {
+        var parents = {};
+        var parentMatch = req.route.path.match(/(:[a-z]+)+/g);
+
+        return bluebird.map(_.filter(parentMatch, function (match) {
+            return match !== ':id';
+        }), function (parentParam) {
+            var parentClass = parentParam.charAt(1).toUpperCase() + parentParam.substr(2);
+            var parentId = req.params[parentParam.substr(1)];
+            return db.models[parentClass].findById(+parentId).then(function (entity) {
+                if (entity === null) {
+                    throw new Error('Unkown ' + parentClass + ': ' + parentId);
+                }
+                parents[parentClass] = entity;
+            });
+        }).then(function () {
+            return parents;
+        });
+    }
+
+    app.post(prefix + modelName.toLowerCase(), function (req, res, next) {
 
         var entity;
 
-        bluebird.try(function () {
+        fetchParents(req)
+        .then(function (parents) {
             entity = db.models[modelName].build(req.body);
+            _.map(parents, function (parent, parentClass) {
+                entity['set' + parentClass](parent, {save: false});
+            });
             return db.transaction(function (t) {
                 // save instance
                 return entity.save({
@@ -33,21 +59,31 @@ module.exports = function (app, db, modelName) {
         });
     });
 
-    app.get('/' + modelName.toLowerCase(), function (req, res, next) {
+    app.get(prefix + modelName.toLowerCase(), function (req, res, next) {
 
         var model = db.models[modelName];
 
-        bluebird.try(function () {
+        fetchParents(req)
+        .then(function(parents) {
+
+            var q = {limit: limit, offset: 0};
+            if (parents) {
+                q.where = {};
+                _.map(parents, function(parent, parentClass) {
+                    q.where[parentClass + 'Id'] = parent.get('id');
+                });
+            }
+
             bluebird.join(
-                model.count(),
-                model.findAll({limit: limit, offset: 0})
+                model.count(q),
+                model.findAll(q)
             ).spread(function (count, entities) {
                 var list = {
-                    '@context': 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List',
+                    '$context': 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List',
                     total: count,
                     items: _.map(entities, function (entity) {
                         var model = transformer(entity);
-                        model['@link'] = entityUrl(entity, req);
+                        model['$id'] = entityUrl(entity, req);
                         return model;
                     })
                 };
@@ -60,16 +96,18 @@ module.exports = function (app, db, modelName) {
         });
     });
 
-    app.get('/' + modelName.toLowerCase() + '/:id', function (req, res, next) {
+    app.get(prefix + modelName.toLowerCase() + '/:id', function (req, res, next) {
 
         bluebird.try(function () {
             db.models[modelName].find({where: {id: req.params.id}}).then(function (entity) {
                 if (entity === null) {
                     throw new Error('Unkown entity: ' + req.url);
                 }
+                var item = transformer(entity);
+                item['$id'] = req.url;
                 res
                     .header('Content-Type', contentType)
-                    .send(transformer(entity));
+                    .send(item);
             });
         }).catch(function (err) {
             return next(err);

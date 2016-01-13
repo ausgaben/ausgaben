@@ -32,7 +32,7 @@ module.exports = function (app, db) {
                 .status(201)
                 .header('Content-Type', contentType)
                 .send({
-                    '@context': 'https://tools.ietf.org/html/rfc7519',
+                    '$context': 'https://tools.ietf.org/html/rfc7519',
                     token: token
                 });
         }).catch(function (err) {
