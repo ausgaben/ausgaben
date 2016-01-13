@@ -1,10 +1,11 @@
-Feature: Registration
+Feature: /api/registration
 
     Background: Client defaults
 
-        Given "application/vnd.ausgaben.v1+json" is the Accept header
+        Given "application/vnd.ausgaben.v1+json; charset=utf-8" is the Accept header
+        Given "application/vnd.ausgaben.v1+json; charset=utf-8" is the Content-Type header
 
-    Scenario: create
+    Scenario: POST (create)
 
         Given this is the request body
         --------------
@@ -14,7 +15,11 @@ Feature: Registration
         --------------
         When I POST to /api/registration
         Then the status code should be 201
-        And the Content-Type header should contain "application/vnd.ausgaben.v1+json"
+        And the Content-Type header should equal "application/vnd.ausgaben.v1+json; charset=utf-8"
         And "$context" should equal "https://tools.ietf.org/html/rfc7519"
-        And "$id" should exist
         And "token" should exist
+        And I store "token" as "token"
+        And JWT sub should equal "john.doe@example.com"
+        And JWT iss should equal "registration"
+        And JWT registered should equal true
+

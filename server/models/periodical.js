@@ -5,40 +5,40 @@ var _ = require('lodash'),
     TYPE_SPENDING = 'spending',
     TYPE_SAVING = 'saving';
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = function (sequelize, dataTypes) {
 
     var fields = {
         type: {
-            type: DataTypes.STRING(255),
+            type: dataTypes.STRING(255),
             allowNull: false,
             isIn: [[TYPE_INCOME, TYPE_SPENDING, TYPE_SAVING]]
         },
         category: {
-            type: DataTypes.STRING(255),
+            type: dataTypes.STRING(255),
             allowNull: false
         },
         title: {
-            type: DataTypes.STRING(255),
+            type: dataTypes.STRING(255),
             allowNull: false
         },
         amount: {
-            type: DataTypes.INTEGER,
+            type: dataTypes.INTEGER,
             allowNull: false
         },
         estimate: {
-            type: DataTypes.BOOLEAN,
+            type: dataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: false
         },
         starts: {
-            type: DataTypes.DATE,
+            type: dataTypes.DATE,
             allowNull: false,
             defaultValue: new Date()
         }
     };
     for (var i = 1; i <= 12; i++) {
         fields['enabledIn' + _.padLeft(i, 2, 0)] = {
-            type: DataTypes.BOOLEAN,
+            type: dataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true
         };
