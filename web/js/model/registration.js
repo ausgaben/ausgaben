@@ -7,18 +7,17 @@ var _ = require('lodash');
  * @constructor
  */
 function Registration(data) {
-    this.$context = Registration.$context;
     this.email = null;
 
     if (data) {
         var self = this;
         _.forEach(this, function (value, key) {
-            if (/^\$/.test(key)) return;
-            self[key] = data[key] || undefined;
+            self[key] = data[key] === undefined ? null : data[key];
         });
     }
+    this.$context = Registration.$context;
 }
 
-Registration.$context = 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#registration';
+Registration.$context = 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Registration';
 
 module.exports = Registration;

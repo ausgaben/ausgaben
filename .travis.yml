@@ -1,3 +1,7 @@
+branches:
+  except:
+    - /^v[0-9]/
+
 language: node_js
 
 addons:
@@ -7,14 +11,16 @@ addons:
         - ubuntu-toolchain-r-test
       packages:
         - g++-4.8
+        - gcc-4.8
+        - clang
 
 sudo: false
 
 node_js:
   - "stable"
-  - "iojs"
-  - "4.1"
-  - "4.0"
+
+env:
+  - NODE_ENV=travis CXX="g++-4.8" CC="gcc-4.8"
 
 env:
   global:
@@ -28,4 +34,4 @@ before_script:
 
 script:
   - npm run lint
-  - npm test
+  - npm run test:coverage

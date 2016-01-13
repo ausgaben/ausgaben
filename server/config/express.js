@@ -3,8 +3,9 @@
 /**
  * Module dependencies.
  */
-var bodyParser = require('body-parser');
-var MIME_TYPE = require('../../web/js/util/http').MIME_TYPE;
+var bodyParser = require('body-parser'),
+    MIME_TYPE = require('../../web/js/util/http').MIME_TYPE,
+    crud = require('../api/route/crud');
 
 /**
  * Handle all the express-stuff for the server
@@ -17,12 +18,14 @@ function initServer(app, database) {
     app.enable('trust proxy');
     app.use(bodyParser.json({type: MIME_TYPE}));
 
+
     require('../api/route/status')(app);
-    require('../api/route/crud')(app, database, 'Periodical');
-    require('../api/route/crud')(app, database, 'Spending');
+    crud(app, database, 'Periodical', '/api/account/:account/');
+    crud(app, database, 'Spending', '/api/account/:account/');
+    crud(app, database, 'Account', '/api/');
     require('../api/route/registration')(app, database);
 
-    app.use(function(err, req, res, next) {
+    app.use(function (err, req, res) {
         console.error(req.method + ' ' + req.url);
         console.error(err.message);
         console.error(err.stack);
