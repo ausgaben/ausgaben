@@ -27,7 +27,7 @@ env:
     - CXX=g++-4.8
 
 before_script:
-  - npm install
+  - npm install --no-shrinkwrap
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config.travis.json config.local.json
   - node server/console.js sequelize:schema:sync
