@@ -20,7 +20,7 @@ PeriodicalsRepository.prototype.persist = function (entity) {
  */
 PeriodicalsRepository.prototype.findByMonth = function (month) {
     var db = this.db;
-    var monthKey = 'enabledIn' + _.padLeft(month.getMonth() + 1, 2, 0);
+    var monthKey = 'enabledIn' + _.padStart(month.getMonth() + 1, 2, 0);
     var where = {starts: {lte: month}};
     where[monthKey] = true;
     return db.models.Periodical.findAll({where: where});

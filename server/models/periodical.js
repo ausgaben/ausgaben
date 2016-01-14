@@ -37,7 +37,7 @@ module.exports = function (sequelize, dataTypes) {
         }
     };
     for (var i = 1; i <= 12; i++) {
-        fields['enabledIn' + _.padLeft(i, 2, 0)] = {
+        fields['enabledIn' + _.padStart(i, 2, 0)] = {
             type: dataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: true

@@ -3,7 +3,7 @@
 var _ = require('lodash');
 
 var pad = function (v) {
-    return _.padLeft(v, 2, 0);
+    return _.padStart(v, 2, 0);
 };
 
 var w3cformat = function (date) {

@@ -36,7 +36,7 @@ case 's:s:s':
 case 'spendings:monthly':
 case 's:m':
     var month = new Date();
-    console.log('Creating spendings for month: ' + month.getFullYear() + '-' + _.padLeft((month.getMonth() + 1), 2, 0));
+    console.log('Creating spendings for month: ' + month.getFullYear() + '-' + _.padStart((month.getMonth() + 1), 2, 0));
     var task = new CreateMonthlySpendingsTask(repos['Periodical'], repos['Spending']);
     task.execute(month).then(function () {
         console.log('Spendings created');
