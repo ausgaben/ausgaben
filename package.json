@@ -35,7 +35,7 @@
     "pg": "^4.4.0",
     "pg-hstore": "^2.3.2",
     "pg-native": "^1.8.1",
-    "sequelize": "^3.4.1",
+    "sequelize": "^3.17.3",
     "supertest": "^1.1.0",
     "tether": "^1.1.1",
     "uglifycss": "0.0.20",
