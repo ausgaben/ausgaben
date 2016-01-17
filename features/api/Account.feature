@@ -30,3 +30,4 @@ Feature: /api/account
         Then the status code should be 200
         And the Content-Type header should equal "application/vnd.ausgaben.v1+json; charset=utf-8"
         And a list of "https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Account" with 1 of 1 item should be returned
+        And "name" of the 1st item should equal "Account"

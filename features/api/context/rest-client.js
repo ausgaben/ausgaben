@@ -172,11 +172,17 @@ module.exports = English.library(dictionary)
         var context = this.ctx;
         var list = context.response.body;
         expect(list['$context']).to.equal('https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List');
-        expect(list['total']).to.equal(+total);
-        expect(list['items'].length).to.equal(+num);
-        _.map(list['items'], function (item) {
+        expect(list.total).to.equal(+total);
+        expect(list.items.length).to.equal(+num);
+        _.map(list.items, function (item) {
             expect(item['$context']).to.equal(itemContext);
         });
+        next();
+    })
+
+    .then(/"([^"]+)" of the ([0-9]+)[a-z]+ item should equal "([^"]+)"/, function (node, num, value, next) {
+        var context = this.ctx;
+        expect(context.response.body.items[num - 1][node]).to.equal(value);
         next();
     })
 
