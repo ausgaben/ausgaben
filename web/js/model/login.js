@@ -19,6 +19,6 @@ function Login(data) {
     this.$context = Login.$context;
 }
 
-Login.$context = 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#login';
+Login.$context = 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#Login';
 
 module.exports = Login;

@@ -57,3 +57,9 @@ fs.lstatAsync(keyFile)
             config.set('public_key', pair.public);
         });
     });
+
+// Event listening
+var emitter = require('./emitter');
+emitter.on('login_link_requested', function (email) {
+    console.log('login_link_requested', email);
+});

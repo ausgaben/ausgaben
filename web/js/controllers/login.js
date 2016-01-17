@@ -34,7 +34,8 @@ module.exports = function (app) {
                     templateUrl: '/view/login.html',
                     controller: 'LoginController',
                     controllerAs: 'vm'
-                });
+                })
+            ;
         }])
     ;
     // Default route

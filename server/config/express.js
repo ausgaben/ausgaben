@@ -35,6 +35,8 @@ function initServer(app, config, database) {
     crud(app, tokenAuth, database, 'Spending', '/api/account/:account/');
     crud(app, tokenAuth, database, 'Account', '/api/');
     require('../api/route/registration')(app, config, database, tokenAuth);
+    require('../api/route/token')(app, config, database, tokenAuth);
+    require('../api/route/login')(app, config, database);
 
     app.use(function (err, req, res, next) {
         if (err.name === 'TokenExpiredError') {

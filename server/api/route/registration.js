@@ -5,13 +5,13 @@ var bluebird = require('bluebird'),
     JsonWebToken = require('../../../web/js/model/jsonwebtoken'),
     contentType = require('../../../web/js/util/http').CONTENT_TYPE;
 
-module.exports = function (app, config, db, tokenAuth) {
+module.exports = function (app, config, db) {
     app.post('/api/registration', function (req, res, next) {
 
         var entity;
 
         bluebird.try(function () {
-            entity = db.models['User'].build(req.body);
+            entity = db.models.User.build(req.body);
             return db.transaction(function (t) {
                 // save instance
                 return entity.save({
@@ -42,11 +42,5 @@ module.exports = function (app, config, db, tokenAuth) {
             }
             return next(err);
         });
-    });
-
-    app.post('/api/token/verify', tokenAuth, function (req, res) {
-        return res
-            .status(204)
-            .send();
     });
 };
