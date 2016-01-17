@@ -15,7 +15,7 @@ module.exports = function (sequelize, dataTypes) {
         associate: function (models) {
             var thisModel = models[this.name.singular];
             thisModel.belongsToMany(models.Account, {
-                through: 'UserAccounts'
+                through: 'UserAccount'
             });
         },
         repository: 'UsersRepository'

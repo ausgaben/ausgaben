@@ -168,7 +168,7 @@ module.exports = English.library(dictionary)
         next();
     })
 
-    .then(/a list of "([^"]+)" with ([0-9]+) of ([0-9]+) items should be returned/, function (itemContext, num, total, next) {
+    .then(/a list of "([^"]+)" with ([0-9]+) of ([0-9]+) items? should be returned/, function (itemContext, num, total, next) {
         var context = this.ctx;
         var list = context.response.body;
         expect(list['$context']).to.equal('https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List');

@@ -20,7 +20,7 @@ module.exports = function (sequelize, dataTypes) {
                     as: 'Creator'
                 });
                 thisModel.belongsToMany(models.User, {
-                    through: 'UserAccounts'
+                    through: 'UserAccount'
                 });
             },
             repository: 'AccountsRepository'

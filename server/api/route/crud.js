@@ -59,15 +59,16 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
                     entity['set' + parentClass](parent, {save: false});
                 });
                 entity['setCreator'](req.user, {save: false});
-                if (entity.addUser) {
-                    entity.addUser(req.user);
-                }
                 return db.transaction(function (t) {
                     // save instance
                     return entity.save({
                         transaction: t
                     });
                 });
+            }).then(function () {
+                if (entity.addUser) {
+                    return entity.addUser(req.user);
+                }
             }).then(function () {
                 res
                     .status(201)
@@ -81,6 +82,7 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
     app.get(prefix + modelName.toLowerCase(), tokenAuth, function (req, res, next) {
 
         var model = db.models[modelName];
+        var entity = model.build();
 
         fetchParents(req)
             .then(function (parents) {
@@ -91,16 +93,35 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
                         q.where[parentClass + 'Id'] = parent.get('id');
                     });
                 }
+                var countQuery = model.count(q);
+                if (entity.addUser) {
+                    q.include = [{
+                        model: db.models.User,
+                        through: {
+                            where: {
+                                UserId: req.user
+                            }
+                        },
+                        required: true
+                    }];
+                    q.include[0].through[model + 'Id'] = db.col('id');
+                    // Use different approach to count, because https://github.com/sequelize/sequelize/issues/3256
+                    countQuery = db.models.UserAccount.count({
+                        where: {
+                            'UserId': req.user
+                        }
+                    });
+                }
 
                 bluebird.join(
-                    model.count(q),
+                    countQuery,
                     model.findAll(q)
                 ).spread(function (count, entities) {
                     var list = {
                         '$context': 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List',
                         total: count,
                         items: _.map(entities, function (entity) {
-                            var model = transformer(entity);
+                            var model = transformer(entity.get({plain: true}));
                             model['$id'] = entityUrl(entity, req);
                             return model;
                         })
@@ -121,7 +142,7 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
                 if (entity === null) {
                     throw new Error('Unkown entity: ' + req.url);
                 }
-                var item = transformer(entity);
+                var item = transformer(entity.get({plain: true}));
                 item['$id'] = req.url;
                 res
                     .header('Content-Type', contentType)
