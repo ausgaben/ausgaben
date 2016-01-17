@@ -1,21 +1,22 @@
 'use strict';
 
 var HttpProgress = require('../util/http').HttpProgress,
-    Account = require('../model/account');
+    Spending = require('../model/spending');
 
 module.exports = function (app) {
     app
         .config(['$stateProvider', function ($stateProvider) {
             $stateProvider
-                .state('accounts', {
-                    url: '/accounts',
-                    templateUrl: '/view/accounts.html',
+                .state('spendings', {
+                    url: '/account/:account/spendings',
+                    templateUrl: '/view/spendings.html',
                     controllerAs: 'vm',
                     controller: [
-                        'AuthorizedAccountService', '$state',
-                        function (AuthorizedAccountService, $state) {
+                        'account', 'AuthorizedSpendingService', '$state',
+                        function (account, AuthorizedSpendingService, $state) {
                             var vm = {
-                                accounts: [],
+                                account: account,
+                                spendings: [],
                                 p: new HttpProgress()
                             };
 
@@ -24,7 +25,7 @@ module.exports = function (app) {
                                     return;
                                 }
                                 vm.p.activity();
-                                AuthorizedAccountService.create(new Account(data))
+                                AuthorizedSpendingService.create(new Spending(data))
                                     .then(function () {
                                         vm.p.success();
                                         $state.go($state.current, {}, {reload: true});
@@ -40,10 +41,10 @@ module.exports = function (app) {
                                     return;
                                 }
                                 vm.p.activity();
-                                AuthorizedAccountService.list()
+                                AuthorizedSpendingService.list()
                                     .then(function (list) {
                                         vm.p.success();
-                                        vm.accounts = list.items;
+                                        vm.spendings = list.items;
                                     })
                                     .catch(function (httpProblem) {
                                         vm.p.error(httpProblem);
@@ -56,13 +57,22 @@ module.exports = function (app) {
                         }
                     ],
                     resolve: {
-                        AuthorizedAccountService: [
-                            'ClientStorageService', 'AccountService', function (ClientStorageService, AccountService) {
+                        account: [
+                            'ClientStorageService', 'AccountService', '$stateParams',
+                            function (ClientStorageService, AccountService, $stateParams) {
+                                return ClientStorageService.get('token')
+                                    .then(function (token) {
+                                        return AccountService.get(token, $stateParams.account);
+                                    });
+                            }
+                        ],
+                        AuthorizedSpendingService: [
+                            'ClientStorageService', 'SpendingService', function (ClientStorageService, SpendingService) {
                                 return ClientStorageService.get('token')
                                     .then(function (token) {
                                         return {
-                                            create: AccountService.create.bind(AccountService, token),
-                                            list: AccountService.list.bind(AccountService, token)
+                                            create: SpendingService.create.bind(SpendingService, token),
+                                            list: SpendingService.list.bind(SpendingService, token)
                                         };
                                     });
                             }

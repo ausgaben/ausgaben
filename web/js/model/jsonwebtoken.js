@@ -5,7 +5,7 @@ var _ = require('lodash');
 if (!atob) {
     var atob = function (str) {
         return new Buffer(str, 'base64').toString('binary');
-    }
+    };
 }
 
 /**

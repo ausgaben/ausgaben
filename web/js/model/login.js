@@ -7,12 +7,12 @@ var _ = require('lodash');
  * @constructor
  */
 function Login(data) {
-    this.email = null;
+    this.email = undefined;
 
     if (data) {
         var self = this;
         _.forEach(this, function (value, key) {
-            self[key] = data[key] === undefined ? null : data[key];
+            self[key] = data[key] === undefined ? undefined : data[key];
         });
     }
 

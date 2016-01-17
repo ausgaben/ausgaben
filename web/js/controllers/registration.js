@@ -5,28 +5,37 @@ var HttpProgress = require('../util/http').HttpProgress,
 
 module.exports = function (app) {
     app
-        .controller('RegistrationController', ['RegistrationService', function (RegistrationService) {
-            var vm = {};
+        .controller(
+        'RegistrationController',
+        [
+            'RegistrationService', 'ClientStorageService', '$state',
+            function (RegistrationService, ClientStorageService, $state) {
+                var vm = {};
 
-            vm.p = new HttpProgress();
+                vm.p = new HttpProgress();
 
-            vm.submit = function (data) {
-                if (vm.p.$active) {
-                    return;
-                }
-                vm.p.activity();
-                RegistrationService.create(new Registration(data))
-                    .then(function () {
-                        vm.p.success();
-                    })
-                    .catch(function (httpProblem) {
-                        vm.p.error(httpProblem);
-                        throw httpProblem;
-                    });
-            };
+                vm.submit = function (data) {
+                    if (vm.p.$active) {
+                        return;
+                    }
+                    vm.p.activity();
+                    RegistrationService.create(new Registration(data))
+                        .then(function (token) {
+                            vm.p.success();
+                            return ClientStorageService.set('token', token);
+                        })
+                        .then(function () {
+                            $state.go('accounts');
+                        })
+                        .catch(function (httpProblem) {
+                            vm.p.error(httpProblem);
+                            throw httpProblem;
+                        });
+                };
 
-            return vm;
-        }])
+                return vm;
+            }
+        ])
         .config(['$stateProvider', function ($stateProvider) {
             $stateProvider
                 .state('register', {

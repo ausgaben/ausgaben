@@ -120,7 +120,7 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
                 ).spread(function (count, entities) {
                     var items = _.map(entities, function (entity) {
                         var model = transformer(entity.get({plain: true}));
-                        model['$id'] = entityUrl(entity, req);
+                        model.$id = entityUrl(entity, req);
                         return model;
                     });
                     res
@@ -140,7 +140,7 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
                     throw new Error('Unkown entity: ' + req.url);
                 }
                 var item = transformer(entity.get({plain: true}));
-                item['$id'] = req.url;
+                item.$id = req.url;
                 res
                     .header('Content-Type', contentType)
                     .send(item);

@@ -7,13 +7,13 @@ var _ = require('lodash');
  * @constructor
  */
 function Account(data) {
-    this.$id = null;
-    this.name = null;
-    this.createdAt = null;
+    this.$id = undefined;
+    this.name = undefined;
+    this.createdAt = undefined;
     if (data) {
         var self = this;
         _.forEach(this, function (value, key) {
-            self[key] = data[key] === undefined ? null : data[key];
+            self[key] = data[key] === undefined ? undefined : data[key];
         });
         this.createdAt = new Date(this.createdAt);
     }

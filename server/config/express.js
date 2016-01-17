@@ -5,6 +5,7 @@
  */
 var bodyParser = require('body-parser'),
     MIME_TYPE = require('../../web/js/util/http').MIME_TYPE,
+    HttpProblem = require('../../web/js/model/http-problem'),
     crud = require('../api/route/crud'),
     passport = require('passport'),
     BearerStrategy = require('passport-http-bearer').Strategy,
@@ -36,6 +37,15 @@ function initServer(app, config, database) {
     require('../api/route/registration')(app, config, database, tokenAuth);
 
     app.use(function (err, req, res, next) {
+        if (err.name === 'TokenExpiredError') {
+            res.status(403)
+                .send(
+                    new HttpProblem(
+                        'https://github.com/ausgaben/ausgaben-node/wiki/HttpProblem#403', err.name, 403, err.message
+                    )
+                );
+            return next();
+        }
         console.error(err.name);
         console.error(req.method + ' ' + req.url);
         console.error(err.message);

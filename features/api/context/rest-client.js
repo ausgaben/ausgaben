@@ -62,7 +62,7 @@ function doRequest(context, method, endpoint, next) {
 }
 
 function checkJwtProperty(context, type, value, next) {
-    expect(context.response.body['$context']).to.equal('https://tools.ietf.org/html/rfc7519');
+    expect(context.response.body.$context).to.equal('https://tools.ietf.org/html/rfc7519');
     jwt.verify(context.response.body.token, config.get('public_key'), function (err, decoded) {
         try {
             if (typeof value === 'function') {
@@ -111,7 +111,7 @@ module.exports = English.library(dictionary)
     .when('I follow the redirect', function (next) {
         var context = this.ctx;
         var agent = client(context);
-        var request = context.request = agent.get(context.response.header['location'].replace(testHost, ''));
+        var request = context.request = agent.get(context.response.header.location.replace(testHost, ''));
         _.forIn(header(context), function (value, name) {
             request.set(name, value);
         });
@@ -171,11 +171,11 @@ module.exports = English.library(dictionary)
     .then(/a list of "([^"]+)" with ([0-9]+) of ([0-9]+) items? should be returned/, function (itemContext, num, total, next) {
         var context = this.ctx;
         var list = context.response.body;
-        expect(list['$context']).to.equal('https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List');
+        expect(list.$context).to.equal('https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List');
         expect(list.total).to.equal(+total);
         expect(list.items.length).to.equal(+num);
         _.map(list.items, function (item) {
-            expect(item['$context']).to.equal(itemContext);
+            expect(item.$context).to.equal(itemContext);
         });
         next();
     })

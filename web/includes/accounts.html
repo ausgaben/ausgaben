@@ -7,27 +7,25 @@
             <form name="form" class="card">
                 <div class="card-header">
                     <h1 class="card-title">
-                        Register
-                        <i class="material-icons">person_add</i>
+                        Create a new account
+                        <i class="material-icons">account_balance</i>
                     </h1>
                 </div>
                 <div class="card-block">
-
-                    <p class="card-text">
-                        Please enter your email address in order to create an account.<br>
-                        <small>If you already have an account you can <a data-ui-sref="login">log-in here</a>.</small>
+                    <p class="card-text" data-ng-hide="vm.accounts">
+                        In order to start using <em>ausgaben</em> you need to create a spendings account.
                     </p>
                     <fieldset class="form-group">
-                        <label for="email">email address</label>
+                        <label for="name">Please enter the name of your account</label>
                         <input tabindex="1"
                                class="form-control"
-                               type="email"
-                               id="email"
+                               type="text"
+                               id="name"
                                required
                                bootstrap-error-states
-                               data-ng-model="data.email"
+                               data-ng-model="data.name"
                                data-ng-disabled="vm.p.$active || vm.initializing"
-                               name="email"
+                               name="name"
                                auto-focus
                         />
                     </fieldset>
@@ -46,10 +44,35 @@
                         <i class="material-icons spin" data-ng-show="vm.p.$active">hourglass_empty</i>
                         <i class="material-icons" data-ng-show="vm.p.$success">check_ok</i>
                         <i class="material-icons" data-ng-show="vm.p.$error">error</i>
-                        <span>Register</span>
+                        <span>Create Account</span>
                     </button>
                 </div>
             </form>
+        </section>
+    </article>
+
+    <article class="row" data-ng-show="vm.accounts">
+        <section class="col-md-offset-3 col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        Your Accounts
+                    </h2>
+                </div>
+                <div class="card-block">
+                    <p class="card-text">
+                        These are your existing accounts:
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" data-ng-repeat="account in vm.accounts">
+                        <a data-ui-sref="spendings({account: account.$id})">
+                            <i class="material-icons">account_balance</i>
+                            %%account.name%%
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </section>
     </article>
 </div>

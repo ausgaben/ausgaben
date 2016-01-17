@@ -1,6 +1,6 @@
 'use strict';
 
-var Registration = require('../model/registration'),
+var JsonWebToken = require('../model/jsonwebtoken'),
     HttpProblem = require('../model/http-problem'),
     httpUtil = require('../util/http');
 
@@ -20,10 +20,10 @@ module.exports = function ($http) {
     RegistrationService.prototype.create = function (registration) {
         return $http.post('/api/registration', registration, httpUtil.accept())
             .then(function (response) {
-                if (response.data.$context !== Registration.$context) {
+                if (response.data.$context !== JsonWebToken.$context) {
                     return false;
                 }
-                return true;
+                return new JsonWebToken(response.data.token);
             })
             .catch(function (httpError) {
                 throw HttpProblem.fromHttpError(httpError, 'Registration failed!');

@@ -7,19 +7,19 @@ var _ = require('lodash');
  * @constructor
  */
 function Spending(data) {
-    this.$id = null;
-    this.createdAt = null;
-    this.booked = null;
-    this.bookedAt = null;
-    this.type = null;
-    this.category = null;
-    this.amount = null;
-    this.title = null;
+    this.$id = undefined;
+    this.createdAt = undefined;
+    this.booked = undefined;
+    this.bookedAt = undefined;
+    this.type = undefined;
+    this.category = undefined;
+    this.amount = undefined;
+    this.title = undefined;
 
     if (data) {
         var self = this;
         _.forEach(this, function (value, key) {
-            self[key] = data[key] === undefined ? null : data[key];
+            self[key] = data[key] === undefined ? undefined : data[key];
         });
         this.createdAt = new Date(this.createdAt);
     }

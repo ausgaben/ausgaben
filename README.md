@@ -4,10 +4,11 @@
 
 ## Set up
 
+    # Install dependencies
+    npm install
     # Create database
     sudo su postgres
     createdb ausgaben
-    
     psql
     CREATE USER ausgaben;
     ALTER ROLE ausgaben WITH PASSWORD 'password';
@@ -24,4 +25,6 @@
     
 ## Run the app
 
-    npm start
+    make
+    npm run dev-server
+    

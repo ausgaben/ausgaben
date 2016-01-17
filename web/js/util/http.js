@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * @param {Token} token
+ * @param {JsonWebToken} token
  * @returns {{headers: {Authorization: string}}}
  */
 function auth(token) {

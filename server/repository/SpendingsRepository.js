@@ -14,7 +14,7 @@ SpendingsRepository.prototype.persist = function (entity) {
 };
 
 SpendingsRepository.prototype.spendingFromPeriodical = function (periodical) {
-    var spending = this.db.models['Spending'].build({
+    var spending = this.db.models.Spending.build({
         type: periodical.type,
         category: periodical.category,
         title: periodical.title,
