@@ -2,6 +2,7 @@
 
 var bluebird = require('bluebird'),
     jwt = require('jsonwebtoken'),
+    JsonWebToken = require('../../../web/js/model/jsonwebtoken'),
     contentType = require('../../../web/js/util/http').CONTENT_TYPE;
 
 module.exports = function (app, config, db, tokenAuth) {
@@ -32,10 +33,7 @@ module.exports = function (app, config, db, tokenAuth) {
             return res
                 .status(201)
                 .header('Content-Type', contentType)
-                .send({
-                    '$context': 'https://tools.ietf.org/html/rfc7519',
-                    token: token
-                });
+                .send(new JsonWebToken(token));
         }).catch(function (err) {
             if (err.name === 'SequelizeUniqueConstraintError') {
                 return res

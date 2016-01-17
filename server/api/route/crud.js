@@ -2,6 +2,7 @@
 
 var bluebird = require('bluebird'),
     _ = require('lodash'),
+    list = require('../../../web/js/model/list'),
     contentType = require('../../../web/js/util/http').CONTENT_TYPE;
 
 var entityUrl = function (entity, req) {
@@ -117,18 +118,14 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
                     countQuery,
                     model.findAll(q)
                 ).spread(function (count, entities) {
-                    var list = {
-                        '$context': 'https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#List',
-                        total: count,
-                        items: _.map(entities, function (entity) {
-                            var model = transformer(entity.get({plain: true}));
-                            model['$id'] = entityUrl(entity, req);
-                            return model;
-                        })
-                    };
+                    var items = _.map(entities, function (entity) {
+                        var model = transformer(entity.get({plain: true}));
+                        model['$id'] = entityUrl(entity, req);
+                        return model;
+                    });
                     res
                         .header('Content-Type', contentType)
-                        .send(list);
+                        .send(new list(count, items));
                 });
             }).catch(function (err) {
                 return next(err);
