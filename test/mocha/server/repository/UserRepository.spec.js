@@ -9,7 +9,7 @@ var db = require('../../../../server/config/sequelize'),
 describe('UsersRepository', function () {
     before(helper.clearDb);
 
-    var repository, month;
+    var repository;
 
     before(function () {
         repository = new Repository(db);

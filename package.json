@@ -49,8 +49,8 @@
     "test:api": "./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/yadda/\\*\\*/\\*.js",
     "test:backend": "./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/mocha/\\*\\*/\\*.js",
     "test:coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --require=server/server.js --timeout=1350 test/\\*\\*/\\*.js && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage",
-    "lint": "npm run lint:server && npm run lint:web",
-    "lint:server": "./node_modules/eslint/bin/eslint.js -c .eslintrc server util",
+    "lint": "npm run lint:backend && npm run lint:web",
+    "lint:backend": "./node_modules/eslint/bin/eslint.js -c .eslintrc server util test",
     "lint:web": "./node_modules/eslint/bin/eslint.js -c web/js/.eslintrc web/js"
   },
   "devDependencies": {

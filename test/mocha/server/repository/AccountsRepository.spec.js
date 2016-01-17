@@ -34,7 +34,7 @@ describe('AccountsRepository', function () {
                 return bluebird.join(
                     repository.persist(account1),
                     repository.persist(account2)
-                )
+                );
             })
             .then(function () {
                 account1.id.should.be.greaterThan(0);

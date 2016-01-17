@@ -1,7 +1,6 @@
 'use strict';
 
-var glob = require('glob'),
-    Yadda = require('yadda'),
+var Yadda = require('yadda'),
     toposort = require('toposort'),
     _ = require('lodash');
 Yadda.plugins.mocha.StepLevelPlugin.init();
