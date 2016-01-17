@@ -45,7 +45,7 @@ case 's:m':
     break;
 case 'token:verify':
     var jwt = require('jsonwebtoken');
-    var pubKey = fs.readFileSync(config.get('root') + '/data/ida_rsa.pub', 'utf8');
+    var pubKey = fs.readFileSync(config.get('root') + '/data/id_rsa.pub', 'utf8');
     jwt.verify(argv._[1], pubKey, {algorithms: ['RS256']}, function (err, decoded) {
         console.log(decoded);
         process.exit(0);

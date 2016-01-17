@@ -5,15 +5,13 @@ Feature: /api/account
 
         Given "application/vnd.ausgaben.v1+json; charset=utf-8" is the Accept header
         Given "application/vnd.ausgaben.v1+json; charset=utf-8" is the Content-Type header
-        Given "Bearer: {token}" is the Authentication header
+        Given "Bearer {token}" is the Authorization header
 
     Scenario: POST (create)
 
         Given this is the request body
         --------------
-        {
-            "name": "Account"
-        }
+        "name": "Account"
         --------------
         When I POST to /api/account
         Then the status code should be 201

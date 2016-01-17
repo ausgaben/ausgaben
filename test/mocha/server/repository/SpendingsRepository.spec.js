@@ -4,20 +4,25 @@ require('should');
 var db = require('../../../../server/config/sequelize'),
     Repository = require('../../../../server/repository/SpendingsRepository'),
     AccountsRepository = require('../../../../server/repository/AccountsRepository'),
+    UsersRepository = require('../../../../server/repository/UsersRepository'),
     bluebird = require('bluebird'),
     helper = require('../helper');
 
 describe('SpendingsRepository', function () {
     before(helper.clearDb);
 
-    var repository, accountsRepository;
+    var repository, accountsRepository, usersRepository;
 
     before(function () {
         repository = new Repository(db);
         accountsRepository = new AccountsRepository(db);
+        usersRepository = new UsersRepository(db);
     });
 
     it('should persist', function (done) {
+        var user = db.models['User'].build({
+            email: 'john.doe@example.com'
+        });
         var account = db.models['Account'].build({
             name: 'Account'
         });
@@ -35,7 +40,14 @@ describe('SpendingsRepository', function () {
             amount: 123456,
             starts: '2015-01-02'
         });
-        accountsRepository.persist(account)
+        usersRepository.persist(user)
+            .then(function () {
+                account.setCreator(user, {save: false});
+                spending1.setCreator(user, {save: false});
+                spending2.setCreator(user, {save: false});
+                return accountsRepository.persist(account);
+            })
+
             .then(function () {
                 spending1.setAccount(account, {save: false});
                 spending2.setAccount(account, {save: false});

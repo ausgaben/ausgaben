@@ -5,6 +5,7 @@ module.exports = function (sequelize, dataTypes) {
         email: {
             type: dataTypes.STRING(255),
             allowNull: false,
+            unique: true,
             validate: {
                 isEmail: true
             }
@@ -13,7 +14,9 @@ module.exports = function (sequelize, dataTypes) {
         tableName: 'User',
         associate: function (models) {
             var thisModel = models[this.name.singular];
-            thisModel.belongsToMany(models.Account, {through: 'UserAccounts'});
+            thisModel.belongsToMany(models.Account, {
+                through: 'UserAccounts'
+            });
         },
         repository: 'UsersRepository'
     });

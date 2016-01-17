@@ -9,9 +9,7 @@ Feature: /api/registration
 
         Given this is the request body
         --------------
-        {
-            "email": "john.doe@example.com"
-        }
+        "email": "mike.doe-{time}@example.com"
         --------------
         When I POST to /api/registration
         Then the status code should be 201
@@ -19,7 +17,7 @@ Feature: /api/registration
         And "$context" should equal "https://tools.ietf.org/html/rfc7519"
         And "token" should exist
         And I store "token" as "token"
-        And JWT sub should equal "john.doe@example.com"
+        And JWT sub should exist
         And JWT iss should equal "registration"
+        And JWT exp should be 30 minutes in the future
         And JWT registered should equal true
-

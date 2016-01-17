@@ -6,6 +6,8 @@
 
     # Create database
     sudo su postgres
+    createdb ausgaben
+    
     psql
     CREATE USER ausgaben;
     ALTER ROLE ausgaben WITH PASSWORD 'password';
@@ -13,7 +15,9 @@
     GRANT ALL PRIVILEGES ON DATABASE ausgaben TO ausgaben;
     # Init database
     node server/console.js sequelize:schema:sync
-
+    # To reset the database
+    sudo -u postgres /bin/bash -c 'dropdb ausgaben; createdb ausgaben' && node server/console.js sequelize:schema:sync
+    
 ## Run tests
 
     npm test

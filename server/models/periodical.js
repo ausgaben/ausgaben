@@ -55,6 +55,12 @@ module.exports = function (sequelize, dataTypes) {
                         allowNull: false
                     }
                 });
+                thisModel.belongsTo(models.User, {
+                    foreignKey: {
+                        allowNull: false
+                    },
+                    as: 'Creator'
+                });
             },
             repository: 'PeriodicalsRepository'
         });

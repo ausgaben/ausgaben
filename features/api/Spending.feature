@@ -5,20 +5,18 @@ Feature: /api/:account/spending
 
         Given "application/vnd.ausgaben.v1+json; charset=utf-8" is the Accept header
         Given "application/vnd.ausgaben.v1+json; charset=utf-8" is the Content-Type header
-        Given "Bearer: {token}" is the Authentication header
+        Given "Bearer {token}" is the Authorization header
 
     Scenario: POST (create)
 
         Given this is the request body
         --------------
-        {
         "type": "[type]",
         "category": "[category]",
         "title": "[title]",
         "amount": [amount],
         "booked": [booked],
         "bookedAt": "[bookedAt]"
-        }
         --------------
         When I POST to {account}/spending
         Then the status code should be 201

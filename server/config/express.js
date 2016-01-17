@@ -5,40 +5,48 @@
  */
 var bodyParser = require('body-parser'),
     MIME_TYPE = require('../../web/js/util/http').MIME_TYPE,
-    crud = require('../api/route/crud');
+    crud = require('../api/route/crud'),
+    passport = require('passport'),
+    BearerStrategy = require('passport-http-bearer').Strategy,
+    jwt = require('jsonwebtoken');
 
 /**
  * Handle all the express-stuff for the server
- *
- * @param  {[type]} app      [description]
- * @param  {[type]} database [description]
- * @return {[type]}          [description]
  */
-function initServer(app, database) {
+function initServer(app, config, database) {
     app.enable('trust proxy');
     app.use(bodyParser.json({type: MIME_TYPE}));
 
+    app.use(passport.initialize());
+    passport.use(new BearerStrategy(
+        function (token, cb) {
+            jwt.verify(token, config.get('public_key'), {algorithms: ['RS256']}, function (err, decoded) {
+                if (!decoded) {
+                    return cb(err);
+                }
+                return cb(null, decoded.sub, decoded);
+            });
+        }));
+    var tokenAuth = passport.authenticate('bearer', {session: false});
 
     require('../api/route/status')(app);
-    crud(app, database, 'Periodical', '/api/account/:account/');
-    crud(app, database, 'Spending', '/api/account/:account/');
-    crud(app, database, 'Account', '/api/');
-    require('../api/route/registration')(app, database);
+    crud(app, tokenAuth, database, 'Periodical', '/api/account/:account/');
+    crud(app, tokenAuth, database, 'Spending', '/api/account/:account/');
+    crud(app, tokenAuth, database, 'Account', '/api/');
+    require('../api/route/registration')(app, config, database, tokenAuth);
 
-    app.use(function (err, req, res) {
+    app.use(function (err, req, res, next) {
+        console.error(err.name);
         console.error(req.method + ' ' + req.url);
         console.error(err.message);
         console.error(err.stack);
         res.status(500).send(err);
+        next();
     });
 }
 /**
  * Export the whole initialization-process to the world as module 'express'
- *
- * @param  {[type]} app      [description]
- * @param  {[type]} database [description]
- * @return {[type]}          [description]
  */
-module.exports = function (app, database) {
-    initServer(app, database);
+module.exports = function (app, config, database) {
+    initServer(app, config, database);
 };

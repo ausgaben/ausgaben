@@ -14,7 +14,7 @@ var config = require('./config/config');
 
 console.error('Node', process.version);
 var app = express();
-require('./config/express')(app, db);
+require('./config/express')(app, config, db);
 
 if (config.get('environment') === 'development') {
     app.set('showStackError', true);

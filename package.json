@@ -32,6 +32,8 @@
     "material-design-icons": "^2.1.3",
     "nconf": "^0.8.2",
     "node-sass": "^3.4.2",
+    "passport": "^0.3.2",
+    "passport-http-bearer": "^1.0.1",
     "pg": "^4.4.0",
     "pg-hstore": "^2.3.2",
     "pg-native": "^1.8.1",
@@ -44,6 +46,8 @@
   "scripts": {
     "dev-server": "./node_modules/nodemon/bin/nodemon.js -e 'js,html,css' -w ./build -w ./server -w ./util -w ./config.json -w ./config.local.json -d 1 ./server/server.js --environment=development",
     "test": "./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/\\*\\*/\\*.js",
+    "test:api": "./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/yadda/\\*\\*/\\*.js",
+    "test:backend": "./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/mocha/\\*\\*/\\*.js",
     "test:coverage": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --require=server/server.js --timeout=1350 test/\\*\\*/\\*.js && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage",
     "lint": "npm run lint:server && npm run lint:web",
     "lint:server": "./node_modules/eslint/bin/eslint.js -c .eslintrc server util",

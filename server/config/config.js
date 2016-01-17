@@ -13,5 +13,6 @@ nconf.set('deployVersion', +new Date());
 nconf.set('version', require('../../package.json').version);
 nconf.set('app', require('../../package.json').name);
 nconf.set('root', path.normalize(__dirname + '/../..'));
+nconf.set('token_lifetime', 1800);
 
 module.exports = nconf;

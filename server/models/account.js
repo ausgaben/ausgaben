@@ -13,7 +13,15 @@ module.exports = function (sequelize, dataTypes) {
             tableName: 'Account',
             associate: function (models) {
                 var thisModel = models[this.name.singular];
-                thisModel.belongsToMany(models.User, {through: 'UserAccounts'});
+                thisModel.belongsTo(models.User, {
+                    foreignKey: {
+                        allowNull: false
+                    },
+                    as: 'Creator'
+                });
+                thisModel.belongsToMany(models.User, {
+                    through: 'UserAccounts'
+                });
             },
             repository: 'AccountsRepository'
         });

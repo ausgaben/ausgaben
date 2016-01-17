@@ -5,20 +5,18 @@ Feature: /api/:account/periodical
 
         Given "application/vnd.ausgaben.v1+json; charset=utf-8" is the Accept header
         Given "application/vnd.ausgaben.v1+json; charset=utf-8" is the Content-Type header
-        Given "Bearer: {token}" is the Authentication header
+        Given "Bearer {token}" is the Authorization header
 
     Scenario: POST (create)
 
         Given this is the request body
-    --------------
-    {
-    "type": "[type]",
-    "category": "[category]",
-    "title": "[title]",
-    "amount": [amount],
-    "starts": "[starts]"
-    }
-    --------------
+        --------------
+        "type": "[type]",
+        "category": "[category]",
+        "title": "[title]",
+        "amount": [amount],
+        "starts": "[starts]"
+        --------------
         When I POST to {account}/periodical
         Then the status code should be 201
         And the Location header should exist

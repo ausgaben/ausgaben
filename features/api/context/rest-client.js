@@ -12,7 +12,7 @@ var _ = require('lodash'),
 
 dictionary
     .define('json', /([^\u0000]*)/, function (data, done) {
-        done(null, JSON.parse(data));
+        done(null, data);
     })
     .define('num', /(\d+)/, Yadda.converters.integer)
 ;
@@ -26,32 +26,35 @@ function client(context) {
     return context.client;
 }
 
-function storage(store, context, name, value) {
+function storage(store, defaults, context, name, value) {
     if (!context[store]) {
-        context[store] = {};
+        context[store] = defaults;
     }
     if (value === undefined) {
+        if (name === undefined) {
+            return context[store];
+        }
         return context[store][name];
     }
     context[store][name] = value;
 }
 
-var header = storage.bind(null, 'headers');
-var data = storage.bind(null, 'data');
+var header = storage.bind(null, 'header', {});
+var data = storage.bind(null, 'data', {time: Date.now()});
 
 function template(str, data) {
-    return _.template(str, {interpolate: /{([\s\S]+?)}/g})(data);
+    return _.template(str, {interpolate: /\{([\s\S]+?)\}/g})(data);
 }
 
 function doRequest(context, method, endpoint, next) {
     var agent = client(context);
-    var url = template(endpoint, context.data);
-    console.log('(REST client)', method, url);
+    var url = template(endpoint, data(context));
     var request = context.request = agent[method.toLowerCase()](url.replace(testHost, ''));
-    _.forIn(context.headers, function (value, name) {
+    _.forIn(header(context), function (value, name) {
         request.set(name, value);
     });
-    request.send(JSON.stringify(context.body));
+    var body = template(context.body, data(context));
+    request.send(JSON.stringify(JSON.parse('{' + body + '}')));
     request.end(function (error, response) {
         context.response = response;
         next();
@@ -61,7 +64,16 @@ function doRequest(context, method, endpoint, next) {
 function checkJwtProperty(context, type, value, next) {
     expect(context.response.body['$context']).to.equal('https://tools.ietf.org/html/rfc7519');
     jwt.verify(context.response.body.token, config.get('public_key'), function (err, decoded) {
-        expect(decoded[type]).to.equal(value);
+        try {
+            if (typeof value === 'function') {
+                value(decoded[type]);
+            } else {
+                expect(decoded[type]).to.equal(value);
+            }
+
+        } catch (err) {
+            next(err);
+        }
     });
     next();
 }
@@ -70,7 +82,7 @@ module.exports = English.library(dictionary)
 
     .given('"$value" is the $header header', function (value, name, next) {
         var context = this.ctx;
-        header(context, name, value);
+        header(context, name, template(value, data(context)));
         next();
     })
 
@@ -99,8 +111,10 @@ module.exports = English.library(dictionary)
     .when('I follow the redirect', function (next) {
         var context = this.ctx;
         var agent = client(context);
-        console.log('(REST client)', 'GET', context.response.headers['location']);
-        var request = context.request = agent.get(context.response.headers['location'].replace(testHost, ''));
+        var request = context.request = agent.get(context.response.header['location'].replace(testHost, ''));
+        _.forIn(header(context), function (value, name) {
+            request.set(name, value);
+        });
         request.send();
         request.end(function (error, response) {
             context.response = response;
@@ -120,13 +134,13 @@ module.exports = English.library(dictionary)
 
     .then('the $header header should equal "$value"', function (name, value, next) {
         var context = this.ctx;
-        expect(context.response.headers[name.toLowerCase()]).to.equal(value);
+        expect(context.response.header[name.toLowerCase()]).to.equal(value);
         next();
     })
 
     .then('the $header header should exist', function (name, next) {
         var context = this.ctx;
-        expect(context.response.headers[name.toLowerCase()]).to.not.equal(undefined);
+        expect(context.response.header[name.toLowerCase()]).to.not.equal(undefined);
         next();
     })
 
@@ -166,6 +180,13 @@ module.exports = English.library(dictionary)
         next();
     })
 
+    .then('JWT $property should exist', function (property, next) {
+        var context = this.ctx;
+        checkJwtProperty(context, property, function (value) {
+            expect(value).to.not.equal(undefined);
+        }, next);
+    })
+
     .then('JWT $property should equal "$value"', function (property, value, next) {
         var context = this.ctx;
         checkJwtProperty(context, property, value, next);
@@ -173,7 +194,23 @@ module.exports = English.library(dictionary)
 
     .then(/JWT ([^ ]+) should equal (true|false)/, function (property, bool, next) {
         var context = this.ctx;
-        checkJwtProperty(context, property, bool, next);
+        checkJwtProperty(context, property, bool === 'true', next);
+    })
+
+    .then(/JWT ([^ ]+) should be ([0-9]+) ([a-z]+) in the (future|past)/, function (property, num, type, dir, next) {
+        var context = this.ctx;
+        var d = new Date();
+        var m = 1;
+        if (type.charAt(0) === 'm') {
+            m = 60;
+        }
+        if (type.charAt(0) === 'h') {
+            m = 3600;
+        }
+        var t = Math.floor(d.getTime() / 1000) + (dir === 'past' ? -1 : 1) * +num * m;
+        checkJwtProperty(context, property, function (value) {
+            expect(value).to.be.within(t - 1, t + 1);
+        }, next);
     })
 
 ;
