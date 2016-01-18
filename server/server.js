@@ -1,9 +1,9 @@
 'use strict';
 
-var bluebird = require('bluebird');
-bluebird.longStackTraces();
+var Promise = require('bluebird');
+Promise.longStackTraces();
 // promisify fs -> this works global
-bluebird.promisifyAll(require('fs'));
+Promise.promisifyAll(require('fs'));
 
 // replace the native url parser by a much faster one
 require('fast-url-parser').replace();
@@ -36,7 +36,7 @@ var keyFile = config.get('root') + '/data/id_rsa';
 var pubKeyFile = keyFile + '.pub';
 fs.lstatAsync(keyFile)
     .then(function () {
-        return bluebird.join(
+        return Promise.join(
             fs.readFileAsync(keyFile, 'utf8'),
             fs.readFileAsync(pubKeyFile, 'utf8')
         ).spread(function (privateKey, publicKey) {
@@ -48,7 +48,7 @@ fs.lstatAsync(keyFile)
         console.log('Generating RSA key pair …');
         var keypair = require('keypair');
         var pair = keypair({bits: 1024});
-        return bluebird.join(
+        return Promise.join(
             fs.writeFileAsync(pubKeyFile, pair.public),
             fs.writeFileAsync(keyFile, pair.private)
         ).then(function () {

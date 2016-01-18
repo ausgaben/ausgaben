@@ -1,7 +1,8 @@
 'use strict';
 
 var nconf = require('nconf'),
-    path = require('path');
+    path = require('path'),
+    pjson = require('../../package.json');
 
 nconf
     .file('local', {file: 'config.local.json'})   // read local overwrite
@@ -10,8 +11,9 @@ nconf
     .file('default', {file: 'config.json'});      // read defaults
 
 nconf.set('deployVersion', +new Date());
-nconf.set('version', require('../../package.json').version);
-nconf.set('app', require('../../package.json').name);
+nconf.set('version', pjson.version);
+nconf.set('app', pjson.name);
+nconf.set('description', pjson.description);
 nconf.set('root', path.normalize(__dirname + '/../..'));
 nconf.set('token_lifetime', 1800);
 

@@ -28,3 +28,9 @@
     make
     npm run dev-server
     
+### E-Mail sending
+
+Emails are sent via [node-templater-mailer-microservice](https://github.com/nametacker/node-templater-mailer-microservice).
+To setup up the service, run
+
+    node server/console.js config:templatemailer

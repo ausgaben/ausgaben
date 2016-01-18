@@ -2,6 +2,13 @@
     "environment": "production",
     "host": "localhost",
     "port": 3000,
+    "httpHost": "http://localhost:3000",
+    "templateMailer": {
+        "api": "http://127.0.0.1:3567",
+        "dsn": "smtp://john:doe@example.com:25",
+        "email": "ausgaben@example.com",
+        "name": "Ausgaben"
+    },
     "postgres": {
         "name": "ausgaben",
         "user": "ausgaben",

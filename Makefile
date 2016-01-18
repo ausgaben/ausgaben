@@ -1,6 +1,9 @@
 .PHONY: build development
 
-build: build/css/styles.min.css build/js/app.min.js build/index.html build/favicon.ico
+development:
+	ENV=development make build
+
+build: build/css/styles.min.css build/js/app.min.js build/index.html build/favicon.ico build/emails/*.html
 
 build/js:
 	mkdir -p build/js
@@ -34,7 +37,7 @@ endif
 
 build/index.html: web/*.html web/includes/*.html util/build-views.js build/img
 	mkdir -p build/view/directive
-	node util/build-views.js
+	node util/build-views.js -s ./web -t ./build
 
 build/img: web/img/*.* web/img/**/*.*
 	mkdir -p build/img
@@ -43,5 +46,9 @@ build/img: web/img/*.* web/img/**/*.*
 build/favicon.ico: build/img
 	cp web/img/favicon/favicon.ico build/favicon.ico
 
-development:
-	ENV=development make build
+# Emails
+
+build/emails/*.html: emails/*.*
+	mkdir -p build/emails
+	node util/build-views.js -s ./emails -t ./build/emails
+	cp emails/*.png build/emails

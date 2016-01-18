@@ -13,4 +13,15 @@ UsersRepository.prototype.persist = function (entity) {
     });
 };
 
+/**
+ * @param {string} email
+ * @returns {bluebird.Promise}
+ */
+UsersRepository.prototype.findByEmail = function (email) {
+    var db = this.db;
+    return db.models.User.find({where: {
+        email: email
+    }});
+};
+
 module.exports = UsersRepository;

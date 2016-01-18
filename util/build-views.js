@@ -6,15 +6,26 @@ Promise.promisifyAll(require('fs'));
 var glob = require('glob'),
     fs = require('fs'),
     _ = require('lodash'),
-    packageJson = require('../package.json');
+    config = require('../server/config/config');
+
+var argv = require('yargs')
+    .usage('Usage: $0 -s [source] -t [target]')
+    .demand(['s', 't'])
+    .alias('s', 'source')
+    .alias('t', 'target')
+    .help('h')
+    .alias('h', 'help')
+        .argv
+    ;
 
 function run() {
 
-    var config = {
+    var templatedata = {
         version: +new Date(),
-        tag: packageJson.version,
-        name: packageJson.name,
-        description: packageJson.description
+        tag: config.get('version'),
+        name: config.get('app'),
+        description: config.get('description'),
+        httpHost: config.get('httpHost')
     };
 
     var includes = {};
@@ -22,19 +33,19 @@ function run() {
 
     console.log();
     console.log('Building template files …');
-    console.log(' public config:');
-    _.map(config, function (value, key) {
+    console.log(' data:');
+    _.map(templatedata, function (value, key) {
         console.log('  ' + key + ': ' + value);
     });
 
     // Build includes
     var globAsync = Promise.promisify(glob);
-    return Promise.join(globAsync('./web/includes/*.html'), globAsync('./web/js/directives/*.html'))
+    return Promise.join(globAsync(argv.s + '/includes/*.html'), globAsync(argv.s + '/js/directives/*.html'))
         .spread(function (includeTemplates, directiveTemplates) {
             return Promise.join(
                 Promise.map(includeTemplates, function (file) {
                     return fs.readFileAsync(file, 'utf8').then(function (data) {
-                        var trg = file.replace('./web/includes/', '');
+                        var trg = file.replace(argv.s + '/includes/', '');
                         trg = trg.replace(/\.html$/, '');
                         trg = trg.replace(/\//, '.');
                         includes[trg] = data;
@@ -42,7 +53,7 @@ function run() {
                 }),
                 Promise.map(directiveTemplates, function (file) {
                     return fs.readFileAsync(file, 'utf8').then(function (data) {
-                        var trg = file.replace('./web/js/directives/', '');
+                        var trg = file.replace(argv.s + '/js/directives/', '');
                         trg = trg.replace(/\.html$/, '');
                         trg = trg.replace(/\//, '.');
                         directives[trg] = data;
@@ -51,13 +62,15 @@ function run() {
             );
         })
         .then(function () {
-            var src = './web/index.html';
-            return fs.readFileAsync(src, 'utf8').then(function (data) {
-                data = _.template(data)({data: config, includes: includes, directives: directives});
-                var trg = './build/' + src.replace('./web/', '');
-                console.log(src + ' -> ' + trg);
-                return fs.writeFileAsync(trg, data);
-            });
+            return globAsync(argv.s + '/*.html')
+                .map(function (src) {
+                    return fs.readFileAsync(src, 'utf8').then(function (data) {
+                        data = _.template(data)({data: templatedata, includes: includes, directives: directives});
+                        var trg = argv.t + '/' + src.replace(argv.s + '/', '');
+                        console.log(src + ' -> ' + trg);
+                        return fs.writeFileAsync(trg, data);
+                    });
+                });
         });
 }
 
