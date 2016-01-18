@@ -9,6 +9,7 @@ Promise.promisifyAll(require('fs'));
 require('fast-url-parser').replace();
 
 var db = require('./config/sequelize');
+var repos = require('./config/repositories');
 var express = require('express');
 var config = require('./config/config');
 
@@ -34,7 +35,7 @@ module.exports = app;
 var fs = require('fs');
 var keyFile = config.get('root') + '/data/id_rsa';
 var pubKeyFile = keyFile + '.pub';
-fs.lstatAsync(keyFile)
+var pgpKeys = fs.lstatAsync(keyFile)
     .then(function () {
         return Promise.join(
             fs.readFileAsync(keyFile, 'utf8'),
@@ -60,6 +61,17 @@ fs.lstatAsync(keyFile)
 
 // Event listening
 var emitter = require('./emitter');
-emitter.on('login_link_requested', function (email) {
-    console.log('login_link_requested', email);
+
+// Tasks
+var SendLoginLinkTask = require('./task/SendLoginLinkTask');
+pgpKeys.then(function () {
+    var sendLoginLinkTask = new SendLoginLinkTask(repos.User, config.get('private_key'), config.get('token_lifetime'));
+    emitter.on('login_link_requested', function (email) {
+        console.log('login_link_requested', email);
+        sendLoginLinkTask
+            .execute(email)
+            .catch(function (err) {
+                console.error(err);
+            });
+    });
 });

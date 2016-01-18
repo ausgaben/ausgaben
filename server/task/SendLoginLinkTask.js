@@ -35,10 +35,11 @@ SendLoginLinkTask.prototype.execute = function (email) {
                 }
             );
 
-            return mailer.send('ausgaben', 'ausgabenlogin', email, email, {token: token});
-        })
-        .catch(function (err) {
-            throw new Error(err.error.detail);
+            return mailer
+                .send('ausgaben', 'ausgabenlogin', email, email, {token: token})
+                .catch(function (err) {
+                    throw new Error(err.error.detail);
+                });
         });
 };
 
