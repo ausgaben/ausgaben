@@ -1,6 +1,6 @@
 'use strict';
 
-var TemplateMailerService = require('../service/template-mailer'),
+var TemplateMailerService = require('node-templater-mailer-microservice-client'),
     config = require('../config/config'),
     TemplateMailerConfig = config.get('templateMailer'),
     mailer = new TemplateMailerService(TemplateMailerConfig.api),

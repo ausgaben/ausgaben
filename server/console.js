@@ -68,7 +68,7 @@ case 'user:loginlink':
     break;
 case 'config:templatemailer':
     // E-Mail setup
-    var TemplateMailerService = require('./service/template-mailer'),
+    var TemplateMailerService = require('node-templater-mailer-microservice-client'),
         TemplateMailerConfig = config.get('templateMailer'),
         mailer = new TemplateMailerService(TemplateMailerConfig.api);
     var globAsync = bluebird.promisify(require('glob'));
