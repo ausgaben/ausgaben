@@ -1,6 +1,6 @@
 {
   "name": "ausgaben",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "dependencies": {
     "abbrev": {
       "version": "1.0.7",
@@ -329,7 +329,7 @@
     "bootstrap": {
       "version": "4.0.0-alpha.2",
       "from": "git://github.com/twbs/bootstrap.git#v4-dev",
-      "resolved": "git://github.com/twbs/bootstrap.git#3ab7f6310f7f33d20da3b551d5f3ad7b66a30760"
+      "resolved": "git://github.com/twbs/bootstrap.git#bd8c03bfc660d43c12155e81cce5dcbc6c391cf5"
     },
     "brace-expansion": {
       "version": "1.1.2",
@@ -3360,6 +3360,18 @@
       "from": "restore-cursor@>=1.0.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/restore-cursor/-/restore-cursor-1.0.1.tgz"
     },
+    "retry-as-promised": {
+      "version": "2.0.0",
+      "from": "retry-as-promised@>=2.0.0 <3.0.0",
+      "resolved": "https://registry.npmjs.org/retry-as-promised/-/retry-as-promised-2.0.0.tgz",
+      "dependencies": {
+        "bluebird": {
+          "version": "2.10.2",
+          "from": "bluebird@>=2.9.27 <3.0.0",
+          "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.10.2.tgz"
+        }
+      }
+    },
     "right-align": {
       "version": "0.1.3",
       "from": "right-align@>=0.1.1 <0.2.0",
@@ -3446,14 +3458,14 @@
       }
     },
     "sequelize": {
-      "version": "3.17.3",
-      "from": "sequelize@3.17.3",
-      "resolved": "https://registry.npmjs.org/sequelize/-/sequelize-3.17.3.tgz",
+      "version": "3.18.0",
+      "from": "sequelize@3.18.0",
+      "resolved": "https://registry.npmjs.org/sequelize/-/sequelize-3.18.0.tgz",
       "dependencies": {
         "generic-pool": {
-          "version": "2.3.0",
-          "from": "generic-pool@2.3.0",
-          "resolved": "https://registry.npmjs.org/generic-pool/-/generic-pool-2.3.0.tgz"
+          "version": "2.4.0",
+          "from": "generic-pool@2.4.0",
+          "resolved": "https://registry.npmjs.org/generic-pool/-/generic-pool-2.4.0.tgz"
         },
         "lodash": {
           "version": "3.10.1",
@@ -3979,9 +3991,9 @@
       "resolved": "https://registry.npmjs.org/validate-npm-package-license/-/validate-npm-package-license-3.0.1.tgz"
     },
     "validator": {
-      "version": "4.5.0",
+      "version": "4.5.1",
       "from": "validator@>=4.0.4 <5.0.0",
-      "resolved": "https://registry.npmjs.org/validator/-/validator-4.5.0.tgz"
+      "resolved": "https://registry.npmjs.org/validator/-/validator-4.5.1.tgz"
     },
     "vary": {
       "version": "1.0.1",
