@@ -40,9 +40,9 @@
       "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-1.0.0.tgz"
     },
     "angular": {
-      "version": "1.4.8",
-      "from": "angular@latest",
-      "resolved": "https://registry.npmjs.org/angular/-/angular-1.4.8.tgz"
+      "version": "1.4.9",
+      "from": "angular@1.4.9",
+      "resolved": "https://registry.npmjs.org/angular/-/angular-1.4.9.tgz"
     },
     "angular-bluebird-promises": {
       "version": "1.0.1",
