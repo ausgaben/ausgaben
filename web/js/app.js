@@ -9,6 +9,7 @@ var app = require('angular')
         require('angular-bluebird-promises'),
         'ausgabenConfigModule',
         'ausgabenDirectiveModule',
+        'ausgabenFilterModule',
         'ausgabenServiceModule'
     ]);
 
@@ -23,4 +24,5 @@ app
 ;
 require('./directives/index');
 require('./services/index');
+require('./filters/index');
 require('./controllers/index')(app);

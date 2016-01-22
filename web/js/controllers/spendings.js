@@ -8,14 +8,14 @@ module.exports = function (app) {
         .config(['$stateProvider', function ($stateProvider) {
             $stateProvider
                 .state('spendings', {
-                    url: '/account/:account/spendings',
+                    url: '/account/:name/spendings?id',
                     templateUrl: '/view/spendings.html',
                     controllerAs: 'vm',
                     controller: [
-                        'account', 'AuthorizedSpendingService', '$state',
-                        function (account, AuthorizedSpendingService, $state) {
+                        'AuthorizedAccountService', 'AuthorizedSpendingService', '$state', '$stateParams',
+                        function (AuthorizedAccountService, AuthorizedSpendingService, $state, $stateParams) {
                             var vm = {
-                                account: account,
+                                account: undefined,
                                 spendings: [],
                                 p: new HttpProgress()
                             };
@@ -41,15 +41,24 @@ module.exports = function (app) {
                                     return;
                                 }
                                 vm.p.activity();
-                                AuthorizedSpendingService.list()
-                                    .then(function (list) {
-                                        vm.p.success();
-                                        vm.spendings = list.items;
+
+                                AuthorizedAccountService.get(atob($stateParams.id))
+                                    .then(function (account) {
+                                        vm.account = account;
+                                        return account.$links[Spending.$context].list;
+                                    })
+                                    .then(function (spendingLink) {
+                                        AuthorizedSpendingService.list(spendingLink)
+                                            .then(function (list) {
+                                                vm.p.success();
+                                                vm.spendings = list.items;
+                                            });
                                     })
                                     .catch(function (httpProblem) {
                                         vm.p.error(httpProblem);
                                         throw httpProblem;
-                                    });
+                                    })
+                                ;
                             };
                             vm.refresh();
 
@@ -57,12 +66,13 @@ module.exports = function (app) {
                         }
                     ],
                     resolve: {
-                        account: [
-                            'ClientStorageService', 'AccountService', '$stateParams',
-                            function (ClientStorageService, AccountService, $stateParams) {
+                        AuthorizedAccountService: [
+                            'ClientStorageService', 'AccountService', function (ClientStorageService, AccountService) {
                                 return ClientStorageService.get('token')
                                     .then(function (token) {
-                                        return AccountService.get(token, $stateParams.account);
+                                        return {
+                                            get: AccountService.get.bind(AccountService, token)
+                                        };
                                     });
                             }
                         ],
