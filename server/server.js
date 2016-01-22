@@ -64,20 +64,22 @@ var pgpKeys = fs.lstatAsync(keyFile)
 var emitter = require('./emitter');
 
 // Tasks
-var SendLoginLinkTask = require('./task/SendLoginLinkTask');
-pgpKeys.then(function () {
-    var sendLoginLinkTask = new SendLoginLinkTask(
-        repos.User,
-        config.get('private_key'),
-        config.get('token_lifetime'),
-        jsonld
-    );
-    emitter.on('login_link_requested', function (email) {
-        console.log('login_link_requested', email);
-        sendLoginLinkTask
-            .execute(email)
-            .catch(function (err) {
-                console.error(err);
-            });
+if (config.get('environment') !== 'testing') {
+    var SendLoginLinkTask = require('./task/SendLoginLinkTask');
+    pgpKeys.then(function () {
+        var sendLoginLinkTask = new SendLoginLinkTask(
+            repos.User,
+            config.get('private_key'),
+            config.get('token_lifetime'),
+            jsonld
+        );
+        emitter.on('login_link_requested', function (email) {
+            console.log('login_link_requested', email);
+            sendLoginLinkTask
+                .execute(email)
+                .catch(function (err) {
+                    console.error(err);
+                });
+        });
     });
-});
+}

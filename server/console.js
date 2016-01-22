@@ -8,7 +8,9 @@ var db = require('./config/sequelize'),
     yargs = require('yargs'),
     bluebird = require('bluebird'),
     _ = require('lodash'),
-    config = require('./config/config');
+    config = require('./config/config'),
+    JSONLD = require('./api/jsonld'),
+    jsonld = JSONLD(config.get('httpHost'));
 
 bluebird.promisifyAll(fs);
 
@@ -57,7 +59,7 @@ case 'token:verify':
     break;
 case 'user:loginlink':
     var privKey = fs.readFileSync(config.get('root') + '/data/id_rsa', 'utf8');
-    var loginLinkTask = new SendLoginLinkTask(repos.User, privKey, config.get('token_lifetime'));
+    var loginLinkTask = new SendLoginLinkTask(repos.User, privKey, config.get('token_lifetime'), jsonld);
     loginLinkTask.execute(argv.email).then(function () {
         console.log('Login link sent to ' + argv.email);
         process.exit(0);
