@@ -31,9 +31,10 @@ HttpProblem.prototype.toString = function () {
 HttpProblem.$context = 'https://www.ietf.org/id/draft-ietf-appsawg-http-problem-01.txt';
 
 HttpProblem.fromHttpError = function (httpError, detail) {
-    if (httpError.data.$context === HttpProblem.$context) {
-        detail += ' (' + httpError.data.detail + ')';
-        return new HttpProblem(httpError.data.type, httpError.data.title, httpError.data.status, detail);
+    var data = httpError.data || {};
+    if (data.$context === HttpProblem.$context) {
+        detail += ' (' + data.detail + ')';
+        return new HttpProblem(data.type, data.title, data.status, detail);
     }
     var statusText = httpError.status > 1 ? httpError.statusText : 'Connection failed';
     var url = 'https://github.com/ausgaben/ausgaben-node/wiki/HttpProblem#' +

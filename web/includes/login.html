@@ -46,7 +46,7 @@
                     <button type="submit"
                             class="btn btn-primary"
                             data-ng-disabled="form.$invalid || vm.p.$active || vm.initializing"
-                            data-ng-click="vm.submit(data)">
+                            data-ng-click="vm.submit(data); data.email = undefined;">
                         <i class="material-icons" data-ng-show="vm.p.$pristine">send</i>
                         <i class="material-icons spin" data-ng-show="vm.p.$active">hourglass_empty</i>
                         <i class="material-icons" data-ng-show="vm.p.$success">check_ok</i>
