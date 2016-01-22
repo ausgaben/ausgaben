@@ -146,6 +146,7 @@ module.exports = English.library(dictionary)
 
     .then('"$node" should equal "$value"', function (node, value, next) {
         var context = this.ctx;
+        value = template(value, data(context));
         expect(context.response.body[node]).to.equal(value);
         next();
     })
@@ -182,6 +183,7 @@ module.exports = English.library(dictionary)
 
     .then(/"([^"]+)" of the ([0-9]+)[a-z]+ item should equal "([^"]+)"/, function (node, num, value, next) {
         var context = this.ctx;
+        value = template(value, data(context));
         expect(context.response.body.items[num - 1][node]).to.equal(value);
         next();
     })
@@ -195,6 +197,7 @@ module.exports = English.library(dictionary)
 
     .then('JWT $property should equal "$value"', function (property, value, next) {
         var context = this.ctx;
+        value = template(value, data(context));
         checkJwtProperty(context, property, value, next);
     })
 
@@ -217,6 +220,12 @@ module.exports = English.library(dictionary)
         checkJwtProperty(context, property, function (value) {
             expect(value).to.be.within(t - 1, t + 1);
         }, next);
+    })
+
+    .then('I parse JWT token into "$name"', function (name, next) {
+        var context = this.ctx;
+        data(context, 'jwt', JSON.parse(new Buffer(context.response.body.token.split('.')[1], 'base64').toString('binary')));
+        next();
     })
 
 ;

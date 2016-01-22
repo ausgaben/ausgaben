@@ -17,6 +17,7 @@ Feature: /api/registration
         And "$context" should equal "https://tools.ietf.org/html/rfc7519"
         And "token" should exist
         And I store "token" as "token"
+        And I parse JWT token into "jwt"
         And JWT sub should exist
         And JWT iss should equal "registration"
         And JWT exp should be 30 minutes in the future

@@ -2,10 +2,11 @@
 
 var bluebird = require('bluebird'),
     jwt = require('jsonwebtoken'),
+    User = require('../../../web/js/model/user'),
     JsonWebToken = require('../../../web/js/model/jsonwebtoken'),
     contentType = require('../../../web/js/util/http').CONTENT_TYPE;
 
-module.exports = function (app, config, db) {
+module.exports = function (app, config, db, jsonld) {
     app.post('/api/registration', function (req, res, next) {
 
         var entity;
@@ -25,7 +26,7 @@ module.exports = function (app, config, db) {
                 {
                     algorithm: 'RS256',
                     issuer: 'registration',
-                    subject: entity.get('id'),
+                    subject: jsonld.createId(User.$context, entity.get('id')),
                     expiresIn: config.get('token_lifetime')
                 }
             );

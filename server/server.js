@@ -12,10 +12,11 @@ var db = require('./config/sequelize');
 var repos = require('./config/repositories');
 var express = require('express');
 var config = require('./config/config');
+var JSONLD = require('./api/jsonld');
+var jsonld = JSONLD(config.get('httpHost'));
 
-console.error('Node', process.version);
 var app = express();
-require('./config/express')(app, config, db);
+require('./config/express')(app, config, db, jsonld);
 
 if (config.get('environment') === 'development') {
     app.set('showStackError', true);
@@ -65,7 +66,12 @@ var emitter = require('./emitter');
 // Tasks
 var SendLoginLinkTask = require('./task/SendLoginLinkTask');
 pgpKeys.then(function () {
-    var sendLoginLinkTask = new SendLoginLinkTask(repos.User, config.get('private_key'), config.get('token_lifetime'));
+    var sendLoginLinkTask = new SendLoginLinkTask(
+        repos.User,
+        config.get('private_key'),
+        config.get('token_lifetime'),
+        jsonld
+    );
     emitter.on('login_link_requested', function (email) {
         console.log('login_link_requested', email);
         sendLoginLinkTask

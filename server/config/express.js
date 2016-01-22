@@ -9,12 +9,10 @@ var bodyParser = require('body-parser'),
     crud = require('../api/route/crud'),
     passport = require('passport'),
     BearerStrategy = require('passport-http-bearer').Strategy,
+    User = require('../../web/js/model/user'),
     jwt = require('jsonwebtoken');
 
-/**
- * Handle all the express-stuff for the server
- */
-function initServer(app, config, database) {
+module.exports = function (app, config, database, jsonld) {
     app.enable('trust proxy');
     app.use(bodyParser.json({type: MIME_TYPE}));
 
@@ -25,7 +23,7 @@ function initServer(app, config, database) {
                 if (!decoded) {
                     return cb(err);
                 }
-                return cb(null, decoded.sub, decoded);
+                return cb(null, jsonld.parseId(User.$context, decoded.sub), decoded);
             });
         }));
     var tokenAuth = passport.authenticate('bearer', {session: false});
@@ -34,9 +32,10 @@ function initServer(app, config, database) {
     crud(app, tokenAuth, database, 'Periodical', '/api/account/:account/');
     crud(app, tokenAuth, database, 'Spending', '/api/account/:account/');
     crud(app, tokenAuth, database, 'Account', '/api/');
-    require('../api/route/registration')(app, config, database, tokenAuth);
+    require('../api/route/registration')(app, config, database, jsonld);
     require('../api/route/token')(app, config, database, tokenAuth);
     require('../api/route/login')(app, config, database);
+    require('../api/route/user')(app, config, database, tokenAuth, jsonld);
 
     app.use(function (err, req, res, next) {
         if (err.name === 'TokenExpiredError') {
@@ -55,10 +54,4 @@ function initServer(app, config, database) {
         res.status(500).send(err);
         next();
     });
-}
-/**
- * Export the whole initialization-process to the world as module 'express'
- */
-module.exports = function (app, config, database) {
-    initServer(app, config, database);
 };

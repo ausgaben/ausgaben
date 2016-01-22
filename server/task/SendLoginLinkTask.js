@@ -2,14 +2,16 @@
 
 var TemplateMailerService = require('node-templater-mailer-microservice-client'),
     config = require('../config/config'),
+    User = require('../../web/js/model/user'),
     TemplateMailerConfig = config.get('templateMailer'),
     mailer = new TemplateMailerService(TemplateMailerConfig.api),
     jwt = require('jsonwebtoken');
 
-var SendLoginLinkTask = function (usersRepository, privateKey, lifetime) {
+var SendLoginLinkTask = function (usersRepository, privateKey, lifetime, jsonld) {
     this.usersRepository = usersRepository;
     this.privateKey = privateKey;
     this.lifetime = lifetime;
+    this.jsonld = jsonld;
 };
 
 /**
@@ -30,7 +32,7 @@ SendLoginLinkTask.prototype.execute = function (email) {
                 {
                     algorithm: 'RS256',
                     issuer: 'loginlinktask',
-                    subject: user.get('id'),
+                    subject: self.jsonld.createId(User.$context, user.get('id')),
                     expiresIn: self.lifetime
                 }
             );
