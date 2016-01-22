@@ -12,6 +12,12 @@
                     </h1>
                 </div>
                 <div class="card-block">
+                    <div class="alert alert-success" role="alert" data-ng-show="vm.p.$success">
+                        <button type="button" class="close" aria-label="Close" data-ng-click="vm.p.reset()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        We've sent you a login link. Please check your email inbox for <strong>%%data.email%%</strong>.
+                    </div>
                     <p class="card-text">
                         Please enter your email address and we will send you a login link.<br>
                         <small>You don't have an account you can <a data-ui-sref="register">create one here</a>.</small>

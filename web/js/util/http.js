@@ -26,12 +26,7 @@ function accept() {
 }
 
 function HttpProgress() {
-    this.$pristine = true;
-    this.$active = false;
-    this.$done = false;
-    this.$error = false;
-    this.$success = false;
-    this.$problem = null;
+    this.reset();
 }
 
 HttpProgress.prototype.activity = function () {
@@ -71,6 +66,15 @@ HttpProgress.prototype.error = function (httpProblem) {
 
 HttpProgress.prototype.success = function () {
     done(this);
+};
+
+HttpProgress.prototype.reset = function () {
+    this.$pristine = true;
+    this.$active = false;
+    this.$done = false;
+    this.$error = false;
+    this.$success = false;
+    this.$problem = null;
 };
 
 module.exports = {

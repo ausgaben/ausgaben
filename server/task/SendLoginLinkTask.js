@@ -35,8 +35,13 @@ SendLoginLinkTask.prototype.execute = function (email) {
                 }
             );
 
+            var data = {
+                token: token,
+                lifetime: self.lifetime / 60
+            };
+
             return mailer
-                .send('ausgaben', 'ausgabenlogin', email, email, {token: token})
+                .send('ausgaben', 'ausgabenlogin', email, email, data)
                 .catch(function (err) {
                     throw new Error(err.error.detail);
                 });
