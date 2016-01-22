@@ -3,7 +3,8 @@
 var bluebird = require('bluebird'),
     _ = require('lodash'),
     list = require('../../../web/js/model/list'),
-    contentType = require('../../../web/js/util/http').CONTENT_TYPE;
+    contentType = require('../../../web/js/util/http').CONTENT_TYPE,
+    errors = require('./errors');
 
 var entityUrl = function (entity, req) {
     return req.protocol + '://' + req.get('host') + req.url + '/' + entity.id;
@@ -25,7 +26,7 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
             var parentId = req.params[parentParam.substr(1)];
             return db.models[parentClass].findById(+parentId).then(function (entity) {
                 if (entity === null) {
-                    throw new Error('Unkown ' + parentClass + ': ' + parentId);
+                    throw new errors.EntityNotFoundError(parentClass, parentId);
                 }
                 return bluebird.try(function () {
                     if (entity.getUsers) {
@@ -41,7 +42,7 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
                         parents[parentClass] = entity;
                         return;
                     }
-                    throw new Error('Not allowed.');
+                    throw new errors.AccessDeniedError(req.url);
                 });
             });
         }).then(function () {
@@ -133,11 +134,10 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
     });
 
     app.get(prefix + modelName.toLowerCase() + '/:id', tokenAuth, function (req, res, next) {
-
         bluebird.try(function () {
-            db.models[modelName].find({where: {id: req.params.id}}).then(function (entity) {
+            return db.models[modelName].find({where: {id: req.params.id}}).then(function (entity) {
                 if (entity === null) {
-                    throw new Error('Unkown entity: ' + req.url);
+                    throw new errors.EntityNotFoundError(modelName.toLowerCase(), req.url);
                 }
                 var item = transformer(entity.get({plain: true}));
                 item.$id = req.url;

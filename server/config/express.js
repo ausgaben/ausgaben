@@ -38,11 +38,20 @@ module.exports = function (app, config, database, jsonld) {
     require('../api/route/user')(app, config, database, tokenAuth, jsonld);
 
     app.use(function (err, req, res, next) {
-        if (err.name === 'TokenExpiredError') {
+        if (err.name === 'TokenExpiredError' || err.name === 'AccessDeniedError') {
             res.status(403)
                 .send(
                     new HttpProblem(
                         'https://github.com/ausgaben/ausgaben-node/wiki/HttpProblem#403', err.name, 403, err.message
+                    )
+                );
+            return next();
+        }
+        if (err.name === 'EntityNotFoundError') {
+            res.status(404)
+                .send(
+                    new HttpProblem(
+                        'https://github.com/ausgaben/ausgaben-node/wiki/HttpProblem#404', err.name, 404, err.message
                     )
                 );
             return next();

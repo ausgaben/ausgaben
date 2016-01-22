@@ -16,3 +16,9 @@ Feature: /api/user/:id
         And "$context" should equal "https://github.com/ausgaben/ausgaben-node/wiki/JsonLD#User"
         And "$id" should equal "{jwt.sub}"
         And "email" should equal "mike.doe-{time}@example.com"
+
+    Scenario: GET (account that is not me)
+
+        When I GET /api/user/1234567890
+        Then the status code should be 403
+

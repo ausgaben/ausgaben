@@ -1,15 +1,20 @@
 'use strict';
 
 var transformer = require('../../transformer/user'),
-    contentType = require('../../../web/js/util/http').CONTENT_TYPE;
+    contentType = require('../../../web/js/util/http').CONTENT_TYPE,
+    errors = require('./errors');
 
 module.exports = function (app, config, db, tokenAuth, jsonld) {
-    app.get('/api/user/:id', tokenAuth, function (req, res) {
+    app.get('/api/user/:id', tokenAuth, function (req, res, next) {
 
-        db.models.User.find({where: {id: req.user}}) // only fetch the current user profile
+        if (req.params.id !== req.user) {
+            throw new errors.AccessDeniedError('User', req.url);
+        }
+
+        return db.models.User.find({where: {id: req.user}}) // only fetch the current user profile
             .then(function (user) {
                 if (user === null) {
-                    throw new Error('Unkown entity: ' + req.url);
+                    throw new errors.EntityNotFoundError('User', req.url);
                 }
 
                 var model = transformer(user.get({plain: true}));
@@ -17,6 +22,9 @@ module.exports = function (app, config, db, tokenAuth, jsonld) {
                 res
                     .header('Content-Type', contentType)
                     .send(model);
+            })
+            .catch(function (err) {
+                return next(err);
             });
     });
 };
