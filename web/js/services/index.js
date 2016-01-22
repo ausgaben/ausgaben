@@ -8,13 +8,16 @@ require('angular')
     .factory('LoginService', ['$http', function ($http) {
         return require('./login')($http);
     }])
-    .factory('ClientStorageService', ['$window', function ($window) {
-        return require('./client-storage')($window);
+    .factory('ClientStorageService', ['$window', '$rootScope', function ($window, $rootScope) {
+        return require('./client-storage')($window, $rootScope);
     }])
     .factory('AccountService', ['$http', function ($http) {
         return require('./account')($http);
     }])
     .factory('SpendingService', ['$http', function ($http) {
         return require('./spending')($http);
+    }])
+    .factory('UserService', ['$http', function ($http) {
+        return require('./user')($http);
     }])
 ;

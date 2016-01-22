@@ -12,7 +12,7 @@ module.exports = function (app) {
                                 $state.go('login');
                             });
                     }],
-                    template: 'TODO'
+                    template: '<!-- blank -->'
                 });
         }])
     ;

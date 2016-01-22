@@ -44,12 +44,21 @@ module.exports = function (app) {
                         '$state',
                         '$stateParams',
                         function (ClientStorageService, $state, $stateParams) {
+                            var vm = {
+                                initializing: true
+                            };
                             var token = new JsonWebToken($stateParams.token);
-                            ClientStorageService.set('token', token)
-                                .then(function () {
-                                    $state.go('accounts');
-                                });
-                            return {};
+                            vm.expired = token.exp.getTime() < Date.now();
+                            if (!vm.expired) {
+                                ClientStorageService.set('token', token)
+                                    .then(function () {
+                                        vm.initializing = false;
+                                        $state.go('accounts');
+                                    });
+                            } else {
+                                vm.initializing = false;
+                            }
+                            return vm;
                         }
                     ]
                 })

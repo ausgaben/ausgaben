@@ -12,7 +12,11 @@
                     </h1>
                 </div>
                 <div class="card-block">
-                    <progress class="progress progress-striped progress-animated" value="50" max="100">50%</progress>
+                    <div class="alert alert-danger" role="alert" data-ng-show="vm.expired">
+                        The login link is expired.
+                        Request a new one <a data-ui-sref="login">here</a>.
+                    </div>
+                    <progress class="progress progress-striped progress-animated" value="50" max="100" data-ng-hide="!vm.initializing">50%</progress>
                 </div>
             </form>
         </section>
