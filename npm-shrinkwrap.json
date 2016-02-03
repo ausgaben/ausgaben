@@ -245,9 +245,9 @@
       "resolved": "https://registry.npmjs.org/block-stream/-/block-stream-0.0.8.tgz"
     },
     "bluebird": {
-      "version": "3.1.1",
-      "from": "bluebird@>=3.1.1 <4.0.0",
-      "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.1.1.tgz"
+      "version": "3.2.1",
+      "from": "bluebird@3.2.1",
+      "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-3.2.1.tgz"
     },
     "bn.js": {
       "version": "4.6.6",
@@ -267,7 +267,7 @@
     "bootstrap": {
       "version": "4.0.0-alpha.2",
       "from": "git://github.com/twbs/bootstrap.git#v4-dev",
-      "resolved": "git://github.com/twbs/bootstrap.git#bd8c03bfc660d43c12155e81cce5dcbc6c391cf5"
+      "resolved": "git://github.com/twbs/bootstrap.git#19be5360835e13c3087c37f0862aa9872f661bd7"
     },
     "brace-expansion": {
       "version": "1.1.2",
@@ -1747,9 +1747,9 @@
       }
     },
     "lodash": {
-      "version": "4.0.0",
-      "from": "lodash@>=4.0.0 <5.0.0",
-      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.0.0.tgz"
+      "version": "4.2.1",
+      "from": "lodash@4.2.1",
+      "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.2.1.tgz"
     },
     "lodash._arraycopy": {
       "version": "3.0.0",
@@ -2096,9 +2096,9 @@
       "resolved": "https://registry.npmjs.org/nan/-/nan-2.2.0.tgz"
     },
     "nconf": {
-      "version": "0.8.2",
-      "from": "nconf@>=0.8.2 <0.9.0",
-      "resolved": "https://registry.npmjs.org/nconf/-/nconf-0.8.2.tgz"
+      "version": "0.8.4",
+      "from": "nconf@0.8.4",
+      "resolved": "https://registry.npmjs.org/nconf/-/nconf-0.8.4.tgz"
     },
     "negotiator": {
       "version": "0.5.3",
@@ -2792,9 +2792,9 @@
       "resolved": "https://registry.npmjs.org/pbkdf2/-/pbkdf2-3.0.4.tgz"
     },
     "pg": {
-      "version": "4.4.3",
-      "from": "pg@>=4.4.0 <5.0.0",
-      "resolved": "https://registry.npmjs.org/pg/-/pg-4.4.3.tgz",
+      "version": "4.4.4",
+      "from": "pg@4.4.4",
+      "resolved": "https://registry.npmjs.org/pg/-/pg-4.4.4.tgz",
       "dependencies": {
         "semver": {
           "version": "4.3.6",
@@ -3189,16 +3189,9 @@
       "resolved": "https://registry.npmjs.org/restore-cursor/-/restore-cursor-1.0.1.tgz"
     },
     "retry-as-promised": {
-      "version": "2.0.0",
+      "version": "2.0.1",
       "from": "retry-as-promised@>=2.0.0 <3.0.0",
-      "resolved": "https://registry.npmjs.org/retry-as-promised/-/retry-as-promised-2.0.0.tgz",
-      "dependencies": {
-        "bluebird": {
-          "version": "2.10.2",
-          "from": "bluebird@>=2.9.27 <3.0.0",
-          "resolved": "https://registry.npmjs.org/bluebird/-/bluebird-2.10.2.tgz"
-        }
-      }
+      "resolved": "https://registry.npmjs.org/retry-as-promised/-/retry-as-promised-2.0.1.tgz"
     },
     "right-align": {
       "version": "0.1.3",
@@ -3244,6 +3237,11 @@
         }
       }
     },
+    "secure-keys": {
+      "version": "1.0.0",
+      "from": "secure-keys@>=1.0.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/secure-keys/-/secure-keys-1.0.0.tgz"
+    },
     "semver": {
       "version": "5.1.0",
       "from": "semver@>=2.0.0 <3.0.0||>=3.0.0 <4.0.0||>=4.0.0 <5.0.0||>=5.0.0 <6.0.0",
@@ -3260,19 +3258,14 @@
       "resolved": "https://registry.npmjs.org/send/-/send-0.13.1.tgz"
     },
     "sequelize": {
-      "version": "3.18.0",
-      "from": "sequelize@>=3.17.3 <4.0.0",
-      "resolved": "https://registry.npmjs.org/sequelize/-/sequelize-3.18.0.tgz",
+      "version": "3.19.1",
+      "from": "sequelize@3.19.1",
+      "resolved": "https://registry.npmjs.org/sequelize/-/sequelize-3.19.1.tgz",
       "dependencies": {
         "generic-pool": {
           "version": "2.4.0",
           "from": "generic-pool@2.4.0",
           "resolved": "https://registry.npmjs.org/generic-pool/-/generic-pool-2.4.0.tgz"
-        },
-        "lodash": {
-          "version": "3.10.1",
-          "from": "lodash@>=3.9.3 <4.0.0",
-          "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
     },
@@ -3307,9 +3300,9 @@
       "resolved": "https://registry.npmjs.org/shimmer/-/shimmer-1.1.0.tgz"
     },
     "should-equal": {
-      "version": "0.6.0",
-      "from": "should-equal@0.6.0",
-      "resolved": "https://registry.npmjs.org/should-equal/-/should-equal-0.6.0.tgz"
+      "version": "0.7.2",
+      "from": "should-equal@0.7.2",
+      "resolved": "https://registry.npmjs.org/should-equal/-/should-equal-0.7.2.tgz"
     },
     "should-format": {
       "version": "0.3.2",
@@ -3712,9 +3705,9 @@
       "resolved": "https://registry.npmjs.org/validate-npm-package-license/-/validate-npm-package-license-3.0.1.tgz"
     },
     "validator": {
-      "version": "4.5.1",
+      "version": "4.6.1",
       "from": "validator@>=4.0.4 <5.0.0",
-      "resolved": "https://registry.npmjs.org/validator/-/validator-4.5.1.tgz"
+      "resolved": "https://registry.npmjs.org/validator/-/validator-4.6.1.tgz"
     },
     "vary": {
       "version": "1.0.1",
