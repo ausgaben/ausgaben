@@ -34,7 +34,7 @@
     "node-templater-mailer-microservice-client": "0.0.2",
     "passport": "^0.3.2",
     "passport-http-bearer": "^1.0.1",
-    "pg": "^5.0.0",
+    "pg": "^6.0.0",
     "pg-hstore": "^2.3.2",
     "pg-native": "^1.8.1",
     "request-promise": "^3.0.0",
