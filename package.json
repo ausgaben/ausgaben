@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/ausgaben/ausgaben-node#readme",
   "dependencies": {
-    "angular": "^1.4.8",
+    "angular": "^1.5.7",
     "angular-bluebird-promises": "^1.0.1",
     "angular-ui-router": "^1.0.0-alpha.5",
     "bluebird": "^3.4.1",
