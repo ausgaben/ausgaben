@@ -15,7 +15,7 @@ var argv = require('yargs')
     .alias('t', 'target')
     .help('h')
     .alias('h', 'help')
-        .argv
+    .argv
     ;
 
 function run() {

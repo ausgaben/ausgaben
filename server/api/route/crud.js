@@ -37,13 +37,13 @@ module.exports = function (app, tokenAuth, db, modelName, prefix) {
                     }
                     return true;
                 })
-                .then(function (found) {
-                    if (found) {
-                        parents[parentClass] = entity;
-                        return;
-                    }
-                    throw new errors.AccessDeniedError(req.url);
-                });
+                    .then(function (found) {
+                        if (found) {
+                            parents[parentClass] = entity;
+                            return;
+                        }
+                        throw new errors.AccessDeniedError(req.url);
+                    });
             });
         }).then(function () {
             return parents;

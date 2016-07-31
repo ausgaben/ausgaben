@@ -29,9 +29,9 @@ module.exports = function ($window, $rootScope) {
         return bluebird.try(function () {
             return $window.localStorage.setItem(name, JSON.stringify(value));
         })
-        .then(function() {
-            self.notify(name, value);
-        });
+            .then(function() {
+                self.notify(name, value);
+            });
     };
 
     /**
@@ -55,9 +55,9 @@ module.exports = function ($window, $rootScope) {
         return bluebird.try(function () {
             return $window.localStorage.removeItem(name);
         })
-        .then(function() {
-            self.notify(name, undefined);
-        });
+            .then(function() {
+                self.notify(name, undefined);
+            });
     };
 
     ClientStorageService.prototype.subscribe = function (scope, callback) {
