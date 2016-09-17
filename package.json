@@ -46,10 +46,10 @@
   },
   "scripts": {
     "dev-server": "./node_modules/nodemon/bin/nodemon.js -e 'js,html,css' -w ./build -w ./server -w ./util -w ./config.json -w ./config.local.json -d 1 ./server/server.js --environment=development",
-    "test": "environment=testing ./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/\\*\\*/\\*.js",
-    "test:api": "environment=testing ./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/yadda/\\*\\*/\\*.js",
-    "test:backend": "environment=testing ./node_modules/mocha/bin/mocha --reporter=spec --require=server/server.js --timeout=1350 test/mocha/\\*\\*/\\*.js",
-    "test:coverage": "environment=testing ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --require=server/server.js --timeout=1350 test/\\*\\*/\\*.js && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage",
+    "test": "environment=testing mocha --reporter=spec --require=server/server.js --timeout=1350 test/\\*\\*/\\*.js",
+    "test:api": "environment=testing mocha --reporter=spec --require=server/server.js --timeout=1350 test/yadda/\\*\\*/\\*.js",
+    "test:backend": "environment=testing mocha --reporter=spec --require=server/server.js --timeout=1350 test/mocha/\\*\\*/\\*.js",
+    "test:coverage": "environment=testing ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec --require=server/server.js --timeout=1350 test/\\*\\*/\\*.js && cat ./coverage/lcov.info | codacy-coverage && rm -rf ./coverage",
     "lint": "npm run lint:backend && npm run lint:web",
     "lint:backend": "./node_modules/eslint/bin/eslint.js -c .eslintrc server util test",
     "lint:web": "./node_modules/eslint/bin/eslint.js -c web/js/.eslintrc web/js"
