@@ -42,7 +42,7 @@
     "tether": "^1.1.1",
     "uglifycss": "0.0.21",
     "uglifyjs": "^2.4.10",
-    "yargs": "^5.0.0"
+    "yargs": "^6.0.0"
   },
   "scripts": {
     "dev-server": "./node_modules/nodemon/bin/nodemon.js -e 'js,html,css' -w ./build -w ./server -w ./util -w ./config.json -w ./config.local.json -d 1 ./server/server.js --environment=development",
