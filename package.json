@@ -67,7 +67,7 @@
     "superagent": "^2.0.0",
     "supertest": "^2.0.0",
     "toposort": "^1.0.0",
-    "yadda": "^0.21.0"
+    "yadda": "^0.22.0"
   },
   "browserify": {
     "transform": [
