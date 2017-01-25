@@ -20,7 +20,7 @@
     "bluebird": "^3.4.1",
     "body-parser": "^1.15.2",
     "bootstrap": "git://github.com/twbs/bootstrap.git#v4-dev",
-    "browserify": "^13.0.0",
+    "browserify": "^14.0.0",
     "browserify-shim": "^3.8.12",
     "express": "^4.14.0",
     "fast-url-parser": "^1.1.3",
