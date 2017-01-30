@@ -65,7 +65,7 @@
     "should": "^11.0.0",
     "simple-mock": "^0.7.0",
     "superagent": "^3.0.0",
-    "supertest": "^2.0.0",
+    "supertest": "^3.0.0",
     "toposort": "^1.0.0",
     "yadda": "^0.22.0"
   },
