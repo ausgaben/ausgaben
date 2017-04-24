@@ -18,7 +18,7 @@
     "angular-bluebird-promises": "^1.0.1",
     "angular-ui-router": "^1.0.0-alpha.5",
     "bluebird": "^3.4.1",
-    "body-parser": "^1.15.2",
+    "body-parser": "^1.17.0",
     "bootstrap": "git://github.com/twbs/bootstrap.git#v4-dev",
     "browserify": "^14.0.0",
     "browserify-shim": "^3.8.12",
