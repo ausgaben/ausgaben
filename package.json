@@ -40,7 +40,7 @@
     "request-promise": "^4.1.0",
     "sequelize": "^3.23.4",
     "tether": "^1.1.1",
-    "uglifycss": "0.0.26",
+    "uglifycss": "0.0.27",
     "uglifyjs": "^2.4.10",
     "yargs": "^7.0.2"
   },
