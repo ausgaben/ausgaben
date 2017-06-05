@@ -55,7 +55,7 @@
     "lint:web": "./node_modules/eslint/bin/eslint.js -c web/js/.eslintrc web/js"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
+    "chai": "^4.0.2",
     "codacy-coverage": "^2.0.0",
     "eslint": "^3.2.0",
     "istanbul": "^0.4.4",
